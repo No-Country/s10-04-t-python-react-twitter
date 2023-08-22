@@ -1,4 +1,6 @@
-
+import Tweets from "../Components/Home/tweets"
 export default function home(){
-    return <h1>we are ready</h1>
+    return <>
+    <Tweets />
+    </>
 }
