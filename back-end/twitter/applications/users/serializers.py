@@ -14,13 +14,20 @@ class UserRegisterSerializers(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['email', 'firs_name', 'birthdate', 'password1', 'password2']
+        fields = [
+            'email', 
+            'firs_name', 
+            'birthdate',
+            'avatar', 
+            'password1', 
+            'password2'
+        ]
         extra_kwargs = {
             'password1': {'write_only': True},
             'password2': {'write_only': True},
             'is_staff': {'read_only': True},
             'is_active': {'read_only': True}
-    }
+        }
 
     def validate(self, data):
             
@@ -60,12 +67,12 @@ class UserLoginSerializers(serializers.ModelSerializer):
         ]
 
 
-# Detail User
+# Detail and Delete and Update  User
 class UserDetailSerializers(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = (
+        fields = [
             'email',
             'firs_name',
             'last_name',
@@ -75,4 +82,6 @@ class UserDetailSerializers(serializers.ModelSerializer):
             'bio',
             'location',
             'website',
-        )
+        ]
+        
+

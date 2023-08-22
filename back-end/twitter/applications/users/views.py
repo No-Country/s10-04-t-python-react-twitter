@@ -9,8 +9,11 @@ from rest_framework.response import Response
 from rest_framework.generics import (
     CreateAPIView,
     RetrieveAPIView,
+    RetrieveUpdateAPIView,
+    RetrieveDestroyAPIView,
 )
 #D Django
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,6 +33,7 @@ class UserRegistrationView(CreateAPIView):
     
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializers
+    parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -71,7 +75,7 @@ class UserLogin(APIView):
 
 
 # Logout User
-class LogoutView(APIView):
+class UserLogoutView(APIView):
     
     def post(self, request):
         logout(request)
@@ -79,14 +83,33 @@ class LogoutView(APIView):
     
 
 # Detail User
-class DetailAPIView(RetrieveAPIView):
+class UserDetailAPIView(RetrieveAPIView):
     
     serializer_class = UserDetailSerializers 
-    authentication_classes = (TokenAuthentication,)   
+    # authentication_classes = (TokenAuthentication,)   
     permission_classes = [IsAuthenticated]
-    
     queryset = User.objects.all()
-    login_url = reverse_lazy('/')
+
 
 
 # Como de deve enviar el Token Authorization Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+
+
+# Update User
+class UserUpdateAPIView(RetrieveUpdateAPIView):
+    
+    serializer_class = UserDetailSerializers 
+    # authentication_classes = (TokenAuthentication,)   
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+    queryset = User.objects.all()
+
+
+
+# Delete persona
+class PersonDeletePIView(RetrieveDestroyAPIView):
+    
+    serializer_class = UserDetailSerializers
+    # authentication_classes = (TokenAuthentication,)   
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()

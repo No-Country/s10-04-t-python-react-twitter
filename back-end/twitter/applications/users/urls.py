@@ -20,13 +20,23 @@ urlpatterns = [
    ),   
    path(
     "user/logout/",
-    views.LogoutView.as_view(),
+    views.UserLogoutView.as_view(),
     name="user-logout"
    ),
    path(
     "user/detail/<pk>/",
-    views.DetailAPIView.as_view(),
+    views.UserDetailAPIView.as_view(),
     name="user-detail"
+   ),
+   path(
+    "user/update/<pk>/",
+    views.UserUpdateAPIView.as_view(),
+    name="user-update"
+   ),
+   path(
+    "user/delete/<pk>/",
+    views.PersonDeletePIView.as_view(),
+    name="user-delete"
    ),
 ]
 
