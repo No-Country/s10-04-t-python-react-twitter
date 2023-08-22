@@ -1,8 +1,7 @@
 import { Ellipse } from "./TweetIcons/Icons";
 import { Link } from "react-router-dom";
-import Functionality from "../Home/tweetsFunctionality";
-import Tooltip from "./Tooltip";
-
+import Functionality from "./tweetsFunctionality";
+import Tooltip from "./tooltip";
 
 export default function Tweets(): JSX.Element {
   const text = {
@@ -12,17 +11,19 @@ export default function Tweets(): JSX.Element {
   return (
     <article className="py-3 px-4  h-auto border-2 border-gray-100 hover:bg-gray-100 cursor-pointer relative">
       <div className="grid grid-flow-col">
+        <Tooltip>
         <div className="col-span-1 w-10 mr-3">
           <div className="w-10 h-10 mr-3 rounded-full bg-black cursor-pointer">
             <Link to="#" className="w-10 h-10 " />
           </div>
         </div>
+        </Tooltip>
         <div className="col-span-1 ">
           <div className="flex justify-between ">
             <div className="flex gap-1 items-center">
-         <Tooltip >
-              <span className="hover:underline">Ever Rojas</span>
-              <span>@EverRojas</span>
+              <Tooltip>
+                <span className="hover:underline">Ever Rojas</span>
+                <span>@EverRojas</span>
               </Tooltip>
               <span className="mb-2">.</span>
               <span className="">aug 20</span>
