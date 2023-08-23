@@ -82,6 +82,52 @@ class UserDetailSerializers(serializers.ModelSerializer):
             'bio',
             'location',
             'website',
+            'followers',
+            'mutual_followers',
         ]
+
         
 
+# User Follower And Followin
+class UserSerializer(serializers.ModelSerializer):
+    
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+    followers = serializers.StringRelatedField(many=True)
+    following = serializers.StringRelatedField(many=True)
+    mutual_followers = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 
+            'get_full_name', 
+            'followers', 
+            'following', 
+            'mutual_followers', 
+            'followers_count', 
+            'following_count'
+        ]
+
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.following.count()
+  
+
+#  User Follower And Followin Detail
+class UserSerializer(serializers.ModelSerializer):
+    followers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 
+            'get_full_name', 
+            'followers',
+        ]
+
+    def get_followers(self, obj):
+        followers = obj.followers.all()
+        return [{"id": follower.id, "get_full_name": follower.get_full_name()} for follower in followers]

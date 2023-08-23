@@ -18,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=50,
     )
     last_name = models.CharField(
-        'Full Name', 
+        'Last Name', 
         max_length=50,
         blank=True,
         null=True,
@@ -57,6 +57,17 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True
     )
+    followers = models.ManyToManyField(
+        'self', 
+        related_name=
+        'following', 
+        symmetrical=False
+    )
+    mutual_followers = models.ManyToManyField(
+        'self', 
+        related_name='mutual_following', 
+        blank=True
+    )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     
@@ -68,22 +79,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     objects = UserManager()
     
+    def get_full_name(self):
+        return str(self.firs_name) + ' ' + str(self.last_name)
+    
     def __str__(self):
         return str(self.id) + ' ' +self.email
 
 
-class Following(TimeStampedModel):
-    
-    follower = models.ForeignKey(
-        User, 
-        related_name='Following', 
-        on_delete=models.CASCADE,
-    )
-    following = models.ForeignKey(
-        User, 
-        related_name='Followers', 
-        on_delete=models.CASCADE,
-    )
-    
-    def __str__(self):
-        return self.follower + self.following
