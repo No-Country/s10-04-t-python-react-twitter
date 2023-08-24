@@ -16,8 +16,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         aria-hidden="true"
         className={`fixed inset-0 z-10 bg-[#0000008f] flex justify-center items-center ${modalClassName}`}
       >
-        <div className="relative w-full h-full flex max-w-2xl ">
-          <div className="relative bg-white flex items-center justify-center w-full shadow md:my-10 md:rounded-md dark:bg-gray-700">
+        <div className="relative flex w-full h-full max-w-2xl ">
+          <div className="relative flex items-center justify-center w-full bg-white shadow md:my-10 md:rounded-md dark:bg-gray-700">
             <button
               type="button"
               className="absolute top-3 left-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -33,9 +33,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
