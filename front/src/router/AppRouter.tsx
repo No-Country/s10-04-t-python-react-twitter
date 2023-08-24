@@ -3,6 +3,9 @@ import {lazy, Suspense} from "react"
 
 const Home: React.LazyExoticComponent<() => JSX.Element> = lazy(
     () => import ("../Pages/Home"))
+const PostTweets: React.LazyExoticComponent<() => JSX.Element> = lazy(
+    () => import ("../Pages/PostTweets")
+)
 
 
 export default function AppRouter(): JSX.Element{
@@ -11,7 +14,7 @@ export default function AppRouter(): JSX.Element{
         <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />}/>
-
+            <Route path="/posttweets" element={<PostTweets />} />
         </Routes>
         </BrowserRouter>
         </Suspense>
