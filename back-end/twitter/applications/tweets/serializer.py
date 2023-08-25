@@ -14,4 +14,4 @@ class CitaSerializer(serializers.ModelSerializer):
 class ComentarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comentario
-        fields = '__all__'
+        fields = ['id', 'usuario', 'post', 'content', 'created_at']

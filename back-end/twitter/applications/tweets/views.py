@@ -24,7 +24,7 @@ class ComentarioCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(usuario=self.request.user)
 
 class TrendingTopicsView(APIView):
     def get(self, request):
