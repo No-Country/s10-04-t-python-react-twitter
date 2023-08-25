@@ -32,6 +32,6 @@ class Cita(models.Model):
 
 class Comentario(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Tweet, on_delete=models.CASCADE) 
+    tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE) 
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
