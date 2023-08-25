@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
-from tweets.models import Tweet
+from ..users.models import User
+from ..tweets.models import Tweet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import TweetSerializer
@@ -24,8 +24,8 @@ def list_like(_request, pk):
 
 
 @api_view(['GET'])
-def get_user_likes(_request, username):
-    user = User.objects.get(username=username)
+def get_user_likes(_request, email):
+    user = User.objects.get(email=email)
     tweets = Tweet.objects.filter(liked=user)
     serializer = TweetSerializer(tweets, many=True)
     return Response(serializer.data)

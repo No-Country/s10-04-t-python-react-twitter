@@ -8,8 +8,8 @@ app_name ='likes_app'
 
 urlpatterns=[
     path('like/<int:pk>/', views.like),
-    path('likelist/<int:pk>/', views.list_like),
-    path('likesuser/<str:username>/', views.get_user_likes),
+    path('lista_likes_tweet/<int:pk>/', views.list_like),
+    path('lista_likes_usuario/<str:email>/', views.get_user_likes),
 ]
 
    
