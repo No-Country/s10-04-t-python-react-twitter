@@ -8,8 +8,7 @@ class TweetSerializer(serializers.ModelSerializer):
         model = Tweet
         fields = ['id', 'usuario', 
                   'contenido', 
-                  'imagen',
-                  'video', 'liked', 'likes_count']
+                  'multimedia', 'liked', 'likes_count']
     def get_likes_count(self, obj):
         return obj.liked.all().count()
     
