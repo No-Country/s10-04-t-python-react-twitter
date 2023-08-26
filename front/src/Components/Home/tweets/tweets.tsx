@@ -9,14 +9,14 @@ export default function Tweets(): JSX.Element {
       "Lorem ipsum dolor sit amet consectetur. Venenatis vulputate turpis nam vitae viverra venenatis. Nibh nulla volutpat sit arcu maecenas cras tincidunt laoreet. Vestibulum neque amet et volutpat et justo neque. Scelerisque ornare sit convallis vivamus.",
   };
   return (
-    <article className="py-3 px-4  h-auto border-2 border-gray-100 hover:bg-gray-100 cursor-pointer relative">
+    <article className="py-3 px-4  h-auto border-2 border-gray-100 hover:bg-gray-100 cursor-pointer">
       <div className="grid grid-flow-col">
         <Tooltip>
-        <div className="col-span-1 w-10 mr-3">
-          <div className="w-10 h-10 mr-3 rounded-full bg-black cursor-pointer">
-            <Link to="#" className="w-10 h-10 " />
+          <div className="col-span-1 w-10 mr-3">
+            <div className="w-10 h-10 mr-3 rounded-full bg-black cursor-pointer">
+              <Link to="#" className="w-10 h-10 " />
+            </div>
           </div>
-        </div>
         </Tooltip>
         <div className="col-span-1 ">
           <div className="flex justify-between ">
@@ -29,7 +29,7 @@ export default function Tweets(): JSX.Element {
               <span className="">aug 20</span>
             </div>
             <div className="group/edit group">
-              <div className="group-hover/edit:bg-blue-100 rounded-full w-[35px] h-[35px] flex items-center justify-center absolute  right-0 ">
+              <div className="group-hover/edit:bg-blue-100 rounded-full w-[35px] h-[35px] flex items-center justify-center ">
                 {Ellipse}
               </div>
             </div>

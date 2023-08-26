@@ -1,21 +1,27 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-const Login: React.LazyExoticComponent<() => JSX.Element> = lazy(
-  () => import("../Pages/Login")
-);
+interface Page {
+  path: string;
+  component: React.LazyExoticComponent<React.ComponentType<unknown>>;
+}
 
-const Home: React.LazyExoticComponent<() => JSX.Element> = lazy(
-  () => import("../Pages/Home")
-);
+const pages: Page[] = [
+  { path: "/", component: lazy(() => import("../Pages/Login")) },
+  { path: "/Home", component: lazy(() => import("../Pages/Home")) },
+  { path: "/Profile", component: lazy(() => import("../Pages/Profile")) },
+  { path: "/Notifications", component: lazy(() => import("../Pages/Notifications")) },
+  { path: "/Explore", component: lazy(() => import("../Pages/Explore")) },
+];
 
 export default function AppRouter(): JSX.Element {
   return (
     <Suspense fallback={<h1>loading...</h1>}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/Home" element={<Home />} />
+          {pages.map((page) => (
+            <Route key={page.path} path={page.path} element={<page.component />} />
+          ))}
         </Routes>
       </BrowserRouter>
     </Suspense>
