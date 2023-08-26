@@ -12,6 +12,7 @@ const pages: Page[] = [
   { path: "/Profile", component: lazy(() => import("../Pages/Profile")) },
   { path: "/Notifications", component: lazy(() => import("../Pages/Notifications")) },
   { path: "/Explore", component: lazy(() => import("../Pages/Explore")) },
+  { path: "/Explore", component: lazy(() => import("../Pages/PostTweets")) },
 ];
 
 export default function AppRouter(): JSX.Element {

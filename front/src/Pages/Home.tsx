@@ -8,7 +8,6 @@ export default function home() {
         <div className="mt-16 mr-3 xl:ml-[300px]">
           <Tweets />
         </div>
-        {/* <div className="xl:ml-[300px] bg-amber-800 min-h-screen">Hola mundo</div> */}
       </div>
     </>
   );
