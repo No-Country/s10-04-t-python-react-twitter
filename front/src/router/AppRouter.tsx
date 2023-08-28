@@ -2,26 +2,35 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Notifications from "../Pages/Notifications";
 
-const Login: React.LazyExoticComponent<() => JSX.Element> = lazy(
-  () => import("../Pages/Login")
-);
-const Home: React.LazyExoticComponent<() => JSX.Element> = lazy(
-  () => import("../Pages/Home")
-);
-const PostTweets: React.LazyExoticComponent<() => JSX.Element> = lazy(
-  () => import("../Pages/PostTweets")
-);
+interface Page {
+  path: string;
+  component: React.LazyExoticComponent<React.ComponentType<unknown>>;
+}
+
+const pages: Page[] = [
+  { path: "/", component: lazy(() => import("../Pages/Login")) },
+  { path: "/Home", component: lazy(() => import("../Pages/Home")) },
+  { path: "/Profile", component: lazy(() => import("../Pages/Profile")) },
+  {
+    path: "/Notifications",
+    component: lazy(() => import("../Pages/Notifications")),
+  },
+  { path: "/Explore", component: lazy(() => import("../Pages/Explore")) },
+  { path: "/Explore", component: lazy(() => import("../Pages/PostTweets")) },
+];
 
 export default function AppRouter(): JSX.Element {
   return (
     <Suspense fallback={<h1>loading...</h1>}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/posttweets" element={<PostTweets />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/notifications" element={<Notifications />} />
+          {pages.map((page) => (
+            <Route
+              key={page.path}
+              path={page.path}
+              element={<page.component />}
+            />
+          ))}
         </Routes>
       </BrowserRouter>
     </Suspense>
