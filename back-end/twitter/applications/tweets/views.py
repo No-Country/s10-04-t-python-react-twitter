@@ -10,8 +10,7 @@ from rest_framework.response import Response
 from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer
 #
 from .models import Tweet, Cita, Comentario
-#
-from applications.users.models import User
+
 
 # Create your views here.
 
