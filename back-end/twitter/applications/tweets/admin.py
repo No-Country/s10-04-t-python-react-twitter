@@ -1,8 +1,9 @@
 # Django
 from django.contrib import admin
-# Models
-from . import models
+from .models import Tweet, Comentario, Cita
 
-admin.site.register(models.Tweet)
-admin.site.register(models.Cita)
-admin.site.register(models.Comentario)
+
+
+admin.site.register(Tweet)
+admin.site.register(Comentario)
+admin.site.register(Cita)

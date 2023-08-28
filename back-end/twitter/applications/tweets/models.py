@@ -1,5 +1,5 @@
 from django.db import models
-from applications.users.models import User
+from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 
 # Create your models here.
