@@ -7,7 +7,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate("/home");
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
