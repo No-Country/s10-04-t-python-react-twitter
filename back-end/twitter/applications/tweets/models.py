@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from applications.users.models import User
 from django.core.validators import FileExtensionValidator
 
 # Create your models here.
@@ -24,13 +24,17 @@ class Tweet(models.Model):
         verbose_name='Tweet'
         verbose_name_plural='Tweets'
 
+
 class Cita(models.Model):
+    
     tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     contenido = models.CharField(max_length=280)
     created = models.DateTimeField(auto_now_add=True)
 
+
 class Comentario(models.Model):
+    
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE) 
     content = models.TextField()

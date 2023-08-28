@@ -7,9 +7,9 @@ from . import views
 app_name ='likes_app'
 
 urlpatterns=[
-    path('like/<int:pk>/', views.like),
-    path('likelist/<int:pk>/', views.list_like),
-    path('likesuser/<str:username>/', views.get_user_likes),
+    path('api/like/<int:pk>/', views.like),
+    path('api/likelist/<int:pk>/', views.list_like),
+    path('api/likesuser/<str:username>/', views.get_user_likes),
 ]
 
    

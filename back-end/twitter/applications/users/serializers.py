@@ -63,7 +63,7 @@ class UserLoginSerializers(serializers.ModelSerializer):
         fields = [
             'id',
             'email', 
-            'password'
+            'password',
         ]
 
 
@@ -130,4 +130,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_followers(self, obj):
         followers = obj.followers.all()
-        return [{"id": follower.id, "get_full_name": follower.get_full_name()} for follower in followers]
+        return [{"id": follower.id, "get_full_name": follower.get_full_name()} for follower in followers]   
+    
+    

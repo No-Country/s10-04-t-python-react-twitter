@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
-from tweets.models import Tweet
+from applications.users.models import User
+from applications.tweets.models import Tweet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import TweetSerializer

@@ -1,3 +1,8 @@
+# Django
 from django.contrib import admin
+# Models
+from . import models
 
-# Register your models here.
+admin.site.register(models.Tweet)
+admin.site.register(models.Cita)
+admin.site.register(models.Comentario)

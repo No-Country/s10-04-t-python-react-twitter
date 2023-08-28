@@ -1,24 +1,38 @@
-
+#
+from collections import Counter
+#
 from rest_framework import viewsets,generics
 from rest_framework.permissions import IsAuthenticated
-from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer
-from .models import Tweet, Cita, Comentario
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from collections import Counter
+#
+from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer
+#
+from .models import Tweet, Cita, Comentario
+#
+from applications.users.models import User
 
 # Create your views here.
 
-class TweetViewSet(viewsets.ModelViewSet):
-    queryset = Tweet.objects.all()
+class TweetViewSet(generics.ListCreateAPIView):
+    
+    permission_classes = [IsAuthenticated]
     serializer_class = TweetSerializer
+    pagination_class = PersonPaginationSerializer
+    queryset = Tweet.objects.all()
 
-class CitaViewSet(viewsets.ModelViewSet):
+
+class CitaViewSet(generics.ListCreateAPIView):
+    
+    pagination_class = PersonPaginationSerializer
     queryset = Cita.objects.all()
     serializer_class = CitaSerializer
 
 
 class ComentarioCreateView(generics.ListCreateAPIView):
+    
+    pagination_class = PersonPaginationSerializer
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
     permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
@@ -26,7 +40,9 @@ class ComentarioCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
 
+
 class TrendingTopicsView(APIView):
+    
     def get(self, request):
         # Recopila todos los textos de tweets y comentarios
         all_texts = []
