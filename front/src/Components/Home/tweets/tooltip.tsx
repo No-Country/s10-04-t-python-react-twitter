@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export default function Tooltip({ children }: { children: ReactNode }) {
   return (
-    <section className="group relative flex gap-1 ">
+    <section className="group  flex gap-1 ">
       {children}
       <div
         className="absolute top-10 scale-0 w-[300px] 

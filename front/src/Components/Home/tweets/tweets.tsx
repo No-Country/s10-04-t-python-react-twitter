@@ -2,10 +2,10 @@ import { Ellipse, GoToPost } from "./TweetIcons/Icons";
 import { Link } from "react-router-dom";
 import Functionality from "./tweetsFunctionality";
 import Tooltip from "./tooltip";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export default function Tweets(): JSX.Element {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const text = {
     text1:
       "Lorem ipsum dolor sit amet consectetur. Venenatis vulputate turpis nam vitae viverra venenatis. Nibh nulla volutpat sit arcu maecenas cras tincidunt laoreet. Vestibulum neque amet et volutpat et justo neque. Scelerisque ornare sit convallis vivamus.",
@@ -14,7 +14,7 @@ export default function Tweets(): JSX.Element {
     <main>
       <article
         className="py-3 px-4  h-auto border-2 border-gray-100
-       hover:bg-gray-100 cursor-pointer relative"
+       hover:bg-gray-100 cursor-pointer"
       >
         <div className="grid grid-flow-col">
           <Tooltip>
@@ -59,7 +59,7 @@ export default function Tweets(): JSX.Element {
           className="w-14 h-14 bg-blue-500 rounded-full flex 
           items-center 
     justify-center cursor-pointer"
-    onClick={()=>navigate("/posttweets")}
+          onClick={() => navigate("/posttweets")}
         >
           {GoToPost}
         </div>
