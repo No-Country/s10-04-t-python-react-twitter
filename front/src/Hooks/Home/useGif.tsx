@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { fetchSearch, fetchGifs } from "../../services/gifApi";
 import useDebounce from "../useDebounce";
 import { SearchResults } from "../../Components/Home/createPost/Gif/searchResults";
-import useGifStore from "../../store/Home/gifStore";
+import useGifStore from "../../store/Home/postStore";
 
 
 export default function useGift(){

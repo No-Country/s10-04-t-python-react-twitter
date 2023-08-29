@@ -14,7 +14,7 @@ export const GifResults = memo(function DataResult({ data,}: DataResultProps ) {
           <div key={gif.gif.id}>
             <img
               src={gif.gif.images.original.url}
-              className="w-[193px] h-[150px] curs"
+              className="w-[193px] h-[150px] cursor-pointer"
               onClick={() => handleSelectName(gif.name)}
             />
             <p>{gif.name}</p>

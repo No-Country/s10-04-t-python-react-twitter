@@ -2,24 +2,32 @@ import { useState } from "react";
 import { WorldIcon } from "./Icons/worldIcon";
 import { securityIcon } from "./Icons/securityIcon";
 import GifEmojiFileDisplay from "./GifEmojiFileDisplay";
-import useGifStore from "../../../store/Home/gifStore";
+import useGifStore, { useTweetPost } from "../../../store/Home/postStore";
+import { closeIcon } from "./Icons/closeIcon";
 
 export default function UserMessage() {
   const [selectOption, setSelectedOption] = useState("todos");
-  const [textArea, setTextArea] = useState("");
-  const selectImage = useGifStore((state) => state.selectImage)
- 
-  const handleTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    event.preventDefault();
-    setTextArea(event.target.value);
-    console.log(event.target.value);
-  };
+  const textArea = useTweetPost((state) => state.textArea);
+  const setTextArea = useTweetPost((state) => state.setTextArea);
+  const selectImage = useGifStore((state) => state.selectImage);
+  const contentUser = useTweetPost((state) => state.contentUser);
+  const setContentUser = useTweetPost((state) => state.setContentUser);
+  const setSelectImage = useGifStore((state) =>state.setSelectImage )
+  const [close, setClose] = useState(false);
 
   const handleSelectedOption = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setSelectedOption(event.target.value);
   };
+  const handleImageClose = () => {
+    if(close) return
+    setContentUser("");
+    setSelectImage("");
+    setClose(false);
+    
+  };
+
   return (
     <section className="grid grid-flow-row auto-rows-max -2 px-4 pt-4">
       <div className="grid grid-cols-[40px,1fr]">
@@ -40,32 +48,51 @@ export default function UserMessage() {
             className="border-0 focus:ring-white
            "
             placeholder="que esta pasando?!"
-            onChange={handleTextArea}
+            onChange={(e) => setTextArea(e.currentTarget.value)}
             value={textArea}
           />
-          <img src={selectImage} alt=""className="h-[302px] w-[302px] mb-2"/>
+              <div className="relative w-[302px]">
+            {selectImage || contentUser ? (
+              <>
+                <div
+                  className="bg-black rounded-full w-8 h-8 flex 
+                  items-center justify-center absolute right-0 cursor-pointer"
+                  onClick={handleImageClose}
+                >
+                  {closeIcon}
+                </div>
+                <img
+                  src={selectImage || contentUser}
+                  alt=""
+                  className="h-[302px] w-[302px] mb-2 rounded-lg"
+                />
+              </>
+            ) : null}
+          </div>
         </div>
       </div>
       <div>
-      <div className="flex flex-row items-center  gap-1">
-        <span className={selectOption === "todos" ? "" : "hidden"}>
-          {WorldIcon}
-        </span>
-        <span className={selectOption === "todos" ? "text-blue-500" : "hidden"}>
-          Todos pueden responder
-        </span>
-      </div>
-      <div className="flex flex-row items-center gap-1">
-        <span className={selectOption === "circle" ? "" : "hidden"}>
-          {securityIcon}
-        </span>
-        <span
-          className={selectOption === "circle" ? "text-blue-500" : "hidden"}
-        >
-          Solo tus seguidores pueden responder
-        </span>
-      </div>
-      <GifEmojiFileDisplay />
+        <div className="flex flex-row items-center  gap-1">
+          <span className={selectOption === "todos" ? "" : "hidden"}>
+            {WorldIcon}
+          </span>
+          <span
+            className={selectOption === "todos" ? "text-blue-500" : "hidden"}
+          >
+            Todos pueden responder
+          </span>
+        </div>
+        <div className="flex flex-row items-center gap-1">
+          <span className={selectOption === "circle" ? "" : "hidden"}>
+            {securityIcon}
+          </span>
+          <span
+            className={selectOption === "circle" ? "text-blue-500" : "hidden"}
+          >
+            Solo tus seguidores pueden responder
+          </span>
+        </div>
+        <GifEmojiFileDisplay />
       </div>
     </section>
   );
