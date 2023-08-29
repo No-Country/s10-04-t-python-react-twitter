@@ -1,4 +1,5 @@
- import Header from "./header"
+
+import Header from "./header"
  import UserMessage from "./userMessage"
 
  export default function Post(){
