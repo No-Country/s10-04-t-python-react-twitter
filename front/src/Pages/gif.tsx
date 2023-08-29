@@ -6,13 +6,12 @@ import useGifStore from "../store/Home/postStore";
 import Button from "../Components/Home/buttons/buttons";
 import {useNavigate} from "react-router-dom"
 
-function GiftPage() {
+
+function GifPage() {
   const { handleSearch, debouncedSearchText, data, search } = useGift();
   const searchText = useGifStore((state) => state.searchText);
   const navigate = useNavigate();
  
- 
-
   const handleClickBack = () => {
     if (debouncedSearchText) {
      window.location.reload()
@@ -20,6 +19,8 @@ function GiftPage() {
       navigate(-1);
     }
   };
+
+
 
   return (
     <main >
@@ -40,4 +41,4 @@ function GiftPage() {
   );
 }
 
-export default GiftPage;
+export default GifPage;
