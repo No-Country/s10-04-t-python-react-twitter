@@ -9,9 +9,9 @@ class Tweet(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
     #Creamos los campos que queremos que tenga el tweet(la base de datos)
-    contenido=models.CharField(max_length=280)
+    contenido=models.CharField(max_length=280, blank=True, null=True)
     
-    multimedia = models.FileField(upload_to='tweets/', null=True, blank=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpeg', 'jpg', 'svg', 'mp4', 'mov', 'mvk', 'gif', 'bmp'])])
+    multimedia = models.CharField(blank=True, max_length=300, null=True)
     
     #imagen = models.ImageField(upload_to='tweets/', null=True, blank=True)
     #video = models.FileField(upload_to='tweets/', null=True, blank=True)
@@ -36,6 +36,7 @@ class Cita(models.Model):
 class Comentario(models.Model):
     
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE) 
+    tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+    multimedia = models.CharField(blank=True, max_length=300, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -31,6 +31,6 @@ class ComentarioSerializer(serializers.ModelSerializer):
 
 # Serialziador de paginacion
 class PersonPaginationSerializer(pagination.PageNumberPagination):
-    page_size = 5
+    page_size = 30
     max_page_size = 100
     
