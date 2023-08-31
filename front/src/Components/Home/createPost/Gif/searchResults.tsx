@@ -8,9 +8,9 @@ import {shallow} from "zustand/shallow";
 
 
 
-export const SearchResults = memo (function Results({data}:{data:ResultsApi}) {
+export const SearchResults = memo (function Results() {
   const[setSelectImage] = useGifStore((state) => [state.setSelectImage], shallow)
-  const {searchLoading} =useGift()
+  const {searchLoading, search} =useGift()
   const navigate = useNavigate()
   if(searchLoading) return <LoadingComponent/>
 
@@ -21,7 +21,7 @@ export const SearchResults = memo (function Results({data}:{data:ResultsApi}) {
  console.log(setSelectImage)
     return (
       <div className="grid grid-cols-3 gap-1">
-        {data?.map((gif) => (
+        {search.data?.map((gif:ResultsApi) => (
           <div key={gif.id}>
             <img
               className="w-[193px] h-[150px] cursor-pointer"

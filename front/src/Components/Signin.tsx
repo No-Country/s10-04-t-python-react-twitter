@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const App: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,10 +12,33 @@ const App: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+
   };
+  // const bearerToken = "d38a98d8cbfaaded62439765c2a70e0c6a10c52f"
+  
+    const mutation = useMutation(
+      async formData => {
+        const response = await axios.post('http://15.229.1.136/users/api/login/', formData, {
+        });
+        return console.log(response.data); 
+     
+      }
+      
+    );
+  
+    const handleSubmit = event => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const formJson = Object.fromEntries(formData.entries())
+      mutation.mutate(formJson);
+    };
 
   return (
     <>
+  {mutation.isError ? (
+            <div>An error occurred: {mutation.error.message}</div>
+          ) : null}
+          {mutation.isSuccess ? <div>Todo added!</div> : null}
       <div className="">
         <button
           data-modal-target="authentication-modal"
@@ -30,7 +55,7 @@ const App: React.FC = () => {
             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
               Inicia sesión en X
             </h3>
-            <form className="space-y-6" action="#">
+            <form className="space-y-6" action="#" onSubmit={handleSubmit}>
               <div>
                 <input
                   type="email"

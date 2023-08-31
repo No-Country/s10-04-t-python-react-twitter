@@ -2,14 +2,14 @@ import { GifResults } from "../Components/Home/createPost/Gif/gifResults";
 import { SearchResults } from "../Components/Home/createPost/Gif/searchResults";
 import { HeaderBack } from "../Components/Home/createPost/Icons/headerBack";
 import useGift from "../Hooks/Home/useGif";
-import useGifStore from "../store/Home/postStore";
 import Button from "../Components/Home/buttons/buttons";
 import {useNavigate} from "react-router-dom"
+import usePostStore from "../store/Home/postStore";
 
 
 function GifPage() {
-  const { handleSearch, debouncedSearchText, data, search } = useGift();
-  const searchText = useGifStore((state) => state.searchText);
+  const { handleSearch, debouncedSearchText} = useGift();
+  const {searchText} = usePostStore()
   const navigate = useNavigate();
  
   const handleClickBack = () => {
@@ -19,8 +19,6 @@ function GifPage() {
       navigate(-1);
     }
   };
-
-
 
   return (
     <main >
@@ -32,9 +30,9 @@ function GifPage() {
       </div>
       <div>
         {debouncedSearchText.length === 0 ? (
-          <GifResults data={data} />
+          <GifResults/>
         ) : (
-          <SearchResults data={search?.data || []}/>
+          <SearchResults/>
         )}
       </div>
     </main>

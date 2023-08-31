@@ -3,13 +3,12 @@ import { useQuery } from "react-query";
 import { fetchSearch, fetchGifs } from "../../services/gifApi";
 import useDebounce from "../useDebounce";
 import { SearchResults } from "../../Components/Home/createPost/Gif/searchResults";
-import useGifStore from "../../store/Home/postStore";
+import usePostStore from "./postStore/usePostStore";
 
 
 export default function useGift(){
-  const setSearchText = useGifStore((state) => state.setSearchText)
-  const setSelectName = useGifStore((state) => state.setSelectName);
-  const searchText = useGifStore((state) => state.searchText)
+  
+  const {setSearchText, setSelectName, searchText} = usePostStore()
   
   const debouncedSearchText = useDebounce(searchText,300)
 
