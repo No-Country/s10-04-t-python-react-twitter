@@ -30,6 +30,7 @@ class Cita(models.Model):
     tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     contenido = models.CharField(max_length=280)
+    multimedia = models.CharField(blank=True, max_length=300, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
 
