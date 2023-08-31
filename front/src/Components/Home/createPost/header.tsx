@@ -1,14 +1,28 @@
 import Button from "../buttons/buttons";
 import { useNavigate } from "react-router-dom";
 import { HeaderBack } from "./Icons/headerBack";
-import { FormEvent } from "react";
-import { useMutation } from "react-query";
+import { FormEvent,} from "react";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 
+type addPost = {
+  usuario: number
+  multimedia?: string
+  contenido?: string
+}
+export function postTweets(newpost:addPost){
+  return axios.post(
+    "http://15.229.1.136/tweets/api/tweets/",newpost)
+}
+
 export default function Header() {
+  // const [firs_name, setFirstName] = useState(""); 
+  // const [last_name, setLastName] = useState("");   
+  // const [avatar, setAvatar] = useState(null);  
   const { textArea, contentUser, selectImage } = usePostStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient()
 
   const handleClickBack = () => {
     navigate("/home");
@@ -17,15 +31,56 @@ export default function Header() {
     event.preventDefault();
   };
 
-  const addPost = useMutation<void, Error>(async (newPost) => {
-    const response = await axios.post(
-      "http://15.229.1.136/tweets/api/tweets/",
-      newPost,
-      {}
-    );
-    return response.data;
+  const { mutate } = useMutation({
+    mutationFn: postTweets,
+    onMutate: async newTodo => {
+      await queryClient.cancelQueries(['newtweets'])
+      const previousTodos = queryClient.getQueryData(['newtweets'])
+      await queryClient.setQueryData(['newtweets'], old => {
+        if (old === null) {
+          return [newTodo];
+        }
+        if (Array.isArray(old)) {
+          return [...old, newTodo];
+        }
+        return old;
+      });
+  
+      return { previousTodos };
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['newtweets']
+      });
+    }
   });
-
+    
+  
+  // const handleAddPost = () => {
+  //   if ((textArea.trim() !== "" || contentUser || selectImage) && (textArea.trim() !== "" || selectImage || contentUser)){
+  //     const usuarioData = {};
+      
+  //     if (avatar) {
+  //       usuarioData.avatar = avatar;
+  //     }
+  //     if (last_name) {
+  //       usuarioData.last_name = last_name;
+  //     }
+  //     if (!avatar && !last_name) {
+  //       usuarioData.firs_name = "NoCountry";
+  //     }
+  
+  //     const postData = {
+  //       usuario: Object.keys(usuarioData).length > 0 ? usuarioData : undefined,
+  //       contenido: textArea,
+  //       multimedia: selectImage || contentUser
+  //     };
+  
+  //     mutate(postData);
+  
+  //     navigate("/home");
+  //   }
+  // };
   const handleAddPost = () => {
     const postData = {
       usuario: 1,
@@ -39,9 +94,13 @@ export default function Header() {
       postData.multimedia = contentUser || selectImage;
     }
 
-    addPost.mutate(postData);
-    navigate("/home");
-  };
+    mutate({
+      usuario: postData.usuario,
+      contenido: postData.contenido,
+      multimedia: postData.multimedia
+    });
+    navigate("/home")
+  }
 
   return (
     <header>
@@ -52,10 +111,6 @@ export default function Header() {
         <Button variant="secondary" onClick={handleClickBack}>
           {HeaderBack}
         </Button>
-        {addPost.isSuccess ? <div>Todo added!</div> : null}
-        {addPost.isError ? (
-          <div>An error occurred: {addPost.error.message}</div>
-        ) : null}
         <Button
           variant="primary"
           className={`${

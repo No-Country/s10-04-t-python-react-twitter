@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import Functionality from "./tweetsFunctionality";
 import Tooltip from "./tooltip";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "react-query";
+import React from "react";
+export function getTweets(){
+  return axios.get("http://15.229.1.136/tweets/api/tweets/")
+}
 
 export default function Tweets(): JSX.Element {
-  const navigate = useNavigate();
-  const text = {
-    text1:
-      "Lorem ipsum dolor sit amet consectetur. Venenatis vulputate turpis nam vitae viverra venenatis. Nibh nulla volutpat sit arcu maecenas cras tincidunt laoreet. Vestibulum neque amet et volutpat et justo neque. Scelerisque ornare sit convallis vivamus.",
-  };
+  const navigate = useNavigate()
+  const {data,error} = useQuery(["newtweets"], getTweets)
+  console.log(data,error)
+
   return (
     <main>
+      {data?.data?.slice().reverse().map((tweet, index) => (
+        <React.Fragment key={index}>
       <article
         className="py-3 px-4  h-auto border-2 border-gray-100
        hover:bg-gray-100 cursor-pointer"
@@ -48,9 +55,11 @@ export default function Tweets(): JSX.Element {
               </div>
             </div>
             <div className="mb-2">
-              <p className=" text-justify hyphens-auto">{text.text1}</p>
+              <p className=" text-justify hyphens-auto">{tweet.contenido}</p>
             </div>
-            <img src="" alt="" className="h-[302px] w-[302px] rounded-lg"/>
+            {tweet.multimedia &&
+            <img src={tweet.multimedia} alt="" className="rounded-lg"/>
+}
             <Functionality />
           </div>
         </div>
@@ -65,6 +74,8 @@ export default function Tweets(): JSX.Element {
           {GoToPost}
         </div>
       </div>
+      </React.Fragment>
+      ))}
     </main>
   );
 }
