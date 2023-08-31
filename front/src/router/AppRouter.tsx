@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import Notifications from "../Pages/Notifications";
 
 interface Page {
   path: string;
@@ -11,10 +10,7 @@ const pages: Page[] = [
   { path: "/", component: lazy(() => import("../Pages/Login")) },
   { path: "/Home", component: lazy(() => import("../Pages/Home")) },
   { path: "/Profile", component: lazy(() => import("../Pages/Profile")) },
-  {
-    path: "/Notifications",
-    component: lazy(() => import("../Pages/Notifications")),
-  },
+  { path: "/Notifications", component: lazy(() => import("../Pages/Notifications")) },
   { path: "/Explore", component: lazy(() => import("../Pages/Explore")) },
   { path: "/Explore", component: lazy(() => import("../Pages/PostTweets")) },
 ];

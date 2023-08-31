@@ -1,8 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
+// import { login } from "../services/rutaPrivada";
+// import {postLogin} from "../services/api";
+import axios from "axios";
+import { useMutation } from "react-query";
+
+// interface LoginForm {
+//   email: string;
+//   password: string;
+// }
 
 const App: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  
+    const mutation = useMutation(
+      async formData => {
+        console.log('formData', formData)
+        const response = await axios.post('http://15.229.1.136/users/api/login/', formData, {
+          
+        });
+        console.log(response.data)
+        return response.data; 
+      }
+    );
+  
+    const handleSubmit = event => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const formJson = Object.fromEntries(formData.entries())
+      mutation.mutate(formJson);
+    }; 
+
+    
+
+
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -11,6 +44,8 @@ const App: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  
 
   return (
     <>
@@ -30,7 +65,11 @@ const App: React.FC = () => {
             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
               Inicia sesión en X
             </h3>
-            <form className="space-y-6" action="#">
+            <form
+              className="space-y-6"
+              action="#"
+              onSubmit={handleSubmit}
+            >
               <div>
                 <input
                   type="email"
@@ -39,6 +78,8 @@ const App: React.FC = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@company.com"
                   required
+          //         value={email}
+          // onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -49,6 +90,8 @@ const App: React.FC = () => {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   required
+          //         value={password}
+          // onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <button
