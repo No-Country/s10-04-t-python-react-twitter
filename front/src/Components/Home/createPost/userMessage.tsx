@@ -2,17 +2,19 @@ import { useState } from "react";
 import { WorldIcon } from "./Icons/worldIcon";
 import { securityIcon } from "./Icons/securityIcon";
 import GifEmojiFileDisplay from "./GifEmojiFileDisplay";
-import useGifStore, { useTweetPost } from "../../../store/Home/postStore";
 import { closeIcon } from "./Icons/closeIcon";
+import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 
 export default function UserMessage() {
   const [selectOption, setSelectedOption] = useState("todos");
-  const textArea = useTweetPost((state) => state.textArea);
-  const setTextArea = useTweetPost((state) => state.setTextArea);
-  const selectImage = useGifStore((state) => state.selectImage);
-  const contentUser = useTweetPost((state) => state.contentUser);
-  const setContentUser = useTweetPost((state) => state.setContentUser);
-  const setSelectImage = useGifStore((state) =>state.setSelectImage )
+  const {
+    textArea,
+    setTextArea,
+    selectImage,
+    contentUser,
+    setContentUser,
+    setSelectImage,
+  } = usePostStore();
   const [close, setClose] = useState(false);
 
   const handleSelectedOption = (
@@ -21,11 +23,10 @@ export default function UserMessage() {
     setSelectedOption(event.target.value);
   };
   const handleImageClose = () => {
-    if(close) return
+    if (close) return;
     setContentUser("");
     setSelectImage("");
     setClose(false);
-    
   };
 
   return (
@@ -51,7 +52,7 @@ export default function UserMessage() {
             onChange={(e) => setTextArea(e.currentTarget.value)}
             value={textArea}
           />
-              <div className="relative w-[302px]">
+          <div className="relative w-[302px]">
             {selectImage || contentUser ? (
               <>
                 <div

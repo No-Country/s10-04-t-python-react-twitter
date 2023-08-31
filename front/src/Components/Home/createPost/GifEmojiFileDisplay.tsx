@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { galleryIcon, emojiIcon, gifIcon, } from "./Icons/GifEmojiFileIcon";
 import { useNavigate } from "react-router-dom";
-import usePostStore, { useTweetPost } from "../../../store/Home/postStore";
+import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
+
 export default function GifEmojiFileDisplay() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate()
-  const contentUser = useTweetPost((state) => state.contentUser)
-  const setContentUser = useTweetPost((state) => state.setContentUser)
-  const selectGif = usePostStore((state) => state.selectImage)
+  const {contentUser,setContentUser, selectGif} = usePostStore()
 
   const handleClick = () => {
     if (inputRef.current) {

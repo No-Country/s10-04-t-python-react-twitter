@@ -47,9 +47,10 @@ export default function Tweets(): JSX.Element {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div className="mb-2">
               <p className=" text-justify hyphens-auto">{text.text1}</p>
             </div>
+            <img src="" alt="" className="h-[302px] w-[302px] rounded-lg"/>
             <Functionality />
           </div>
         </div>
