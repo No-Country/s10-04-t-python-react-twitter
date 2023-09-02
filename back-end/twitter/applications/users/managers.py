@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager
 
 
+
+
 class UserManager(BaseUserManager, models.Manager):
     
     def _create_user(self, email, password, is_active, is_staff, is_superuser, **extra_fields):
@@ -25,3 +27,4 @@ class UserManager(BaseUserManager, models.Manager):
     def create_superuser(self, email, password=None, **extra_fields):
         # Con el _ la hacemos privada esto evita que se pueda acceder de otro la do que no sea la terminal.
         return self._create_user( email, password,True, True, True, **extra_fields)
+    

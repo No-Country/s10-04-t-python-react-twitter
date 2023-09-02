@@ -13,8 +13,13 @@ urlpatterns = [
     name='register'
    ),
    path(
+    'api/list/',
+    views.UserList.as_view(),
+    name='list'
+   ),
+   path(
     "api/login/",
-    views.UserLogin.as_view(),
+    views.UserDetailFollowers.as_view(),
     name="user-login"
    ),   
    path(

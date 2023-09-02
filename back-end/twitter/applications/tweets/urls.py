@@ -4,6 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name ='tweets_app'
 
 # router = routers.DefaultRouter()
 # router.register(r'tweets', TweetViewSet)
@@ -23,8 +24,7 @@ urlpatterns = [
 
 
 
-#no se de donde salio esto, pero aja lo dejo como esta :v
-app_name ='tweets_app'
+
 
 
    

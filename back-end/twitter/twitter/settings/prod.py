@@ -24,3 +24,10 @@ STATIC_ROOT = BASE_DIR.child('staticfiles')
 # Direction off MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.child('media')
+
+
+CORS_ALLOWED_ORIGINS = [
+
+    "http://localhost:5173",
+
+]

@@ -24,3 +24,4 @@ STATIC_DIR = BASE_DIR.child('static')
 # Direction off MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.child('media')
+

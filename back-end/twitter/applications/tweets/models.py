@@ -6,13 +6,14 @@ from django.core.validators import FileExtensionValidator
 
 class Tweet(models.Model):
     #Aca lo conectamos con el user
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, related_name= 'tweets', on_delete=models.CASCADE)
 
     #Creamos los campos que queremos que tenga el tweet(la base de datos)
     contenido=models.CharField(max_length=280)
     
-    multimedia = models.FileField(upload_to='tweets/', null=True, blank=True, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpeg', 'jpg', 'svg', 'mp4', 'mov', 'mvk', 'gif', 'bmp'])])
+    multimedia = models.FileField(upload_to='tweets/', null=True, blank=True )
     
+    gif = models.CharField(max_length=150)
     #imagen = models.ImageField(upload_to='tweets/', null=True, blank=True)
     #video = models.FileField(upload_to='tweets/', null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
@@ -30,12 +31,12 @@ class Cita(models.Model):
     tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     contenido = models.CharField(max_length=280)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True,)
 
 
 class Comentario(models.Model):
     
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet_original = models.ForeignKey(Tweet, on_delete=models.CASCADE) 
+    tweet_original = models.ForeignKey(Tweet, related_name='comentario', on_delete=models.CASCADE) 
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,5 @@
 # Rest Framework
-from rest_framework.parsers import MultiPartParser, FormParser
+
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework import  permissions
@@ -14,12 +14,15 @@ from rest_framework.generics import (
     RetrieveAPIView,
     RetrieveUpdateAPIView,
     RetrieveDestroyAPIView,
+    ListAPIView,
 )
 #D Django
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
+
+from applications.tweets.models import Tweet
 # Models
 from .models import User
 # Serializers
@@ -28,6 +31,7 @@ from .serializers import (
     UserRegisterSerializers,
     UserDetailSerializers,
     UserSerializer,
+    UserDeletelSerializers,
 )
 
 
@@ -36,7 +40,7 @@ class UserRegistrationView(CreateAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserRegisterSerializers
-    parser_classes = [MultiPartParser, FormParser]
+    # parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -96,19 +100,21 @@ class UserDetailAPIView(RetrieveAPIView):
 # Update User
 class UserUpdateAPIView(RetrieveUpdateAPIView):
 
-    serializer_class = UserDetailSerializers
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
-    queryset = User.objects.all()
+    serializer_class = UserDeletelSerializers
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = [IsAuthenticated]
+    # parser_classes = [MultiPartParser, FormParser]
+    def get_queryset(self):
+        
+        return User.objects.all() 
 
 
 # Delete persona
 class PersonDeletePIView(RetrieveDestroyAPIView):
 
-    serializer_class = UserDetailSerializers
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    serializer_class = UserDeletelSerializers
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
 
@@ -116,7 +122,7 @@ class PersonDeletePIView(RetrieveDestroyAPIView):
 class FollowToggleView(CreateAPIView):
 
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -145,10 +151,17 @@ class FollowToggleView(CreateAPIView):
 # User Follower And Following Detail
 class UserDetailFollowers(RetrieveAPIView):
 
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 # Como de deve enviar el Token Authorization Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
 
+class UserList(ListAPIView):
+
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = [IsAuthenticated]
+    serializer_class = UserDetailSerializers
+    def get_queryset(self):
+        return User.objects.all()

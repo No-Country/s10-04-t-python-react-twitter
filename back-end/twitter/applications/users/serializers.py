@@ -2,6 +2,8 @@
 from rest_framework import serializers, pagination
 # Dejango
 from django.contrib.auth import authenticate
+# app Tweets
+from applications.tweets.models import Tweet
 # Models
 from .models import User
 
@@ -67,29 +69,8 @@ class UserLoginSerializers(serializers.ModelSerializer):
         ]
 
 
-# Detail and Delete and Update  User
-class UserDetailSerializers(serializers.ModelSerializer):
-    
-    class Meta:
-        model = User
-        fields = [
-            'email',
-            'firs_name',
-            'last_name',
-            'avatar',
-            'front_page',
-            'birthdate',
-            'bio',
-            'location',
-            'website',
-            'followers',
-            'mutual_followers',
-        ]
-
-        
-
 # User Follower And Followin
-class UserSerializer(serializers.ModelSerializer):
+class UserFollowSerializer(serializers.ModelSerializer):
     
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
@@ -133,3 +114,72 @@ class UserSerializer(serializers.ModelSerializer):
         return [{"id": follower.id, "get_full_name": follower.get_full_name()} for follower in followers]   
     
     
+# Tweets
+class TweetSerializer(serializers.ModelSerializer):
+    
+    liked_count = serializers.SerializerMethodField( read_only=True)
+    comentario_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Tweet
+        fields = [
+            'contenido', 
+            'multimedia', 
+            'gif', 
+            'liked_count',
+            'comentario_count', 
+        ]
+        
+    def get_liked_count(self, obj):
+        return obj.liked.all().count()
+    
+    def get_comentario_count(self, obj):
+        return obj.comentario.count()
+        
+# Detail  User
+class UserDetailSerializers(serializers.ModelSerializer):
+    
+    tweets = TweetSerializer(many=True, read_only=True)
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'firs_name',
+            'last_name',
+            'avatar',
+            'front_page',
+            'birthdate',
+            'bio',
+            'location',
+            'website',
+            'followers_count', 
+            'following_count',
+            'tweets',
+        ]
+
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.following.count()
+    
+# Delete and Update User
+
+class UserDeletelSerializers(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'firs_name',
+            'last_name',
+            'avatar',
+            'front_page',
+            'birthdate',
+            'bio',
+            'location',
+            'website',
+        ]

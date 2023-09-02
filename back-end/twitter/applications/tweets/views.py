@@ -1,6 +1,7 @@
 #
 from collections import Counter
 #
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets,generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -16,25 +17,26 @@ from .models import Tweet, Cita, Comentario
 
 class TweetViewSet(generics.ListCreateAPIView):
     
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = TweetSerializer
-    pagination_class = PersonPaginationSerializer
-    queryset = Tweet.objects.all()
+    # parser_classes = [MultiPartParser, FormParser]
+    # pagination_class = PersonPaginationSerializer
+    queryset = Tweet.objects.all()  
 
 
 class CitaViewSet(generics.ListCreateAPIView):
     
-    pagination_class = PersonPaginationSerializer
+    # pagination_class = PersonPaginationSerializer
     queryset = Cita.objects.all()
     serializer_class = CitaSerializer
 
 
 class ComentarioCreateView(generics.ListCreateAPIView):
     
-    pagination_class = PersonPaginationSerializer
+    # pagination_class = PersonPaginationSerializer
     queryset = Comentario.objects.all()
     serializer_class = ComentarioSerializer
-    permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
+    # permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
 
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
