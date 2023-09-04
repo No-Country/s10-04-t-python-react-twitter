@@ -13,7 +13,7 @@ class Tweet(models.Model):
     
     multimedia = models.FileField(upload_to='tweets/', null=True, blank=True )
     
-    gif = models.CharField(max_length=150)
+    gif = models.CharField(max_length=150, null=True, blank=True)
     #imagen = models.ImageField(upload_to='tweets/', null=True, blank=True)
     #video = models.FileField(upload_to='tweets/', null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
@@ -40,3 +40,5 @@ class Comentario(models.Model):
     tweet_original = models.ForeignKey(Tweet, related_name='comentario', on_delete=models.CASCADE) 
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    multimedia = models.FileField(upload_to='tweets/', null=True, blank=True )
+    gif = models.CharField(max_length=150, null=True, blank=True)

@@ -12,6 +12,7 @@ class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = [
+            'id',
             'usuario',
             'contenido',
             'multimedia',
@@ -44,7 +45,9 @@ class ComentarioSerializer(serializers.ModelSerializer):
         'usuario', 
         'tweet_original', 
         'content', 
-        'created_at'
+        'created_at',
+        'multimedia',
+        'gif',
     ]
 
 
@@ -53,4 +56,29 @@ class PersonPaginationSerializer(pagination.PageNumberPagination):
     page_size = 5
     max_page_size = 100
     
+    
+class TweetSerializerId(serializers.ModelSerializer):
+    
+    liked_count = serializers.SerializerMethodField( read_only=True)
+    comentario_count = serializers.SerializerMethodField()
+    comentario = ComentarioSerializer(many=True)
+
+    class Meta:
+        model = Tweet
+        fields = [
+            'usuario',
+            'contenido',
+            'multimedia',
+            'gif',
+            'created',
+            'liked_count',  
+            'comentario_count', 
+            'comentario', 
+        ]
+        
+    def get_liked_count(self, obj):
+        return obj.liked.all().count()
+
+    def get_comentario_count(self, obj):
+        return obj.comentario.count()
     

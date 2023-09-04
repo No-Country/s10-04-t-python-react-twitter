@@ -123,6 +123,7 @@ class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = [
+            'id', 
             'contenido', 
             'multimedia', 
             'gif', 
@@ -146,6 +147,7 @@ class UserDetailSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            'id',
             'email',
             'firs_name',
             'last_name',

@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 #
-from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer
+from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer,TweetSerializerId
 #
 from .models import Tweet, Cita, Comentario
 
@@ -63,3 +63,10 @@ class TrendingTopicsView(APIView):
         trending_topics = [word for word, count in orden_palabras[:10]]
 
         return Response({'trending_topics': trending_topics})
+    
+
+# Detail Tweets
+class TweetsDetailAPIView(generics.RetrieveAPIView):
+
+    serializer_class = TweetSerializerId
+    queryset = Tweet.objects.all()
