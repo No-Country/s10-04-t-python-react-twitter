@@ -19,7 +19,7 @@ urlpatterns = [
    ),
    path(
     "api/login/",
-    views.UserDetailFollowers.as_view(),
+    views.UserLogin.as_view(),
     name="user-login"
    ),   
    path(

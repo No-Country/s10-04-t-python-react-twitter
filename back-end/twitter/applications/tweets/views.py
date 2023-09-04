@@ -1,6 +1,8 @@
 #
 from collections import Counter
 #
+from rest_framework.decorators import api_view
+#
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework import viewsets,generics
 from rest_framework.permissions import IsAuthenticated
@@ -8,10 +10,14 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 #
-from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer,TweetSerializerId
+from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer,TweetSerializerId,RetweetSerializer
 #
 from .models import Tweet, Cita, Comentario
-
+#
+from applications.users.models import User
+#
+from collections import Counter
+from rest_framework import status
 
 # Create your views here.
 
@@ -70,3 +76,25 @@ class TweetsDetailAPIView(generics.RetrieveAPIView):
 
     serializer_class = TweetSerializerId
     queryset = Tweet.objects.all()
+
+
+class RetweetView(APIView):
+    
+    def post(self, request):
+        
+        serializer = RetweetSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            tweet_id = serializer.validated_data['tweet_id']
+            tweet_to_retweet = Tweet.objects.get(id=tweet_id)
+
+            # Crear un retweet
+            retweet = Tweet.objects.create(
+                usuario=request.user,
+                contenido=tweet_to_retweet.contenido,
+                retweet_of=tweet_to_retweet
+            )
+            retweet.save()
+
+            return Response({'message': 'Retweet creado exitosamente.'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

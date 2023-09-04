@@ -8,6 +8,7 @@ class TweetSerializer(serializers.ModelSerializer):
     
     liked_count = serializers.SerializerMethodField( read_only=True)
     comentario_count = serializers.SerializerMethodField()
+    retweet = serializers.SerializerMethodField()
 
     class Meta:
         model = Tweet
@@ -20,6 +21,7 @@ class TweetSerializer(serializers.ModelSerializer):
             'created',
             'liked_count',  
             'comentario_count', 
+            'retweet', 
         ]
         
     def get_liked_count(self, obj):
@@ -27,6 +29,9 @@ class TweetSerializer(serializers.ModelSerializer):
 
     def get_comentario_count(self, obj):
         return obj.comentario.count()
+    
+    def get_retweet(self, obj):
+        return obj.retweet.count()
         
         
 class CitaSerializer(serializers.ModelSerializer):
@@ -50,19 +55,13 @@ class ComentarioSerializer(serializers.ModelSerializer):
         'gif',
     ]
 
-
-# Serialziador de paginacion
-class PersonPaginationSerializer(pagination.PageNumberPagination):
-    page_size = 5
-    max_page_size = 100
-    
-    
+ 
 class TweetSerializerId(serializers.ModelSerializer):
     
     liked_count = serializers.SerializerMethodField( read_only=True)
     comentario_count = serializers.SerializerMethodField()
     comentario = ComentarioSerializer(many=True)
-
+    retweet = serializers.SerializerMethodField()
     class Meta:
         model = Tweet
         fields = [
@@ -73,7 +72,8 @@ class TweetSerializerId(serializers.ModelSerializer):
             'created',
             'liked_count',  
             'comentario_count', 
-            'comentario', 
+            'retweet', 
+            'comentario',
         ]
         
     def get_liked_count(self, obj):
@@ -81,4 +81,17 @@ class TweetSerializerId(serializers.ModelSerializer):
 
     def get_comentario_count(self, obj):
         return obj.comentario.count()
+    
+    def get_retweet(self, obj):
+        return obj.retweet.count()
+
+
+class RetweetSerializer(serializers.Serializer):
+    tweet_id = serializers.IntegerField()
+
+
+# Serialziador de paginacion
+class PersonPaginationSerializer(pagination.PageNumberPagination):
+    page_size = 30
+    max_page_size = 100
     

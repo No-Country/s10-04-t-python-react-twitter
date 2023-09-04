@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/tweets/',views.TweetViewSet.as_view(), name='tweets'),
     path('api/citas/',views.CitaViewSet.as_view(), name='citas'),
     path('api/detail/<pk>/',views.TweetsDetailAPIView.as_view(), name='detail'),
+    path('api/retweets/',views.RetweetView.as_view(), name='retweets'),
 ]
 # urlpatterns += [
 #     path('', include(router.urls)),

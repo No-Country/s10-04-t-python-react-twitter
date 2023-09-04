@@ -119,6 +119,7 @@ class TweetSerializer(serializers.ModelSerializer):
     
     liked_count = serializers.SerializerMethodField( read_only=True)
     comentario_count = serializers.SerializerMethodField()
+    retweet = serializers.SerializerMethodField()
     
     class Meta:
         model = Tweet
@@ -129,6 +130,7 @@ class TweetSerializer(serializers.ModelSerializer):
             'gif', 
             'liked_count',
             'comentario_count', 
+            'retweet', 
         ]
         
     def get_liked_count(self, obj):
@@ -136,6 +138,9 @@ class TweetSerializer(serializers.ModelSerializer):
     
     def get_comentario_count(self, obj):
         return obj.comentario.count()
+    
+    def get_retweet(self, obj):
+        return obj.retweet.count()
         
 # Detail  User
 class UserDetailSerializers(serializers.ModelSerializer):
