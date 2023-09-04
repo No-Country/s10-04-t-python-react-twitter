@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const SignUp: React.FC = () => {
   const initialState = {
-    nameReg: "",
-    emailReg: "",
-    dateNacReg: "",
-    passwordReg: "",
-    repasswordReg: "",
+    firs_name: "",
+    email: "",
+    // birthdate: "",
+    password1: "",
+    password2: "",
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataReg, setDataReg] = useState(initialState);
   const isFormValid =
-    dataReg.nameReg !== "" &&
-    dataReg.emailReg !== "" &&
-    dataReg.dateNacReg !== "" &&
-    dataReg.passwordReg !== "" &&
-    dataReg.passwordReg == dataReg.repasswordReg;
+    dataReg.firs_name !== "" &&
+    dataReg.email !== "" &&
+    // dataReg.birthdate !== "" &&
+    dataReg.password1 !== "" &&
+    dataReg.password1 == dataReg.password2;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -34,9 +36,46 @@ const SignUp: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", dataReg);
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Form submitted:", dataReg);
+  // };
+
+
+  // const mutation = useMutation(async (formData) => {
+  //   console.log(formData)
+  //   const response = await axios.post(
+  //     "http://15.229.1.136/users/api/register/",
+  //     formData,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json' // Configura el Content-Type a application/json
+  //       }
+  //     }
+  //   );
+  //   return console.log(response.data);
+  // });
+
+
+  const mutation = useMutation(async (formData) => {
+    console.log(formData)
+    const response = await axios.post(
+      "http://15.229.1.136/users/api/register/", formData,
+      
+    );
+    return console.log(response.data);
+  });
+
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    // const formData = 
+    // {"email":"rocioprueba@gmail.com","firs_name":"Chio","password1":"prueba1234","password2":"prueba1234"}
+    
+    const formJson = Object.fromEntries(formData.entries());
+
+  // Utiliza Axios para hacer la solicitud POST
+  mutation.mutate(formJson);
   };
 
   return (
@@ -57,23 +96,13 @@ const SignUp: React.FC = () => {
             <h3 className="mb-4 text-xl font-medium text-left text-gray-900 dark:text-white">
               Crea tu cuenta
             </h3>
-            <form className="space-y-4" action="#" onSubmit={handleSubmit}>
-              <div>
-                <input
-                  type="text"
-                  name="nameReg"
-                  id="nameReg"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="Nombre"
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <form className="space-y-4" action="#" onSubmit={handleSubmit2}>
+              
               <div>
                 <input
                   type="email"
-                  name="emailReg"
-                  id="emailReg"
+                  name="email"
+                  id="email2"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@company.com"
                   onChange={handleChange}
@@ -82,19 +111,30 @@ const SignUp: React.FC = () => {
               </div>
               <div>
                 <input
-                  type="date"
-                  name="dateNacReg"
-                  id="dateNacReg"
+                  type="text"
+                  name="firs_name"
+                  id="firs_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="Nombre"
                   onChange={handleChange}
                   required
+                  
                 />
               </div>
+              {/* <div>
+                <input
+                  type="date"
+                  name="birthdate"
+                  id="birthdate"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  onChange={handleChange}
+                />
+              </div> */}
               <div>
                 <input
                   type="password"
-                  name="passwordReg"
-                  id="passwordReg"
+                  name="password1"
+                  id="password1"
                   placeholder="Password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   onChange={handleChange}
@@ -104,8 +144,8 @@ const SignUp: React.FC = () => {
               <div>
                 <input
                   type="password"
-                  name="repasswordReg"
-                  id="repasswordReg"
+                  name="password2"
+                  id="password2"
                   placeholder="Re-password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   onChange={handleChange}
@@ -114,7 +154,7 @@ const SignUp: React.FC = () => {
               </div>
               <button
                 type="submit"
-                disabled={!isFormValid}
+                // disabled={!isFormValid}
                 className="w-full text-white disabled:bg-[#87898C] enabled:bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Crear cuenta

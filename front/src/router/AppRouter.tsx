@@ -1,5 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import Loading from "../Components/Loading";
+
+
 
 interface Page {
   path: string;
@@ -12,12 +15,13 @@ const pages: Page[] = [
   { path: "/Profile", component: lazy(() => import("../Pages/Profile")) },
   { path: "/Notifications", component: lazy(() => import("../Pages/Notifications")) },
   { path: "/Explore", component: lazy(() => import("../Pages/Explore")) },
-  { path: "/Explore", component: lazy(() => import("../Pages/PostTweets")) },
+  { path: "/posttweets", component: lazy(() => import("../Pages/PostTweets")) },
+  {path: "/gift", component: lazy(() => import("../Pages/gif"))}
 ];
 
 export default function AppRouter(): JSX.Element {
   return (
-    <Suspense fallback={<h1>loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <BrowserRouter>
         <Routes>
           {pages.map((page) => (

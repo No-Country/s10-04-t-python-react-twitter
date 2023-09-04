@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button({ variant = "primary", children, ...props }: ButtonProps) {
   const variantClasses = {
-    "primary": "bg-blue-500 text-white w-16 h-8 rounded-full",
+    "primary": "bg-blue-500 text-white w-16 h-8 rounded-full cursor-pointer",
     "secondary": "text-center"
   };
 
