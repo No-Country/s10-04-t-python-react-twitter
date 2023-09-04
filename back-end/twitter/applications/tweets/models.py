@@ -17,6 +17,10 @@ class Tweet(models.Model):
     #video = models.FileField(upload_to='tweets/', null=True, blank=True)
     created=models.DateTimeField(auto_now_add=True)
 
+    #funcionaldiad retweet
+    retweet_of = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+
+
     #reacciones = models.ForeignKey(davidtarea, on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, default=None, blank=True, related_name='liked')
 

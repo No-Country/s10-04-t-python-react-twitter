@@ -7,11 +7,14 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 #
-from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer
+from .serializer import TweetSerializer, RetweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer
 #
 from .models import Tweet, Cita, Comentario
 #
 from applications.users.models import User
+
+from collections import Counter
+from rest_framework import status
 
 # Create your views here.
 
@@ -62,3 +65,20 @@ class TrendingTopicsView(APIView):
         trending_topics = [word for word, count in orden_palabras[:10]]
 
         return Response({'trending_topics': trending_topics})
+
+class RetweetView(APIView):
+    def tweet(self, request):
+        serializer = RetweetSerializer(data=request.data)
+        if serializer.is_valid():
+            tweet_id = serializer.validated_data['tweet_id']
+            tweet_to_retweet = Tweet.objects.get(id=tweet_id)
+
+            # Crear un retweet
+            retweet = Tweet.objects.create(
+                usuario=request.user,
+                contenido=tweet_to_retweet.contenido,
+                retweet_de=tweet_to_retweet
+            )
+
+            return Response({'message': 'Retweet creado exitosamente.'}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
