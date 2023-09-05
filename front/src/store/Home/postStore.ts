@@ -11,10 +11,12 @@ interface gifState {
 
 interface tweetPost {
   contentUser: string ;
-  setContentUser: (img:string) => void
   textArea: string;
+  imageFile: File | null;
+  setContentUser: (img:string) => void
   setTextArea: (text:string) => void
-
+  setImageFile: (img:File) => void
+  
 }
 
 const usePostStore = create<gifState>((set) => ({
@@ -24,14 +26,16 @@ const usePostStore = create<gifState>((set) => ({
     selectImage: "",
     setSearchText: (text) => set({ searchText: text }),
     setSelectName: (name) => set({ selectName: name }),
-    setSelectImage:(img) => set({ selectImage:img }),
+    setSelectImage:(img) => set({ selectImage: img }),
   }))
 
   export const useTweetPost = create<tweetPost>((set) => ({
     contentUser: "",
     textArea:"",
+    imageFile: null,
     setContentUser:(contentUser) => set({contentUser:contentUser}),
     setTextArea:(textArea) => set({textArea:textArea}),
+    setImageFile:(img) => set({imageFile:img}),
   }))
 
 

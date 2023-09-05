@@ -13,7 +13,7 @@ export const GifResults = memo(function DataResult() {
         {data?.data?.map((gif:Gif) => (
           <div key={gif.gif.id}>
             <img
-              src={gif.gif.images.original.url}
+              src={gif.gif.images?.original.url}
               className="w-[193px] h-[150px] cursor-pointer"
               onClick={() => handleSelectName(gif.name)}
             />

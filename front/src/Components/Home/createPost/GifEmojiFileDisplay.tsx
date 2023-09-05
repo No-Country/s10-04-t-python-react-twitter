@@ -1,12 +1,12 @@
 import { useRef } from "react";
-import { galleryIcon, emojiIcon, gifIcon, } from "./Icons/GifEmojiFileIcon";
+import { galleryIcon, gifIcon, } from "./Icons/GifEmojiFileIcon";
 import { useNavigate } from "react-router-dom";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 
 export default function GifEmojiFileDisplay() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate()
-  const {contentUser,setContentUser, selectGif} = usePostStore()
+  const {contentUser,setContentUser, selectGif, setImageFile} = usePostStore()
 
   const handleClick = () => {
     if (inputRef.current) {
@@ -20,6 +20,7 @@ export default function GifEmojiFileDisplay() {
       const file = fileInput.files[0];
       if (file) {
         setContentUser(URL.createObjectURL(file));
+        setImageFile(file)
       }
     }
   };
@@ -32,7 +33,6 @@ export default function GifEmojiFileDisplay() {
           <input ref={inputRef} accept="" type="file" hidden onChange={handleOnChange} />
         </button>
         <button className={`cursor-pointer ${contentUser ? "opacity-50" : ""}`} onClick={() => navigate("/gift")} disabled={contentUser !== ""}>{gifIcon}</button>
-        <div className="cursor-pointer">{emojiIcon}</div>
       </div>
     </section>
   );

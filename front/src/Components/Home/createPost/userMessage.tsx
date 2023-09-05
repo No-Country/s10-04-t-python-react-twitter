@@ -30,7 +30,7 @@ export default function UserMessage() {
   };
 
   return (
-    <section className="grid grid-flow-row auto-rows-max -2 px-4 pt-4">
+    <section className="grid grid-flow-row auto-rows-max px-4 pt-4">
       <div className="grid grid-cols-[40px,1fr]">
         <div className="w-10 h-10 rounded-full bg-black cursor-pointer"></div>
         <div className="flex flex-col ml-3">

@@ -1,42 +1,30 @@
 import Button from "../buttons/buttons";
 import { useNavigate } from "react-router-dom";
 import { HeaderBack } from "./Icons/headerBack";
-import { FormEvent,} from "react";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
-
-type addPost = {
-  usuario: number
-  multimedia?: string
-  contenido?: string
-}
-export function postTweets(newpost:addPost){
-  return axios.post(
-    "http://15.229.1.136/tweets/api/tweets/",newpost)
-}
+import { postTweets } from "../../../services/postTweets/postTweets";
 
 export default function Header() {
-  // const [firs_name, setFirstName] = useState(""); 
-  // const [last_name, setLastName] = useState("");   
-  // const [avatar, setAvatar] = useState(null);  
-  const { textArea, contentUser, selectImage } = usePostStore();
+  
+  const { textArea, contentUser, selectImage, imageFile, setTextArea,setContentUser,setSelectImage,setImageFile } = usePostStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient()
 
   const handleClickBack = () => {
     navigate("/home");
   };
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
 
   const { mutate } = useMutation({
     mutationFn: postTweets,
-    onMutate: async newTodo => {
+    onMutate: async (newTodo) => {
+      setTextArea("")
+      setContentUser("")
+      setSelectImage("")
+      setImageFile(null)
       await queryClient.cancelQueries(['newtweets'])
       const previousTodos = queryClient.getQueryData(['newtweets'])
-      await queryClient.setQueryData(['newtweets'], old => {
+      await queryClient.setQueryData(['newtweets'], (old: unknown) => {
         if (old === null) {
           return [newTodo];
         }
@@ -55,58 +43,32 @@ export default function Header() {
     }
   });
     
-  
-  // const handleAddPost = () => {
-  //   if ((textArea.trim() !== "" || contentUser || selectImage) && (textArea.trim() !== "" || selectImage || contentUser)){
-  //     const usuarioData = {};
-      
-  //     if (avatar) {
-  //       usuarioData.avatar = avatar;
-  //     }
-  //     if (last_name) {
-  //       usuarioData.last_name = last_name;
-  //     }
-  //     if (!avatar && !last_name) {
-  //       usuarioData.firs_name = "NoCountry";
-  //     }
-  
-  //     const postData = {
-  //       usuario: Object.keys(usuarioData).length > 0 ? usuarioData : undefined,
-  //       contenido: textArea,
-  //       multimedia: selectImage || contentUser
-  //     };
-  
-  //     mutate(postData);
-  
-  //     navigate("/home");
-  //   }
-  // };
+
+ 
   const handleAddPost = () => {
     const postData = {
       usuario: 1,
+      contenido: textArea.trim() !== "" ? textArea : undefined,
+      multimedia: imageFile,
+      gif: selectImage
     };
-
-    if (textArea.trim() !== "") {
-      postData.contenido = textArea;
-    }
-
-    if (contentUser || selectImage) {
-      postData.multimedia = contentUser || selectImage;
-    }
-
-    mutate({
+  
+    const dataToSend = {
       usuario: postData.usuario,
-      contenido: postData.contenido,
-      multimedia: postData.multimedia
-    });
-    navigate("/home")
-  }
+      ...(postData.contenido && { contenido: postData.contenido }),
+      ...(postData.multimedia && { multimedia: postData.multimedia }),
+      ...(postData.gif && {gif: postData.gif})
+    };
+  
+    mutate(dataToSend);
+    navigate("/home");
+  };
 
   return (
     <header>
       <form
         className="flex flex-row justify-between items-center px-4 "
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       >
         <Button variant="secondary" onClick={handleClickBack}>
           {HeaderBack}

@@ -28,3 +28,9 @@ export interface ResultsApi {
   };
   name?: string;
 }
+export interface TweetsInterface {
+  contenido: string;
+  multimedia: string;
+  gif:string;
+  created: string;
+}

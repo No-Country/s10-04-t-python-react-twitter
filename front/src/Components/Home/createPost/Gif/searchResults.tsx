@@ -18,7 +18,7 @@ export const SearchResults = memo (function Results() {
     setSelectImage(img)
     navigate("/posttweets")
   }
- console.log(setSelectImage)
+
     return (
       <div className="grid grid-cols-3 gap-1">
         {search.data?.map((gif:ResultsApi) => (
