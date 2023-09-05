@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 const App: React.FC = () => {
@@ -35,10 +35,6 @@ const App: React.FC = () => {
 
   return (
     <>
-  {mutation.isError ? (
-            <div>An error occurred: {mutation.error.message}</div>
-          ) : null}
-          {mutation.isSuccess ? <div>Todo added!</div> : null}
       <div className="">
         <button
           data-modal-target="authentication-modal"

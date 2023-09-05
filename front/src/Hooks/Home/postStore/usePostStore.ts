@@ -6,11 +6,13 @@ export default function usePostStore() {
   const setSelectImage = useGifStore((state) =>state.setSelectImage )
   const setContentUser = useTweetPost((state) => state.setContentUser);
   const setTextArea = useTweetPost((state) => state.setTextArea);
+  const setImageFile = useTweetPost((state) => state.setImageFile)
   const selectImage = useGifStore((state) => state.selectImage);
   const selectGif = useGifStore((state) => state.selectImage);
   const searchText = useGifStore((state) => state.searchText);
   const textArea = useTweetPost((state) => state.textArea);
   const contentUser = useTweetPost((state) => state.contentUser);
+  const imageFile = useTweetPost((state) => state.imageFile);
   
 
   return {
@@ -24,5 +26,7 @@ export default function usePostStore() {
     contentUser,
     selectImage,
     selectGif,
+    imageFile,
+    setImageFile
   };
 }

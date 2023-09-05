@@ -1,5 +1,5 @@
 import React, {useCallback, } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { fetchSearch, fetchGifs } from "../../services/gifApi";
 import useDebounce from "../useDebounce";
 import { SearchResults } from "../../Components/Home/createPost/Gif/searchResults";
@@ -26,7 +26,7 @@ export default function useGift(){
     }
   );
   
-  const { data, error, isLoading } = useQuery('giphy', fetchGifs,
+  const { data, error, isLoading } = useQuery(['giphy'], fetchGifs,
   {
     enabled: !!SearchResults
   }
