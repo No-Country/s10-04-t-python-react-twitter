@@ -10,17 +10,34 @@ const Data: React.FC = ({children}) => {
 
   const [userId, setUserId] = useState("");
 
+  // const mutation = useMutation(async (formData) => {
+  //   console.log("formData", formData);
+  //   const response = await axios.post(
+  //     "http://15.229.1.136/users/api/login/",
+  //     formData, 
+  //     {}
+  //   );
+  //   setUserId(response.data.id);
+  //   // navigate("/home");
+  //   return response.data;
+  // });
+
   const mutation = useMutation(async (formData) => {
     console.log("formData", formData);
     const response = await axios.post(
       "http://15.229.1.136/users/api/login/",
-      formData,
-      {}
+      formData, 
+      {
+        headers: {
+          "X-Frame-Options": "SAMEORIGIN"
+        }
+      }
     );
     setUserId(response.data.id);
     // navigate("/home");
     return response.data;
   });
+  
 
   return (
     <dataContext.Provider
