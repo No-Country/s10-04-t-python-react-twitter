@@ -1,15 +1,12 @@
 import Button from "../buttons/buttons";
 import { useNavigate } from "react-router-dom";
 import { HeaderBack } from "./Icons/headerBack";
-import { FormEvent,} from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 import { postTweets } from "../../../services/postTweets/postTweets";
 
 export default function Header() {
-  // const [firs_name, setFirstName] = useState(""); 
-  // const [last_name, setLastName] = useState("");   
-  // const [avatar, setAvatar] = useState(null);  
+  
   const { textArea, contentUser, selectImage, imageFile, setTextArea,setContentUser,setSelectImage,setImageFile } = usePostStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient()
@@ -17,9 +14,6 @@ export default function Header() {
   const handleClickBack = () => {
     navigate("/home");
   };
-  // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  // };
 
   const { mutate } = useMutation({
     mutationFn: postTweets,
@@ -30,7 +24,7 @@ export default function Header() {
       setImageFile(null)
       await queryClient.cancelQueries(['newtweets'])
       const previousTodos = queryClient.getQueryData(['newtweets'])
-      await queryClient.setQueryData(['newtweets'], old => {
+      await queryClient.setQueryData(['newtweets'], (old: unknown) => {
         if (old === null) {
           return [newTodo];
         }
@@ -49,32 +43,7 @@ export default function Header() {
     }
   });
     
-  
-  // const handleAddPost = () => {
-  //   if ((textArea.trim() !== "" || contentUser || selectImage) && (textArea.trim() !== "" || selectImage || contentUser)){
-  //     const usuarioData = {};
-      
-  //     if (avatar) {
-  //       usuarioData.avatar = avatar;
-  //     }
-  //     if (last_name) {
-  //       usuarioData.last_name = last_name;
-  //     }
-  //     if (!avatar && !last_name) {
-  //       usuarioData.firs_name = "NoCountry";
-  //     }
-  
-  //     const postData = {
-  //       usuario: Object.keys(usuarioData).length > 0 ? usuarioData : undefined,
-  //       contenido: textArea,
-  //       multimedia: selectImage || contentUser
-  //     };
-  
-  //     mutate(postData);
-  
-  //     navigate("/home");
-  //   }
-  // };
+
  
   const handleAddPost = () => {
     const postData = {
@@ -92,8 +61,6 @@ export default function Header() {
     };
   
     mutate(dataToSend);
-    console.log(dataToSend)
-  
     navigate("/home");
   };
 
