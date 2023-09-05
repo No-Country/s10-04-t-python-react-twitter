@@ -12,7 +12,7 @@ export const PostProfile: React.FC = () => {
   const navigate = useNavigate();
   const [contenido, setContenido] = useState([]);
 
-  const userId = 1;
+  const userId = 2;
 
   async function getPostById() {
     const response = await axios.get(
@@ -38,16 +38,14 @@ export const PostProfile: React.FC = () => {
        hover:bg-gray-100 cursor-pointer"
             >
               <div className="grid grid-flow-col">
+              {contenido && (
                 <Tooltip>
                   <div className="col-span-1 w-10 mr-3">
-                    <div
-                      className="w-10 h-10 mr-3 rounded-full 
-              bg-black cursor-pointer"
-                    >
+                    <img src={contenido.avatar}></img>
                       <Link to="#" className="w-10 h-10 " />
-                    </div>
                   </div>
                 </Tooltip>
+                )}
                 <div className="col-span-1 ">
                   <div className="flex justify-between ">
                     <div className="flex gap-1 items-center">

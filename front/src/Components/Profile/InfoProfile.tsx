@@ -7,7 +7,7 @@ export const InfoProfile: React.FC = () => {
 
   const [contenido, setContenido] = useState([]);
 
-  const userId = 1;
+  const userId = 2;
 
   async function getPostById() {
     const response = await axios.get(  
@@ -29,7 +29,7 @@ export const InfoProfile: React.FC = () => {
         {contenido &&
         <img src={contenido.front_page} alt=""></img> }
       </div>
-      <div className="flex flex-row relative bottom-[50px] mx-5 justify-between">
+      <div className="flex flex-row -mt-[50px] mx-5 justify-between">
       {contenido &&
         <div className="">
           <img src={contenido.avatar} className="w-[100px] h-[100px] mr-3 rounded-full 

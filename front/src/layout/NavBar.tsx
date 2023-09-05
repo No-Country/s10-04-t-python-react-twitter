@@ -28,7 +28,7 @@ export default function NavBar(): JSX.Element {
         <div
           className={`${
             open ? "w-[280px]" : "w-0"
-          } bg-white min-h-screen fixed top-0 right-0 left-0 transition-all duration-200 xl:w-[280px] `}
+          } bg-white min-h-screen absolute top-0 right-0 left-0 transition-all duration-200 xl:w-[280px] z-10`}
         >
           <div className={`${!open && "hidden"} xl:block`}>
             <div>
