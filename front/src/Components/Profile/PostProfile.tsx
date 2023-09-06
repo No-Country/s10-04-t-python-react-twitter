@@ -7,29 +7,48 @@ import {
 import Functionality from "../../Components/Home/tweets/tweetsFunctionality";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { setAccess } from "../../redux/actions/config";
+import { useAppSelector } from "../../Hooks/useAppSelector";
+import { getPostById } from "../../services/dataContext";
 
 export const PostProfile: React.FC = () => {
   const navigate = useNavigate();
-  const [contenido, setContenido] = useState([]);
+  // const [contenido, setContenido] = useState([]);
 
-  const userId = 2;
+  const contenido = useAppSelector(state=>state.config.access || [])
+  const idUser = useAppSelector(state=>state.config.access?.id)
+  // const contenido = useAppSelector(state=>state.config.access?.tweets || [])
 
-  async function getPostById() {
-    const response = await axios.get(
-      `http://15.229.1.136/users/api/detail/${userId}/`
-    );
-    const responseMap = response.data;
-    return setContenido(responseMap);
-  }
+  console.log(contenido, "useaAppSelector")
+  // const id = 1;
 
+  // async function getPostById() {
+  //   const response = await axios.get(
+  //     `http://15.229.1.136/users/api/detail/${userId}/`
+  //   );
+  //   const responseMap = response.data;
+  //   return setContenido(responseMap);
+  // }
+
+  // async function getPostById() {
+  //   const response = await axios.get(
+  //     `http://15.229.1.136/users/api/detail/${userId}/`
+  //   );
+  //   const responseMap = response.data;
+  //   console.log(responseMap)
+  //   setAccess(responseMap)
+  //   return responseMap;
+  // }
+  const id = 3;
   useEffect(() => {
-    getPostById();
-  }, []);
+    getPostById({id});
+  }, [id]);
 
-  console.log(contenido);
+  // console.log(contenido);
 
   return (
     <>
+    
       {contenido.length !== 0 ? (
         contenido.tweets.map((cont, index) => (
           <main key={index}>
@@ -41,7 +60,7 @@ export const PostProfile: React.FC = () => {
               {contenido && (
                 <Tooltip>
                   <div className="col-span-1 w-10 mr-3">
-                    <img src={contenido.avatar}></img>
+                    <img src={contenido?.avatar} className="rounded-full"></img>
                       <Link to="#" className="w-10 h-10 " />
                   </div>
                 </Tooltip>
@@ -53,7 +72,7 @@ export const PostProfile: React.FC = () => {
                         <span className="hover:underline">
                           {contenido.firs_name}
                         </span>
-                        {/* <span>@EverRojas</span> */}
+                        
                       </Tooltip>
                       <span className="mb-2">.</span>
                       <span className="">aug 20</span>
@@ -72,7 +91,7 @@ export const PostProfile: React.FC = () => {
                     <p>{cont.contenido}</p>
                   </div>
 
-                  {/* <img src="" alt="" /> */}
+                 
                   {cont.multimedia && (
                     <img src={cont.multimedia} alt="" className="rounded-lg" />
                   )}

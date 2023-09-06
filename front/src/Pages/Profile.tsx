@@ -6,9 +6,11 @@ import NavBar from "../layout/NavBar";
 import { InfoProfile } from "../Components/Profile/InfoProfile";
 import { PostProfile } from "../Components/Profile/PostProfile";
 
+
   
 const Profile = () => {
   // const {userId} = useContext(dataContext);
+
 
   // console.log(userId)
   // const navigate = useNavigate()

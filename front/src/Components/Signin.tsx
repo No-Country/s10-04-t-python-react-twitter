@@ -1,43 +1,43 @@
 import React, { useContext, useState } from "react";
 import Modal from "./Modal";
-// import { useMutation } from "react-query";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-import { dataContext } from "../services/dataContext";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+// import { dataContext } from "../services/dataContext";  
 
+  // const {userId} = useContext(dataContext);
 
 
 const App: React.FC = () => {
 
-  const {mutation} = useContext(dataContext);
+  // const {mutation, userId} = useContext(dataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   // console.log(userId)
 
-  // const mutation = useMutation(async (formData) => {
-  //   const { setUserId } = useUserContext();
+  const mutation = useMutation(async (formData) => {  
+    console.log("formData", formData);
+    const response = await axios.post(
+      "http://15.229.1.136/users/api/login/",
+      formData,
+      {}
+    );
+    console.log(response.data);
   
-  //   console.log("formData", formData);
-  //   const response = await axios.post(
-  //     "http://15.229.1.136/users/api/login/",
-  //     formData,
-  //     {}
-  //   );
-  //   console.log(response.data.id);
+    // setUserId(response.data.id); // Asignar el valor al contexto
   
-  //   setUserId(response.data.id); // Asignar el valor al contexto
-  
-  //   return response.data;
-  // });
+    return response.data;
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formJson = Object.fromEntries(formData.entries());
     mutation.mutate(formJson);
+    navigate("/Profile")
   };
 
   const openModal = () => {

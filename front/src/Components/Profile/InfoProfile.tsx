@@ -32,7 +32,7 @@ export const InfoProfile: React.FC = () => {
       <div className="flex flex-row -mt-[50px] mx-5 justify-between">
       {contenido &&
         <div className="">
-          <img src={contenido.avatar} className="w-[100px] h-[100px] mr-3 rounded-full 
+          <img src={contenido?.avatar} className="w-[100px] h-[100px] mr-3 rounded-full 
               bg-slate-400 cursor-pointer"
           ></img>
           <h1 className="text-center text-xl font-bold">{contenido.firs_name}</h1>
@@ -41,10 +41,10 @@ export const InfoProfile: React.FC = () => {
          <UpdateProfile />
         </div> 
       </div>
-      {contenido.length !==0 ?
+      {contenido?.length !==0 ?
       <section className="flex flex-row">
-        <div className="mr-5">{contenido.followers.length} Followers</div>
-        <div>x Following</div> 
+        <div className="mr-5">{contenido?.followers_count} Followers</div>
+        <div>{contenido?.following_count} Following</div> 
       </section> : <div>Cargando</div>}
     </>
   );

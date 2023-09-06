@@ -36,13 +36,19 @@ export const UpdateProfile: React.FC = () => {
           Set up profile{" "}
         </button>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <div className="flex flex-col items-center">
-            <div className="border border-slate-500 w-[200px] h-[200px] rounded-[50%] flex justify-center items-center">PREVISUALIZACIÓN</div>
-            <input type="file" onChange={handleOnChange}></input>
-            <div >
-              <button className="border border-slate-400 px-5 py-1 rounded-full">Subir Foto</button>
+          <form>
+            <div className="flex flex-col items-center">
+              <div className="border border-slate-500 w-[200px] h-[200px] rounded-[50%] flex justify-center items-center">
+                PREVISUALIZACIÓN
+              </div>
+              <input type="file" onChange={handleOnChange}></input>
+              <div>
+                <button type="submit" className="border border-slate-400 px-5 py-1 rounded-full">
+                  Subir Foto
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </Modal>
       </div>
     </>
