@@ -1,10 +1,57 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "./Modal";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Hooks/useAppDispatch";
+import { useAppSelector } from "../Hooks/useAppSelector";
+import { setAuth } from "../redux/slices/config";
+// import { dataContext } from "../services/dataContext";  
+import * as configSlices from '../redux/slices/config'
+
+
+  // const {userId} = useContext(dataContext);
+
 
 const App: React.FC = () => {
+
+  const dispatch = useAppDispatch();
+
+  const authId = useAppSelector(state=>state.config.auth)
+  
+
+  console.log(authId)
+
+  // const {mutation, userId} = useContext(dataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+
+  // console.log(userId)
+
+  const mutation = useMutation(async (formData) => {  
+    console.log("formData", formData);
+    const response = await axios.post(
+      "http://15.229.1.136/users/api/login/",
+      formData,
+      {}
+    );
+    // dispatch(setAuth(response.data));
+    await dispatch(configSlices.setAuthId(response.data.id))
+  navigate('/profile')
+    // setUserId(response.data.id); // Asignar el valor al contexto
+  
+    return response.data;
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formJson = Object.fromEntries(formData.entries());
+    mutation.mutate(formJson);
+    // navigate("/Profile")
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -14,27 +61,30 @@ const App: React.FC = () => {
     setIsModalOpen(false);
 
   };
-  // const bearerToken = "d38a98d8cbfaaded62439765c2a70e0c6a10c52f"
   
-    const mutation = useMutation(
-      async formData => {
-        const response = await axios.post('http://15.229.1.136/users/api/login/', formData, {
-        });
-        return console.log(response.data); 
-     
-      }
-      
-    );
-  
-    const handleSubmit = event => {
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      const formJson = Object.fromEntries(formData.entries())
-      mutation.mutate(formJson);
-    };
+
+
+
+// // const onSubmit = (token: string) => {
+//     const form: RegisterDto = {
+//       email: watch('email'),
+//       password: watch('password'),
+//       country: watch('country'),
+//       phone: watch('phone'),
+//       accept: watch('accept'),
+//       token: token,
+//       acquistion: watch('acquistion'),
+//     }
+//     handleSubmitRegister({ setLoading, form, navigation, dispatch, setError })
+//   }
+
 
   return (
     <>
+      {mutation.isError ? (
+        <div>An error occurred: {mutation.error.message}</div>
+      ) : null}
+      {mutation.isSuccess ? <div>Todo added!</div> : null}
       <div className="">
         <button
           data-modal-target="authentication-modal"
