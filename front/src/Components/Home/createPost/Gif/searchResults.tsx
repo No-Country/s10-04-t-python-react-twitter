@@ -16,7 +16,7 @@ export const SearchResults = memo (function Results() {
 
   const handleClickImage = (img:string)=>{
     setSelectImage(img)
-    navigate("/posttweets")
+  window.history.back()
   }
 
     return (
