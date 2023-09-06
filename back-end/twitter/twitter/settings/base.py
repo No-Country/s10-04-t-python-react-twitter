@@ -2,7 +2,7 @@ from django.core.exceptions import ImproperlyConfigured
 import json
 from pathlib import Path
 from unipath import Path
-
+import os
 # Calling the secret.json file
 with open('secret.json') as f:
     secret = json.loads(f.read())
@@ -14,7 +14,8 @@ def get_secret(secret_name, secrets = secret):
         msg = 'La variable %s no existe' % secret_name
         raise ImproperlyConfigured(msg)
 
-BASE_DIR = Path(__file__).ancestor(3)
+#BASE_DIR = Path(__file__).ancestor(3)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = get_secret ("SECRET_KEY")
 
