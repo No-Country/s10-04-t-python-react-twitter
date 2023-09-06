@@ -17,3 +17,6 @@ sqlparse==0.4.4
 tzdata==2023.3
 Unipath==1.1
 uritemplate==4.1.1
+dj-database-url==2.1.0
+whitenoise==6.5.0
+gunicorn==21.2.0

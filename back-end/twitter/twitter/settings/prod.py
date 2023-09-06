@@ -1,19 +1,23 @@
 from .base import *
+import os
+import dj_database_url
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Data BAse
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_secret ("DB_PROD_NAME"),
-        'USER': get_secret ("DB_PROD_USER"),
-        'PASSWORD': get_secret ("DB_PROD_PASSWORD"),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        # Feel free to alter this value to suit your needs.
+        default='postgres://twitterdb_vjb4_user:83kttfsJFPk6FO8g7xDut311eVbt2hGP@dpg-cjs92ftm702s73fd9l70-a/twitterdb_vjb4',
+        conn_max_age=600
+    )
 }
 
 # Direction off JS - IMG - CSS
