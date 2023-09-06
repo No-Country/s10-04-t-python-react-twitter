@@ -3,12 +3,24 @@ import Modal from "./Modal";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Hooks/useAppDispatch";
+import { useAppSelector } from "../Hooks/useAppSelector";
+import { setAuth } from "../redux/slices/config";
 // import { dataContext } from "../services/dataContext";  
+import * as configSlices from '../redux/slices/config'
+
 
   // const {userId} = useContext(dataContext);
 
 
 const App: React.FC = () => {
+
+  const dispatch = useAppDispatch();
+
+  const authId = useAppSelector(state=>state.config.auth)
+  
+
+  console.log(authId)
 
   // const {mutation, userId} = useContext(dataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,8 +37,9 @@ const App: React.FC = () => {
       formData,
       {}
     );
-    console.log(response.data);
-  
+    // dispatch(setAuth(response.data));
+    await dispatch(configSlices.setAuthId(response.data.id))
+  navigate('/profile')
     // setUserId(response.data.id); // Asignar el valor al contexto
   
     return response.data;
@@ -37,7 +50,7 @@ const App: React.FC = () => {
     const formData = new FormData(event.target);
     const formJson = Object.fromEntries(formData.entries());
     mutation.mutate(formJson);
-    navigate("/Profile")
+    // navigate("/Profile")
   };
 
   const openModal = () => {
@@ -48,6 +61,22 @@ const App: React.FC = () => {
     setIsModalOpen(false);
   };
   
+
+
+
+// // const onSubmit = (token: string) => {
+//     const form: RegisterDto = {
+//       email: watch('email'),
+//       password: watch('password'),
+//       country: watch('country'),
+//       phone: watch('phone'),
+//       accept: watch('accept'),
+//       token: token,
+//       acquistion: watch('acquistion'),
+//     }
+//     handleSubmitRegister({ setLoading, form, navigation, dispatch, setError })
+//   }
+
 
   return (
     <>

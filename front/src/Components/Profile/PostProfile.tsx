@@ -16,10 +16,12 @@ export const PostProfile: React.FC = () => {
   // const [contenido, setContenido] = useState([]);
 
   const contenido = useAppSelector(state=>state.config.access || [])
-  const idUser = useAppSelector(state=>state.config.access?.id)
+  // const idUser = useAppSelector(state=>state.config.access?.id)
+  const id = useAppSelector(state=>state.config.auth.id)
   // const contenido = useAppSelector(state=>state.config.access?.tweets || [])
 
   console.log(contenido, "useaAppSelector")
+  console.log(id,"holaaa")
   // const id = 1;
 
   // async function getPostById() {
@@ -39,7 +41,7 @@ export const PostProfile: React.FC = () => {
   //   setAccess(responseMap)
   //   return responseMap;
   // }
-  const id = 3;
+ 
   useEffect(() => {
     getPostById({id});
   }, [id]);

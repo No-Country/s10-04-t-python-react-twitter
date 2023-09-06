@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit"
 import Config from "../types/config"
 
 const initialState: Config = {
-    access: []
+    access: [],
+    auth: {
+        id: null,
+        token: null,
+    }
 }
 
 const configSlice = createSlice({
@@ -11,12 +15,16 @@ const configSlice = createSlice({
     reducers: {
         setAccess: (state,action) => {
             state.access = action.payload
+        },
+        setAuthId: (state,action) => {
+            state.auth.id = action.payload
         }
     }
 })
 
 export const {
-    setAccess
+    setAccess,
+    setAuthId
 } = configSlice.actions
 
 export default configSlice.reducer;
