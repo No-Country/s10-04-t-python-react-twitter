@@ -35,12 +35,12 @@ export default function Functionality({
         </div>
         <span
           className={`${
-            tweetData.comentario_count === 0
+            tweetData?.comentario_count === 0
               ? "hidden"
               : "group-hover:text-blue-400"
           }`}
         >
-          {tweetData.comentario_count}
+          {tweetData?.comentario_count}
         </span>
       </div>
       <div className="flex flex-row items-center gap-1 group">
@@ -52,12 +52,12 @@ export default function Functionality({
         </div>
         <span
           className={`${
-            tweetData.retweet_count === 0
+            tweetData?.retweet_count === 0
               ? "hidden"
               : "group-hover:text-green-400"
           }`}
         >
-          {tweetData.retweet_count}
+          {tweetData?.retweet_count}
         </span>
       </div>
       <div className="flex flex-row items-center gap-1 group">
@@ -69,10 +69,10 @@ export default function Functionality({
         </div>
         <span
           className={`${
-            tweetData.liked_count === 0 ? "hidden" : "group-hover:text-red-400"
+            tweetData?.liked_count === 0 ? "hidden" : "group-hover:text-red-400"
           }`}
         >
-          {tweetData.liked_count}
+          {tweetData?.liked_count}
         </span>
       </div>
       {/* <div className="flex flex-row items-center gap-1 group">

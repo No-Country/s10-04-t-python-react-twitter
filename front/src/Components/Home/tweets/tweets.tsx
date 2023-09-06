@@ -42,13 +42,12 @@ export default function Tweets(): JSX.Element {
         ?.slice()
         .reverse()
         .map((tweet: TweetsInterface) => (
-          <>
+          <React.Fragment key={tweet.id}>
             <article
               className="py-3 px-4  h-auto border-2 border-gray-100
        hover:bg-gray-100 cursor-pointer"
               onClick={() => handleClickId(tweet.id) }
             >
-              <div>
               <div className="grid grid-cols-[40px,1fr] ">
                 <div className=" w-10 mr-3 grid">
                   <Tooltip>
@@ -97,10 +96,10 @@ export default function Tweets(): JSX.Element {
                   )}
                 </div>
               </div>
-              </div>
+            
               <Functionality onClick={handleFunctionalityClick} tweetData={tweet} />
             </article>
-            </>
+            </React.Fragment>
         ))}
             <div data-dial-init className="fixed right-6 bottom-6 group">
               <div
