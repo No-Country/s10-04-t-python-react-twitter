@@ -21,6 +21,7 @@ export default function Functionality({
   const handleFunctionalityClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setTweet_id(tweetData.id);
+    console.log(tweetData.id)
   };
  
   return (

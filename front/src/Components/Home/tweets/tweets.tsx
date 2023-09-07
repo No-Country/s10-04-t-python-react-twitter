@@ -2,34 +2,23 @@ import { Ellipse, GoToPost } from "./TweetIcons/Icons";
 import Functionality from "./tweetsFunctionality";
 import Tooltip from "./tooltip";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import { TweetsInterface } from "../../../types";
 import TimeAgo from "./timeAgo";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
-import { closeIcon } from "../createPost/Icons/closeIcon";
-
 import useTweets from "../../../Hooks/Home/usetweets";
-
+import ImageModal from "./ImageModal";
+import useImageModal from "../../../Hooks/imageModal";
 
 
 export default function Tweets(): JSX.Element {
   const navigate = useNavigate();
   const {setTweet_id}=usePostStore()
   const { data } = useTweets()
-  // console.log(data)
-  const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-
-  const openImage = (imageSrc: string) => {
-    setEnlargedImage(imageSrc);
-  };
-
-  const closeImage = () => {
-    setEnlargedImage(null);
-  };
+const {openImage,enlargedImage, closeImage} = useImageModal()
 
   const handleClickId = (id:number) =>{
     setTweet_id(id)
-    console.log(id);
     navigate("/comments")
 
   }
@@ -119,23 +108,7 @@ export default function Tweets(): JSX.Element {
                 {GoToPost}
               </div>
             </div>
-         {enlargedImage && (
-        <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black z-50">
-          <div className=" relative w-screen h-screen">
-            <img
-              src={enlargedImage}
-              alt="Enlarged Image"
-              className="w-full h-full object-contain rounded-lg"
-            />
-            <button
-              onClick={closeImage}
-              className="absolute top-0 left-0 m-4 p-2 rounded-full hover:bg-gray-100 focus:outline-none"
-            >
-              {closeIcon}
-              </button>
-          </div>
-        </div>
-      )}
+        <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
     </main>
   );
 }

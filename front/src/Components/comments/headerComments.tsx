@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Home/buttons/buttons";
 import { HeaderBack } from "../Home/createPost/Icons/headerBack";
 import usePostStore from "../../Hooks/Home/postStore/usePostStore";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postComment } from "../../services/PostComments";
 import { useAppSelector } from "../../Hooks/useAppSelector";
 
 export default function HeaderComment() {
+  const queryClient = useQueryClient()
   const navigate = useNavigate();
   const id = useAppSelector(state=>state.config.auth.id)
   const {
@@ -27,6 +28,32 @@ export default function HeaderComment() {
   };
   const { mutate } = useMutation({
     mutationFn: postComment,
+    onMutate: async (newTodo) => {
+      setTextArea("");
+      setContentUser("");
+      setSelectImage("");
+      await queryClient.cancelQueries(["tweetComments"]);
+      const previousNewComment = queryClient.getQueryData(["tweetComments"]);
+      await queryClient.setQueryData(["tweetComments"], (old: unknown) => {
+        if (old === null) {
+          return [newTodo];
+        }
+        if (Array.isArray(old)) {
+          return [...old, newTodo];
+        }
+        return old;
+      });
+
+      return { previousNewComment };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousNewComment) {
+        queryClient.setQueryData(['tweetComments'], context.previousNewComment)
+      }
+    },
+    onSettled:()=> {
+      queryClient.invalidateQueries({queryKey:["tweetComments"]})
+    }
   });
   const handleAddComment = () => {
     mutate({
@@ -36,6 +63,7 @@ export default function HeaderComment() {
       multimedia: imageFile,
       gif: selectImage,
     });
+    navigate("/comments")
     console.log(tweet_id, textArea, imageFile, selectImage,id);
   };
 

@@ -1,27 +1,36 @@
 import { Link, useNavigate } from "react-router-dom";
 import Tooltip from "../Home/tweets/tooltip";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
-import { useQuery } from "@tanstack/react-query";
-import { getTweetsComments } from "../../services/getTweets";
 import Functionality from "../Home/tweets/tweetsFunctionality";
 import FunctionalityIcons from "../../Hooks/funcionalityIcons";
-
+// import usePostStore from "../../Hooks/Home/postStore/usePostStore";
+import useSelectedTweet from "../../Hooks/Home/useSelectedTweet";
+import TimeAgo from "../Home/tweets/timeAgo";
+import useImageModal from "../../Hooks/imageModal";
+import ImageModal from "../Home/tweets/ImageModal";
+interface commentUser{
+  created_at:string;
+  multimedia:string;
+  content:string;
+  gif:string
+}
 export default function CommentsUser() {
-  const { data} = useQuery({
-    queryKey: ['todos'],
-    queryFn: getTweetsComments,
-  })
+  // const {tweet_id}=usePostStore()
+  const { data } = useSelectedTweet()
+  const navigate = useNavigate();
+  const {openImage,enlargedImage, closeImage} = useImageModal()
   console.log(data)
   const handleFunctionalityClick = (e: React.MouseEvent) => {
    
     e.stopPropagation();
     navigate("/replycomments");
   };
-
-  const navigate = useNavigate();
+ 
   const { funcionalityIcons } = FunctionalityIcons();
   return (
     <main>
+      {data?.data.comentario.slice().reverse().map((comments : commentUser) =>
+        
       <article
         className="py-3 px-4  h-auto border-2 border-gray-100
            hover:bg-gray-100 cursor-pointer"
@@ -46,7 +55,7 @@ export default function CommentsUser() {
                 <span>@EverRojas</span>
               </Tooltip>
               <span className="mb-2">.</span>
-              <span className="">aug 20</span>
+              <span className=""><TimeAgo timestamp={comments.created_at} /></span>
               <div className="group/edit group flex items-center">
                 <div
                   className="group-hover/edit:bg-blue-100 
@@ -58,15 +67,18 @@ export default function CommentsUser() {
               </div>
             </div>
             <div className="mb-2">
-              <p className=" text-justify hyphens-auto">bebeeeeeee</p>
+              <p className=" text-justify hyphens-auto">{comments.content}</p>
             </div>
+            {(comments.multimedia ||comments.gif) &&
+                <img src={comments.multimedia ||comments.gif} alt="" className="rounded-lg" onClick={() =>openImage(comments.multimedia || comments.gif)}/>
+    }
           </div>
-          {/* {tweet.multimedia &&
-                <img src={tweet.multimedia} alt="" className="rounded-lg"/>
-    } */}
         </div>
+     
         <Functionality onClick={handleFunctionalityClick} tweetData={funcionalityIcons} />
       </article>
+      )}
+       <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
     </main>
   );
 }
