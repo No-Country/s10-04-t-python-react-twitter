@@ -16,7 +16,7 @@ import { setAccess } from "../redux/actions/config";
 //   }
 
 interface IgetPostById {
-    id: number
+    id: string | null
 }
 //DEbo usar useDispatch
 // const mutation = useMutation(async (formData) => {  

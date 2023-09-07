@@ -15,20 +15,20 @@ const Profile = () => {
   // console.log(userId)
   // const navigate = useNavigate()
 
-  const userId = 1;
+//   const userId = 1;
 
-function getPostById() {
-  axios.get(`http://15.229.1.136/users/api/detail/${userId}/`)
-  .then(response => {
-    response.data;
-})
-.catch(e => {
-    // Podemos mostrar los errores en la consola
-    console.log(e);
-})
-}
+// function getPostById() {
+//   axios.get(`http://15.229.1.136/users/api/detail/${userId}/`)
+//   .then(response => {
+//     response.data;
+// })
+// .catch(e => {
+//     // Podemos mostrar los errores en la consola
+//     console.log(e);
+// })
+// }
 
-  getPostById()
+//   getPostById()
 
   return (
    <>
