@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { UpdateProfile } from "./UpdateProfile";
+// import {Root} from '../../types/config'
 
 
 export const InfoProfile: React.FC = () => {
 
-  const [contenido, setContenido] = useState([]);
+  interface ContenidoType {
+    front_page: string;
+    avatar: string;
+    firs_name: string;
+    followers_count: number;
+    following_count: number;
+  }
+  
+  const [contenido, setContenido] = useState<ContenidoType | null>(null);
 
-  const userId = 2;
+  const userId = 5;
 
   async function getPostById() {
     const response = await axios.get(  
@@ -41,7 +50,7 @@ export const InfoProfile: React.FC = () => {
          <UpdateProfile />
         </div> 
       </div>
-      {contenido?.length !==0 ?
+      {contenido  ?
       <section className="flex flex-row">
         <div className="mr-5">{contenido?.followers_count} Followers</div>
         <div>{contenido?.following_count} Following</div> 
