@@ -10,10 +10,22 @@ const SignUp: React.FC = () => {
     password1: "",
     password2: "",
   };
+
+  interface FormData {
+    name: string;
+    email: string;
+    password: string;
+  }
+  interface UserResponse {
+    id: string;
+    name: string;
+    email: string;
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataReg, setDataReg] = useState(initialState);
-  
-    dataReg.firs_name !== "" &&
+
+  dataReg.firs_name !== "" &&
     dataReg.email !== "" &&
     dataReg.password1 !== "" &&
     dataReg.password1 == dataReg.password2;
@@ -34,20 +46,38 @@ const SignUp: React.FC = () => {
     }));
   };
 
+  // const mutation = useMutation(async (formData) => {
+  //   console.log(formData);
+  //   const response = await axios.post(
+  //     "http://15.229.1.136/users/api/register/",
+  //     formData
+  //   );
+  //   return console.log(response.data);
+  // });
 
-  const mutation = useMutation(async (formData) => {
+  const mutation = useMutation(async (formData: FormData) => {
     console.log(formData);
-    const response = await axios.post(
+
+    const response = await axios.post<UserResponse>(
       "http://15.229.1.136/users/api/register/",
       formData
     );
+
     return console.log(response.data);
   });
 
-  const handleSubmit2 = (event) => {
+  // const handleSubmit2 = (event:any) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.target);
+  //   const formJson = Object.fromEntries(formData.entries());
+  //   mutation.mutate(formJson);
+  // };
+  const handleSubmit2 = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const formJson = Object.fromEntries(formData.entries());
+    const formData = new FormData(event.target as HTMLFormElement);
+    const formJson = Object.fromEntries(
+      formData.entries()
+    ) as unknown as FormData;
     mutation.mutate(formJson);
   };
 
