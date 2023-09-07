@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Hooks/useAppDispatch";
 import * as configSlices from "../redux/slices/config";
 
-
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -17,7 +16,7 @@ const App: React.FC = () => {
 
   // console.log(userId)
 
-  const mutation = useMutation(async (formData) => {
+  const mutation = useMutation(async (formData: { [key: string]: string }) => {
     console.log("formData", formData);
     const response = await axios.post(
       "http://15.229.1.136/users/api/login/",
@@ -25,14 +24,14 @@ const App: React.FC = () => {
       {}
     );
     // dispatch(setAuth(response.data));
-    const data = response.data.id
+    const data = response.data.id;
     await dispatch(configSlices.setAuthId(data));
-      localStorage.setItem('userId', data);
+    localStorage.setItem("userId", data);
     navigate("/profile");
     return response.data;
   });
 
-  const handleSubmit = (event: { preventDefault: () => void; target: HTMLFormElement | undefined; }) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const formJson = Object.fromEntries(formData.entries());
@@ -40,7 +39,7 @@ const App: React.FC = () => {
     // navigate("/Profile")
   };
 
-
+ 
 
   const openModal = () => {
     setIsModalOpen(true);
