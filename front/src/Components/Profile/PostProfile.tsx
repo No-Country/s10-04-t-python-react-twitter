@@ -4,7 +4,7 @@ import {
   Ellipse,
   GoToPost,
 } from "../../Components/Home/tweets/TweetIcons/Icons";
-import Functionality from "../../Components/Home/tweets/tweetsFunctionality";
+// import Functionality from "../../Components/Home/tweets/tweetsFunctionality";
 import { useEffect } from "react";
 // import axios from "axios";
 // import { setAccess } from "../../redux/actions/config";
@@ -21,21 +21,18 @@ export const PostProfile: React.FC = () => {
   }
 
   const navigate = useNavigate();
-  const contenido = useAppSelector((state) => state.config.access || []);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const contenido = useAppSelector((state: { config: { access: any; }; }) => state.config.access || []);
   const id = localStorage.getItem("userId");
-  // console.log(contenido, "useaAppSelector")
-  // console.log(id,"holaaa")
 
   useEffect(() => {
     getPostById({ id });
   }, [id]);
 
-  // console.log(contenido);
-
   return (
     <>
       {contenido.length !== 0 ? (
-        contenido.tweets.map((cont: ContenidoType, index: number) => (
+        contenido.tweets.slice().reverse().map((cont: ContenidoType, index: number) => (
           <main key={index}>
             <article
               className="py-3 px-4  h-auto border-2 border-gray-100
@@ -84,7 +81,7 @@ export const PostProfile: React.FC = () => {
                     <img src={cont.gif} alt="" className="rounded-lg" />
                   )}
 
-                  <Functionality />
+                  {/* <Functionality/> */}
                 </div>
               </div>
             </article>

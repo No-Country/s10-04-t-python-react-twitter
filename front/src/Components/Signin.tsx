@@ -7,6 +7,15 @@ import { useAppDispatch } from "../Hooks/useAppDispatch";
 import * as configSlices from "../redux/slices/config";
 
 const App: React.FC = () => {
+  interface FormData {
+    email: string;
+    password: string;
+  }
+  interface UserResponse {
+    id: string;
+    token: string;
+  }
+
   const dispatch = useAppDispatch();
 
   // const authId = useAppSelector((state) => state.config.auth);
@@ -16,14 +25,13 @@ const App: React.FC = () => {
 
   // console.log(userId)
 
-  const mutation = useMutation(async (formData: { [key: string]: string }) => {
+  const mutation = useMutation(async (formData: FormData) => {
     console.log("formData", formData);
-    const response = await axios.post(
+    const response = await axios.post<UserResponse>(
       "http://15.229.1.136/users/api/login/",
       formData,
       {}
     );
-    // dispatch(setAuth(response.data));
     const data = response.data.id;
     await dispatch(configSlices.setAuthId(data));
     localStorage.setItem("userId", data);
@@ -31,15 +39,14 @@ const App: React.FC = () => {
     return response.data;
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const formJson = Object.fromEntries(formData.entries());
+    const formData = new FormData(event.target as HTMLFormElement);
+    const formJson = Object.fromEntries(
+      formData.entries()
+    ) as unknown as FormData;
     mutation.mutate(formJson);
-    // navigate("/Profile")
   };
-
- 
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -47,14 +54,13 @@ const App: React.FC = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-
   };
 
   return (
     <>
-      {mutation.isError ? (
-        <div>An error occurred: {mutation.error.message}</div>
-      ) : null}
+      {/* {mutation.isError ? (
+        <div>An error occurred: {mutation.error?.message}</div>
+      ) : null} */}
       {mutation.isSuccess ? <div>Todo added!</div> : null}
       <div className="">
         <button

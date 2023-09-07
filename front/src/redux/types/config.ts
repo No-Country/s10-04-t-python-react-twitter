@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface Config {
-    access: any,
+    access: unknown,
     auth: IAuth
 }
 
