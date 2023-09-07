@@ -7,16 +7,14 @@ const SignUp: React.FC = () => {
   const initialState = {
     firs_name: "",
     email: "",
-    // birthdate: "",
     password1: "",
     password2: "",
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataReg, setDataReg] = useState(initialState);
-  const isFormValid =
+  
     dataReg.firs_name !== "" &&
     dataReg.email !== "" &&
-    // dataReg.birthdate !== "" &&
     dataReg.password1 !== "" &&
     dataReg.password1 == dataReg.password2;
 
@@ -36,32 +34,12 @@ const SignUp: React.FC = () => {
     }));
   };
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log("Form submitted:", dataReg);
-  // };
-
-
-  // const mutation = useMutation(async (formData) => {
-  //   console.log(formData)
-  //   const response = await axios.post(
-  //     "http://15.229.1.136/users/api/register/",
-  //     formData,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json' // Configura el Content-Type a application/json
-  //       }
-  //     }
-  //   );
-  //   return console.log(response.data);
-  // });
-
 
   const mutation = useMutation(async (formData) => {
-    console.log(formData)
+    console.log(formData);
     const response = await axios.post(
-      "http://15.229.1.136/users/api/register/", formData,
-      
+      "http://15.229.1.136/users/api/register/",
+      formData
     );
     return console.log(response.data);
   });
@@ -69,13 +47,8 @@ const SignUp: React.FC = () => {
   const handleSubmit2 = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    // const formData = 
-    // {"email":"rocioprueba@gmail.com","firs_name":"Chio","password1":"prueba1234","password2":"prueba1234"}
-    
     const formJson = Object.fromEntries(formData.entries());
-
-  // Utiliza Axios para hacer la solicitud POST
-  mutation.mutate(formJson);
+    mutation.mutate(formJson);
   };
 
   return (
@@ -97,7 +70,6 @@ const SignUp: React.FC = () => {
               Crea tu cuenta
             </h3>
             <form className="space-y-4" action="#" onSubmit={handleSubmit2}>
-              
               <div>
                 <input
                   type="email"
@@ -118,18 +90,8 @@ const SignUp: React.FC = () => {
                   placeholder="Nombre"
                   onChange={handleChange}
                   required
-                  
                 />
               </div>
-              {/* <div>
-                <input
-                  type="date"
-                  name="birthdate"
-                  id="birthdate"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  onChange={handleChange}
-                />
-              </div> */}
               <div>
                 <input
                   type="password"
@@ -154,7 +116,6 @@ const SignUp: React.FC = () => {
               </div>
               <button
                 type="submit"
-                // disabled={!isFormValid}
                 className="w-full text-white disabled:bg-[#87898C] enabled:bg-gray-900 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Crear cuenta

@@ -1,6 +1,5 @@
 // import { useContext } from "react";
 // import { dataContext } from "../services/dataContext";
-import axios from "axios";
 import NavBar from "../layout/NavBar";
 // import { useNavigate } from "react-router-dom";
 import { InfoProfile } from "../Components/Profile/InfoProfile";
