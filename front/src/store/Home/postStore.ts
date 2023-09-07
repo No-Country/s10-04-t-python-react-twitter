@@ -16,8 +16,8 @@ interface tweetPost {
   imageFile: File | null;
   setContentUser: (img:string) => void
   setTextArea: (text:string) => void
-  setImageFile: (img:File) => void
-  setTweet_id:(id:number) => void
+  setImageFile: (img:File | null) =>void
+  setTweet_id:(id:number | null) => void
   
 }
 
@@ -32,7 +32,7 @@ const usePostStore = create<gifState>((set) => ({
   }))
 
   export const useTweetPost = create<tweetPost>((set) => ({
-    tweet_id:null,
+    tweet_id: null,
     contentUser: "",
     textArea:"",
     imageFile: null,

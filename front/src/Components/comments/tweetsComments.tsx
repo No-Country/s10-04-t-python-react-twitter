@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Tooltip from "../Home/tweets/tooltip";
-import Functionality from "../Home/tweets/tweetsFunctionality";
+// import Functionality from "../Home/tweets/tweetsFunctionality";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
 import BackButton from "./BackButton";
+import Functionality from "../Home/tweets/tweetsFunctionality";
+import FunctionalityIcons from "../../Hooks/funcionalityIcons";
 
-export default function commentsTweets() {
+export default function CommentsTweets() {
+  const navigate = useNavigate()
+  const handleFunctionalityClick = (e: React.MouseEvent) => {
+   
+    e.stopPropagation();
+    navigate("/replycomments");
+  };
+  
+  const { funcionalityIcons } = FunctionalityIcons();
   return (
     <main className="" >
       <article
@@ -44,14 +54,14 @@ export default function commentsTweets() {
               </div>
             </div>
             <div className="mb-2">
-              <p className=" text-justify hyphens-auto">hola</p>
+              <p className=" text-justify hyphens-auto">bebee</p>
             </div>
             {/* {tweet.multimedia &&
             <img src={tweet.multimedia} alt="" className="rounded-lg"/>
 } */}
       </article>
       <div className="border-b-2 border-gray-100">
-      <Functionality />
+      <Functionality onClick={handleFunctionalityClick} tweetData={funcionalityIcons}/>
       </div>
     </main>
   );

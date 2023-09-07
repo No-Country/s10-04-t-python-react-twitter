@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Message, Retweet, Like, Share } from "./TweetIcons/Icons";
 import React from "react";
+import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
+// import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 interface funcionality {
   comentario_count?: number;
   liked_count?: number;
   retweet_count?: number;
+  id:number | null;
 }
 export default function Functionality({
   onClick,
@@ -13,10 +16,13 @@ export default function Functionality({
   onClick: (e: React.MouseEvent) => void;
   tweetData: funcionality;
 }): JSX.Element {
+  const {setTweet_id} = usePostStore()
   const navigate = useNavigate();
   const handleFunctionalityClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setTweet_id(tweetData.id);
   };
+ 
   return (
     <div
       onClick={onClick}
@@ -95,3 +101,4 @@ export default function Functionality({
     </div>
   );
 }
+

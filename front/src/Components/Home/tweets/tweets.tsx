@@ -1,5 +1,4 @@
 import { Ellipse, GoToPost } from "./TweetIcons/Icons";
-import { Link } from "react-router-dom";
 import Functionality from "./tweetsFunctionality";
 import Tooltip from "./tooltip";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +7,16 @@ import { TweetsInterface } from "../../../types";
 import TimeAgo from "./timeAgo";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 import { closeIcon } from "../createPost/Icons/closeIcon";
+
 import useTweets from "../../../Hooks/Home/usetweets";
+
+
 
 export default function Tweets(): JSX.Element {
   const navigate = useNavigate();
   const {setTweet_id}=usePostStore()
   const { data } = useTweets()
+  // console.log(data)
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
   const openImage = (imageSrc: string) => {
@@ -26,16 +29,21 @@ export default function Tweets(): JSX.Element {
 
   const handleClickId = (id:number) =>{
     setTweet_id(id)
+    console.log(id);
     navigate("/comments")
 
   }
-  const handleFunctionalityClick = (e: React.MouseEvent) => {
+  const handleProfileClick = (e:React.MouseEvent) => {
+    e.stopPropagation();
+    navigate("/Profile")
+  }
+  const handleImgClick = (e: React.MouseEvent) => {
     e.stopPropagation();
    
   };
-  
- 
-
+  const handleFunctionalityClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
   return (
     <main>
       {data?.data
@@ -49,13 +57,13 @@ export default function Tweets(): JSX.Element {
               onClick={() => handleClickId(tweet.id) }
             >
               <div className="grid grid-cols-[40px,1fr] ">
-                <div className=" w-10 mr-3 grid">
+                <div className=" w-10 mr-3 grid " >
                   <Tooltip>
                     <div
                       className="w-10 h-10 mr-3 rounded-full 
               bg-black cursor-pointer"
+              onClick={handleProfileClick}
                     >
-                      <Link to="#" className="w-10 h-10 " />
                     </div>
                   </Tooltip>
                 </div>
@@ -89,7 +97,7 @@ export default function Tweets(): JSX.Element {
                       src={tweet.multimedia || tweet.gif}
                       alt=""
                       className="rounded-lg"
-                      onClick={(e) => { handleFunctionalityClick(e);
+                      onClick={(e) => { handleImgClick(e);
                       openImage(tweet.multimedia || tweet.gif);
                     }}
                     />
@@ -101,7 +109,7 @@ export default function Tweets(): JSX.Element {
             </article>
             </React.Fragment>
         ))}
-            <div data-dial-init className="fixed right-6 bottom-6 group">
+            <div data-dial-init className="fixed right-6 bottom-16 group ">
               <div
                 className="w-14 h-14 bg-blue-500 rounded-full flex 
           items-center 

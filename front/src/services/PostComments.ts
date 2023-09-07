@@ -1,12 +1,14 @@
-import axios from "axios"
+
+import { axiosWithAuth } from "./configHeader"
 
 interface addComment {
     usuario:number | null
-    tweet_original:number
+    tweet_original:number | null
     content:string
-    multimedia: File 
+    multimedia: File | null 
     gif: string
 }
+
 
 export async function postComment(newComment: addComment) {
     try {
@@ -27,8 +29,8 @@ export async function postComment(newComment: addComment) {
         if (newComment.gif) {
           formData.append('gif', newComment.gif);
         }
-        
-        const response = await axios.post('http://15.229.1.136//tweets/api/comentario/', formData);
+    
+        const response = await axiosWithAuth.post('http://15.229.1.136/tweets/api/comentario/', formData);
         return console.log(response.data,formData,{
             headers: {
                 "Content-Type": "multipart/form-data",
