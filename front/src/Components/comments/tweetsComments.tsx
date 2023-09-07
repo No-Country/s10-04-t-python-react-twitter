@@ -30,7 +30,7 @@ export default function CommentsTweets() {
   const commentIds = data?.data.comentario.map((coment:comments) => coment.tweet_original);
 
 
-const selectedId = commentIds[0];
+  const selectedId = commentIds?.length > 0 ? commentIds[0] : null; //
 
 const tweetData = {
   id: selectedId,
