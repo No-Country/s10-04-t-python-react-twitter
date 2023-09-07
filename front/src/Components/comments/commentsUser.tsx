@@ -1,10 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
 import Tooltip from "../Home/tweets/tooltip";
-import Functionality from "../Home/tweets/tweetsFunctionality";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
+import { useQuery } from "@tanstack/react-query";
+import { getTweetsComments } from "../../services/getTweets";
+import Functionality from "../Home/tweets/tweetsFunctionality";
+import FunctionalityIcons from "../../Hooks/funcionalityIcons";
 
 export default function CommentsUser() {
+  const { data} = useQuery({
+    queryKey: ['todos'],
+    queryFn: getTweetsComments,
+  })
+  console.log(data)
+  const handleFunctionalityClick = (e: React.MouseEvent) => {
+   
+    e.stopPropagation();
+    navigate("/replycomments");
+  };
+
   const navigate = useNavigate();
+  const { funcionalityIcons } = FunctionalityIcons();
   return (
     <main>
       <article
@@ -43,14 +58,14 @@ export default function CommentsUser() {
               </div>
             </div>
             <div className="mb-2">
-              <p className=" text-justify hyphens-auto">hola</p>
+              <p className=" text-justify hyphens-auto">bebeeeeeee</p>
             </div>
           </div>
           {/* {tweet.multimedia &&
                 <img src={tweet.multimedia} alt="" className="rounded-lg"/>
     } */}
         </div>
-        <Functionality />
+        <Functionality onClick={handleFunctionalityClick} tweetData={funcionalityIcons} />
       </article>
     </main>
   );

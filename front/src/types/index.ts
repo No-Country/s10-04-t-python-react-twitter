@@ -29,8 +29,12 @@ export interface ResultsApi {
   name?: string;
 }
 export interface TweetsInterface {
+  id:number
   contenido: string;
   multimedia: string;
   gif:string;
   created: string;
+  comentario_count?: number;
+  liked_count?: number;
+  retweet_count?: number;
 }

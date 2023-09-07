@@ -6,25 +6,34 @@ import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 import { postTweets } from "../../../services/postTweets/postTweets";
 
 export default function Header() {
-  
-  const { textArea, contentUser, selectImage, imageFile, setTextArea,setContentUser,setSelectImage,setImageFile } = usePostStore();
+  const {
+    textArea,
+    contentUser,
+    selectImage,
+    imageFile,
+    setTextArea,
+    setContentUser,
+    setSelectImage,
+  } = usePostStore();
   const navigate = useNavigate();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const handleClickBack = () => {
+    setTextArea("");
+    setContentUser("");
+    setSelectImage("");
     navigate("/home");
   };
 
   const { mutate } = useMutation({
     mutationFn: postTweets,
     onMutate: async (newTodo) => {
-      setTextArea("")
-      setContentUser("")
-      setSelectImage("")
-      setImageFile(null)
-      await queryClient.cancelQueries(['newtweets'])
-      const previousTodos = queryClient.getQueryData(['newtweets'])
-      await queryClient.setQueryData(['newtweets'], (old: unknown) => {
+      setTextArea("");
+      setContentUser("");
+      setSelectImage("");
+      await queryClient.cancelQueries(["newtweets"]);
+      const previousTodos = queryClient.getQueryData(["newtweets"]);
+      await queryClient.setQueryData(["newtweets"], (old: unknown) => {
         if (old === null) {
           return [newTodo];
         }
@@ -33,33 +42,31 @@ export default function Header() {
         }
         return old;
       });
-  
+
       return { previousTodos };
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['newtweets']
+        queryKey: ["newtweets"],
       });
-    }
+    },
   });
-    
 
- 
   const handleAddPost = () => {
     const postData = {
-      usuario: 1,
+      usuario: 2,
       contenido: textArea.trim() !== "" ? textArea : undefined,
       multimedia: imageFile,
-      gif: selectImage
+      gif: selectImage,
     };
-  
+
     const dataToSend = {
       usuario: postData.usuario,
       ...(postData.contenido && { contenido: postData.contenido }),
       ...(postData.multimedia && { multimedia: postData.multimedia }),
-      ...(postData.gif && {gif: postData.gif})
+      ...(postData.gif && { gif: postData.gif }),
     };
-  
+
     mutate(dataToSend);
     navigate("/home");
   };
@@ -74,6 +81,7 @@ export default function Header() {
           {HeaderBack}
         </Button>
         <Button
+          type="button"
           variant="primary"
           className={`${
             textArea === "" && contentUser === "" && selectImage === ""

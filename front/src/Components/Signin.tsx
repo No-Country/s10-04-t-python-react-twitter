@@ -2,9 +2,44 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../Hooks/useAppDispatch";
+import * as configSlices from "../redux/slices/config";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  // const authId = useAppSelector((state) => state.config.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  // console.log(userId)
+
+  const mutation = useMutation(async (formData: { [key: string]: string }) => {
+    console.log("formData", formData);
+    const response = await axios.post(
+      "http://15.229.1.136/users/api/login/",
+      formData,
+      {}
+    );
+    // dispatch(setAuth(response.data));
+    const data = response.data.id;
+    await dispatch(configSlices.setAuthId(data));
+    localStorage.setItem("userId", data);
+    navigate("/profile");
+    return response.data;
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formJson = Object.fromEntries(formData.entries());
+    mutation.mutate(formJson);
+    // navigate("/Profile")
+  };
+
+ 
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -14,27 +49,13 @@ const App: React.FC = () => {
     setIsModalOpen(false);
 
   };
-  // const bearerToken = "d38a98d8cbfaaded62439765c2a70e0c6a10c52f"
-  
-    const mutation = useMutation(
-      async formData => {
-        const response = await axios.post('http://15.229.1.136/users/api/login/', formData, {
-        });
-        return console.log(response.data); 
-     
-      }
-      
-    );
-  
-    const handleSubmit = event => {
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      const formJson = Object.fromEntries(formData.entries())
-      mutation.mutate(formJson);
-    };
 
   return (
     <>
+      {mutation.isError ? (
+        <div>An error occurred: {mutation.error.message}</div>
+      ) : null}
+      {mutation.isSuccess ? <div>Todo added!</div> : null}
       <div className="">
         <button
           data-modal-target="authentication-modal"
