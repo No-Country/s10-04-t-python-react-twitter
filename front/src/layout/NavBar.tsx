@@ -7,6 +7,7 @@ import {
   Explore,
 } from "../Components/Home/tweets/TweetIcons/Icons";
 import logo from "../assets/twitter-logo.svg";
+import Logout from "../Components/Logout";
 
 export default function NavBar(): JSX.Element {
   const [open, setOpen] = useState(false);
@@ -81,6 +82,11 @@ export default function NavBar(): JSX.Element {
                 {Explore}
                 <h1 className="text-xl">Explore</h1>
               </Link>
+              <div className="px-5 mt-7">
+                <div className="flex flex-row hover:bg-[#E7E7E8] rounded-full cursor-pointer px-5 py-3 justify-center">
+                  <Logout />
+                </div>
+              </div>
             </div>
           </div>
         </div>
