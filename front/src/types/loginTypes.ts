@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface FormDataSignin {
   email: string;
   password: string;
@@ -17,4 +19,10 @@ export interface UserResponseSignUp {
   id: string;
   name: string;
   email: string;
+}
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
 }
