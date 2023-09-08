@@ -1,42 +1,44 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { UpdateProfile } from "./UpdateProfile";
-import { ContenidoType } from "../../types/profileTypes";
-// import {Root} from '../../types/config'
+import { useAppSelector } from "../../Hooks/useAppSelector";
+import { getPostById } from "../../services/dataApi";
+import defaultUser from "../../assets/userDefault.png";
 
 export const InfoProfile: React.FC = () => {
-  const [contenido, setContenido] = useState<ContenidoType | null>(null);
-  const userId = 5;
-
-  async function getPostById() {
-    const response = await axios.get(
-      `http://15.229.1.136/users/api/detail/${userId}/`
-    );
-    const responseMap = response.data;
-    return setContenido(responseMap);
-  }
+  const dataPost = useAppSelector(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (state: { config: { access: any } }) => state.config.access || []
+  );
+  const id = localStorage.getItem("userId");
 
   useEffect(() => {
-    getPostById();
-  }, []);
+    getPostById({ id });
+  }, [id]);
 
-  console.log(contenido);
+  console.log(dataPost);
 
   return (
     <>
       <div className="mt-16 mx-2 bg-slate-300 h-[157px]">
-        {contenido && <img src={contenido.front_page} alt=""></img>}
+        {dataPost && <img src={dataPost.front_page} alt="" className="h-[157px] w-[100%]"></img>}
       </div>
       <div className="flex flex-row -mt-[50px] mx-5 justify-between">
-        {contenido && (
+        {dataPost && (
           <div className="">
-            <img
-              src={contenido?.avatar}
+            {/* <img
+              src={dataPost?.avatar}
               className="w-[100px] h-[100px] mr-3 rounded-full 
               bg-slate-400 cursor-pointer"
-            ></img>
+            ></img> */}
+            {dataPost?.avatar ? (
+                        <img src={dataPost?.avatar} alt="" className="w-[100px] h-[100px] mr-3 rounded-full 
+                        bg-slate-400 cursor-pointer"/>
+                    ) : (
+                        <img src={defaultUser} alt="" className="w-[100px] h-[100px] mr-3 rounded-full 
+                        bg-slate-400 cursor-pointer"/>
+                    )}
             <h1 className="text-center text-xl font-bold">
-              {contenido.firs_name}
+              {dataPost.firs_name}
             </h1>
           </div>
         )}
@@ -44,10 +46,10 @@ export const InfoProfile: React.FC = () => {
           <UpdateProfile />
         </div>
       </div>
-      {contenido ? (
+      {dataPost ? (
         <section className="flex flex-row">
-          <div className="mr-5">{contenido?.followers_count} Followers</div>
-          <div>{contenido?.following_count} Following</div>
+          <div className="mr-5">{dataPost?.followers_count} Followers</div>
+          <div>{dataPost?.following_count} Following</div>
         </section>
       ) : (
         <div>Cargando</div>

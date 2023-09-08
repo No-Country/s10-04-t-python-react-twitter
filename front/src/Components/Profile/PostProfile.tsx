@@ -6,12 +6,13 @@ import {
 } from "../../Components/Home/tweets/TweetIcons/Icons";
 import { useEffect } from "react";
 import { useAppSelector } from "../../Hooks/useAppSelector";
-import { getPostById } from "../../services/dataContext";
+import { getPostById } from "../../services/dataApi";
 import { ContenidoType } from "../../types/profileTypes";
+import defaultUser from "../../assets/userDefault.png";
 
 export const PostProfile: React.FC = () => {
   const navigate = useNavigate();
-  const contenido = useAppSelector(
+  const dataPost = useAppSelector(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state: { config: { access: any } }) => state.config.access || []
   );
@@ -23,34 +24,36 @@ export const PostProfile: React.FC = () => {
 
   return (
     <>
-      {contenido.length !== 0 ? (
-        contenido.tweets
-          .slice()
-          .reverse()
-          .map((cont: ContenidoType, index: number) => (
-            <main key={index}>
+      <main>
+        {dataPost.length !== 0 ? (
+          dataPost.tweets
+            .slice()
+            .reverse()
+            .map((data: ContenidoType, index: number) => (
               <article
+                key={index}
                 className="py-3 px-4  h-auto border-2 border-gray-100
        hover:bg-gray-100 cursor-pointer"
               >
                 <div className="grid grid-flow-col">
-                  {contenido && (
-                    <Tooltip>
+                  <Tooltip>
+                    {dataPost?.avatar ? (
                       <div className="col-span-1 w-10 mr-3">
-                        <img
-                          src={contenido?.avatar}
-                          className="rounded-full"
-                        ></img>
+                        <img src={dataPost?.avatar} alt="" />
                         <Link to="#" className="w-10 h-10 " />
                       </div>
-                    </Tooltip>
-                  )}
+                    ) : (
+                      <div className="col-span-1 w-10 mr-3">
+                        <img src={defaultUser} alt="" />
+                      </div>
+                    )}
+                  </Tooltip>
                   <div className="col-span-1 ">
                     <div className="flex justify-between ">
                       <div className="flex gap-1 items-center">
                         <Tooltip>
                           <span className="hover:underline">
-                            {contenido.firs_name}
+                            {dataPost.firs_name}
                           </span>
                         </Tooltip>
                         <span className="mb-2">.</span>
@@ -67,38 +70,39 @@ export const PostProfile: React.FC = () => {
                       </div>
                     </div>
                     <div className="mb-2">
-                      <p>{cont.contenido}</p>
+                      <p>{data.contenido}</p>
                     </div>
 
-                    {cont.multimedia ? (
+                    {data.multimedia ? (
                       <img
-                        src={cont.multimedia}
+                        src={data.multimedia}
                         alt=""
                         className="rounded-lg"
                       />
                     ) : (
-                      <img src={cont.gif} alt="" className="rounded-lg" />
+                      <img src={data.gif} alt="" className="rounded-lg" />
                     )}
 
                     {/* <Functionality/> */}
                   </div>
                 </div>
               </article>
-              <div data-dial-init className="fixed right-6 bottom-6 group">
-                <div
-                  className="w-14 h-14 bg-blue-500 rounded-full flex 
+            ))
+        ) : (
+          <div>Cargando!</div>
+        )} 
+        {/* {dataPost.tweets.length === 0 && (<div className="text-slate-400 text-xl">Aún no tienes ningún tweet</div>)} */}
+        <div data-dial-init className="fixed right-6 bottom-6 group">
+          <div
+            className="w-14 h-14 bg-blue-500 rounded-full flex 
           items-center 
     justify-center cursor-pointer"
-                  onClick={() => navigate("/posttweets")}
-                >
-                  {GoToPost}
-                </div>
-              </div>
-            </main>
-          ))
-      ) : (
-        <div>Cargando!</div>
-      )}
+            onClick={() => navigate("/posttweets")}
+          >
+            {GoToPost}
+          </div>
+        </div>
+      </main>
     </>
   );
 };
