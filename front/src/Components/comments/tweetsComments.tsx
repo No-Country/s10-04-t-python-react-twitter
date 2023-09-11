@@ -7,6 +7,7 @@ import useSelectedTweet from "../../Hooks/Home/useSelectedTweet";
 import useImageModal from "../../Hooks/imageModal";
 import ImageModal from "../Home/tweets/ImageModal";
 import UserInformation from "../../Hooks/userInformation";
+import usePostStore from "../../Hooks/Home/postStore/usePostStore";
 
 
 export default function CommentsTweets() {
@@ -14,8 +15,19 @@ export default function CommentsTweets() {
   const { data } = useSelectedTweet()
   const {openImage,enlargedImage, closeImage} = useImageModal()
   console.log(data)
-  
+const {tweet_id}=usePostStore()
   const {firs_name,avatar,} = UserInformation()
+
+
+  const tweetData = {
+    id: tweet_id,
+    comentario_count :data?.data.comentario_count,
+    usuario: {
+      firs_name: firs_name,
+      avatar: avatar, 
+    },
+
+  }
 
   
 
@@ -68,7 +80,7 @@ export default function CommentsTweets() {
     }
       </article>
       <div className="border-b-2 border-gray-100">
-      <Functionality tweetData={data?.data}/>
+      <Functionality tweetData={tweetData}/>
       </div>
       <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
       </>
