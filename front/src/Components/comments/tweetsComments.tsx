@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+
 import Tooltip from "../Home/tweets/tooltip";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
 import BackButton from "./BackButton";
@@ -6,40 +6,24 @@ import Functionality from "../Home/tweets/tweetsFunctionality";
 import useSelectedTweet from "../../Hooks/Home/useSelectedTweet";
 import useImageModal from "../../Hooks/imageModal";
 import ImageModal from "../Home/tweets/ImageModal";
-import usePostStore from "../../Hooks/Home/postStore/usePostStore";
-interface comments {
-  tweet_original:number
-}
+import UserInformation from "../../Hooks/userInformation";
+
 
 export default function CommentsTweets() {
   
   const { data } = useSelectedTweet()
-  const navigate = useNavigate()
-  const {setTweet_id} = usePostStore()
   const {openImage,enlargedImage, closeImage} = useImageModal()
+  console.log(data)
+  
+  const {firs_name,avatar,} = UserInformation()
 
-  const handleFunctionalityClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setTweet_id(data?.data.tweet_original)
-    
-     navigate("/replycomments");
-  };
- 
+  
 
- 
-  const commentIds = data?.data.comentario.map((coment:comments) => coment.tweet_original);
-
-
-  const selectedId = commentIds?.length > 0 ? commentIds[0] : null; //
-
-const tweetData = {
-  id: selectedId,
-  likes: data?.data.likes,
-  comentario_count: data?.data.comentario_count || 0,
-};
 
   return (
+    
     <main className="" >
+        <>
       <article
         className="py-3 px-4  h-auto border-2 border-gray-100"
       >
@@ -47,12 +31,11 @@ const tweetData = {
         <div className=" flex flex-row ">
           <div className=" w-10 mr-3 grid">
             <Tooltip>
-              <div
+              <img
+              src={avatar}
                 className="w-10 h-10 mr-3 rounded-full 
               bg-black cursor-pointer"
-              >
-                <Link to="#" className="w-10 h-10 " />
-              </div>
+              />
             </Tooltip>
           </div>
           
@@ -60,8 +43,8 @@ const tweetData = {
               <div className="flex gap-1 items-center">
                 <Tooltip>
                   <div className="flex flex-col">
-                    <span className="hover:underline">Ever Rojas</span>
-                    <span>@EverRojas</span>
+                    <span className="hover:underline">{firs_name}</span>
+                    <span>@{firs_name}</span>
                   </div>
                 </Tooltip>
               </div>
@@ -85,9 +68,10 @@ const tweetData = {
     }
       </article>
       <div className="border-b-2 border-gray-100">
-      <Functionality onClick={handleFunctionalityClick} tweetData={tweetData}/>
+      <Functionality tweetData={data?.data}/>
       </div>
       <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
+      </>
     </main>
   );
 }

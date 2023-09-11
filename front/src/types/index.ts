@@ -37,4 +37,9 @@ export interface TweetsInterface {
   comentario_count?: number;
   liked_count?: number;
   retweet_count?: number;
+  usuario?:{
+    firs_name: string,
+    avatar: string
+  }
+  
 }

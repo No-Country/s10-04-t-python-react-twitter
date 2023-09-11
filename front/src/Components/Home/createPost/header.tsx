@@ -4,8 +4,16 @@ import { HeaderBack } from "./Icons/headerBack";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
 import { postTweets } from "../../../services/postTweets/postTweets";
+import { getPostById } from "../../../services/dataContext";
+import { useEffect } from "react";
 
 export default function Header() {
+  const id = localStorage.getItem("userId");
+ 
+  useEffect(() => {
+    getPostById(id);
+  }, [id]);
+
   const {
     textArea,
     contentUser,
@@ -14,6 +22,7 @@ export default function Header() {
     setTextArea,
     setContentUser,
     setSelectImage,
+    setImageFile
   } = usePostStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -22,39 +31,54 @@ export default function Header() {
     setTextArea("");
     setContentUser("");
     setSelectImage("");
+    setImageFile(null)
     navigate("/home");
   };
+  
 
-  const { mutate } = useMutation({
+
+  const { mutate, } = useMutation({
     mutationFn: postTweets,
-    onMutate: async (newTodo) => {
-      setTextArea("");
-      setContentUser("");
-      setSelectImage("");
-      await queryClient.cancelQueries(["newtweets"]);
-      const previousTodos = queryClient.getQueryData(["newtweets"]);
-      await queryClient.setQueryData(["newtweets"], (old: unknown) => {
-        if (old === null) {
-          return [newTodo];
-        }
-        if (Array.isArray(old)) {
-          return [...old, newTodo];
-        }
-        return old;
-      });
+    // onMutate: async (newPost) => {
+    //   await queryClient.cancelQueries(['newtweets'])
+    //   const previousTodos = queryClient.getQueryData(['newtweets']);
 
-      return { previousTodos };
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: ["newtweets"],
-      });
-    },
+    //   // const newItem = {
+    //   //   id:Math.random(),
+    //   //   firs_name:newPost.firs_name,
+    //   //   avatar: avatar,
+    //   //   usuario: firs_name,
+    //   //   ...(newPost.contenido && { contenido: newPost.contenido }),
+    //   //   ...(newPost.multimedia && { multimedia: newPost.multimedia }),
+    //   //   ...(newPost.gif && { gif: newPost.gif }),
+  
+    //   // };
+    //   // console.log(newItem)
+    //   console.log(newPost)
+    //   console.log(previousTodos)
+    //    if(previousTodos) {
+    //     queryClient.setQueryData(['newtweets'], {
+    //       ...(previousTodos || {}), 
+    //       data: [...(previousTodos?.data || []),{}], 
+    //     });
+    //   }
+
+
+    //   return { previousTodos };
+    // },
+    // onSuccess: async (newTweet) => {
+    //   // eslint-disable-next-line no-unsafe-optional-chaining
+    //   await queryClient.setQueryData( ['newtweets'], (old) => [...old?.data, newTweet]);
+
+    // },
+
+     onSettled: () => {
+       queryClient.invalidateQueries(['newtweets']);
+     },
   });
-
   const handleAddPost = () => {
     const postData = {
-      usuario: 2,
+      usuario: id,
       contenido: textArea.trim() !== "" ? textArea : undefined,
       multimedia: imageFile,
       gif: selectImage,
@@ -66,13 +90,19 @@ export default function Header() {
       ...(postData.multimedia && { multimedia: postData.multimedia }),
       ...(postData.gif && { gif: postData.gif }),
     };
-
+    
     mutate(dataToSend);
-    navigate("/home");
+    setTextArea("");
+    setContentUser("");
+    setSelectImage("");
+    setImageFile(null)
+    navigate("/home")
+    
   };
 
   return (
     <header>
+
       <form
         className="flex flex-row justify-between items-center px-4 "
         // onSubmit={handleSubmit}

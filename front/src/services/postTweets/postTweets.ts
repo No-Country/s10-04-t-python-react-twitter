@@ -1,10 +1,11 @@
 import axios from "axios";
 
-type AddPost = {
-    usuario: number
-    multimedia?: File 
-    contenido?: string
-    gif?: string
+export type AddPost = {
+  
+    usuario: string | null
+    multimedia?: File | null 
+    contenido?: string | null
+    gif?: string | null
   }
 
 

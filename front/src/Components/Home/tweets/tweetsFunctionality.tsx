@@ -1,42 +1,40 @@
-import { useNavigate } from "react-router-dom";
+
 import { Message, Retweet, Like, Share } from "./TweetIcons/Icons";
 import React from "react";
-import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
-// import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
+import useFuncionalityComments from "../../../Hooks/Home/funcinality";
 interface funcionality {
   comentario_count?: number;
   liked_count?: number;
   retweet_count?: number;
   id:number | null;
+  usuario?:{
+    firs_name:string;
+    avatar:string
+  }
+  contenido?:string
 }
 export default function Functionality({
-  onClick,
+ 
   tweetData,
 }: {
-  onClick: (e: React.MouseEvent) => void;
   tweetData: funcionality;
 }): JSX.Element {
-  const {setTweet_id} = usePostStore()
-  const navigate = useNavigate();
-  const handleFunctionalityClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setTweet_id(tweetData.id);
-    console.log(tweetData.id)
-  };
+
+ const {handleFunctionalityClick } = useFuncionalityComments (tweetData)
+ const handleRetweetClick = (e:React.MouseEvent) =>{
+  e.stopPropagation()
+ }
  
   return (
     <div
-      onClick={onClick}
       className="flex flex-row items-center justify-between gap-2 mt-3"
     >
       <div className="flex flex-row items-center gap-1 group">
         <div
           className="flex w-[35px] h-[35px] items-center 
         justify-center group-hover:bg-blue-100 rounded-full cursor-pointer"
-          onClick={(e) => {
-            handleFunctionalityClick(e);
-            navigate("/replycomments");
-          }}
+          onClick={
+            handleFunctionalityClick}
         >
           {Message}
         </div>
@@ -49,8 +47,8 @@ export default function Functionality({
         >
           {tweetData?.comentario_count}
         </span>
-      </div>
-      <div className="flex flex-row items-center gap-1 group">
+      </div >
+      <div onClick={handleRetweetClick} className="flex flex-row items-center gap-1 group">
         <div
           className="flex w-[35px] h-[35px] items-center 
         justify-center group-hover:bg-blue-100 rounded-full cursor-pointer"
@@ -67,7 +65,7 @@ export default function Functionality({
           {tweetData?.retweet_count}
         </span>
       </div>
-      <div className="flex flex-row items-center gap-1 group">
+      <div onClick={handleRetweetClick} className="flex flex-row items-center gap-1 group">
         <div
           className="flex w-[35px] h-[35px] items-center 
         justify-center group-hover:bg-red-100 rounded-full cursor-pointer"
@@ -91,7 +89,7 @@ export default function Functionality({
             </div>
             <span className="group-hover:text-blue-400">2</span>
           </div> */}
-      <div className="flex flex-row items-center group">
+      <div onClick={handleRetweetClick} className="flex flex-row items-center group">
         <div
           className="flex w-[35px] h-[35px] items-center 
         justify-center group-hover:bg-blue-100 rounded-full cursor-pointer"

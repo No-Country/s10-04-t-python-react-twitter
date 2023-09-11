@@ -46,6 +46,6 @@ interface IgetPostById {
           setAccess(data)
           return data;
     } catch (error) {
-      alert('No se pudo cargar la vista home')
+      // alert('No se pudo cargar la vista home')
     }
   }

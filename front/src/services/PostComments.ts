@@ -2,7 +2,7 @@
 import { axiosWithAuth } from "./configHeader"
 
 interface addComment {
-    usuario:number | null
+    usuario:string | null
     tweet_original:number | null
     content:string
     multimedia: File | null 
@@ -18,7 +18,7 @@ export async function postComment(newComment: addComment) {
         formData.append('usuario', Number(newComment.usuario).toString());
         formData.append('tweet_original', Number(newComment.tweet_original).toString());
   
-        if (newComment.content) {
+        if (newComment.content && newComment.content.trim() !== "") {
           formData.append('content', newComment.content);
         }
   

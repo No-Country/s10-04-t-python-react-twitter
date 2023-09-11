@@ -12,11 +12,11 @@ export interface TweetsInterface {
   }
 
   export default function useTweets() {
-    const { data } = useQuery({
+    const { data, isLoading } = useQuery({
       queryKey: ['newtweets'],
       queryFn: getTweets,
     });
-    return{data}
+    return{data, isLoading}
 }
   
 //     if (data) {

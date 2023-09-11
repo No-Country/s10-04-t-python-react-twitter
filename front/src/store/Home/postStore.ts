@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface gifState {
     searchText: string;
@@ -31,7 +32,9 @@ const usePostStore = create<gifState>((set) => ({
     setSelectImage:(img) => set({ selectImage: img }),
   }))
 
-  export const useTweetPost = create<tweetPost>((set) => ({
+  export const useTweetPost = create<tweetPost>()(
+    persist(
+    (set) => ({
     tweet_id: null,
     contentUser: "",
     textArea:"",
@@ -39,8 +42,16 @@ const usePostStore = create<gifState>((set) => ({
     setContentUser:(contentUser) => set({contentUser:contentUser}),
     setTextArea:(textArea) => set({textArea:textArea}),
     setImageFile:(img) => set({imageFile:img}),
-    setTweet_id:(id) => set({tweet_id:id})
-  }))
+    setTweet_id:(id) => set({tweet_id:id}),
+  }),
+    {
+      name: 'user-tweets',
+      storage: createJSONStorage(() => sessionStorage),
+    }
+    )
+    )
+   
+ 
 
 
 export default usePostStore;
