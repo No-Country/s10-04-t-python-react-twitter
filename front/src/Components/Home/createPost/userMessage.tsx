@@ -17,7 +17,7 @@ export default function UserMessage() {
   useEffect(() => {
     getPostById({id})
   },
-  [])
+  [id])
   const [selectOption, setSelectedOption] = useState("todos");
   const {
     textArea,
