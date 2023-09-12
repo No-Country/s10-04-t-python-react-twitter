@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GifEmojiFileDisplay from "../Home/createPost/GifEmojiFileDisplay";
 import usePostStore from "../../Hooks/Home/postStore/usePostStore";
 import { closeIcon } from "../Home/createPost/Icons/closeIcon";
+import { useAppSelector } from "../../Hooks/useAppSelector";
+import { getPostById } from "../../services/dataApi";
 
 export default function MessageReply() {
+  const dataPost = useAppSelector(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (state: { config: { access: any } }) => state.config.access || []
+  );
+  const id = localStorage.getItem("userId");
+
+  useEffect(() => {
+    getPostById({id})
+  },
+  [id])
+  
   const [close, setClose] = useState(false);
   const {
     setContentUser,
@@ -23,7 +36,7 @@ export default function MessageReply() {
   return (
     <section className="grid grid-flow-row auto-rows-max px-4 pt-4 mt-3">
       <div className="grid grid-cols-[40px,1fr]">
-        <div className="w-10 h-10 rounded-full bg-black cursor-pointer"></div>
+        <img src={dataPost?.avatar} className="w-10 h-10 rounded-full bg-black cursor-pointer" />
         <div className="flex flex-col ml-3">
           <textarea
             className="border-0 focus:ring-white

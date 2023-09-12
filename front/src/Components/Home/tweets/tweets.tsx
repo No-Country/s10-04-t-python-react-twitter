@@ -2,35 +2,39 @@ import { Ellipse, GoToPost } from "./TweetIcons/Icons";
 import Functionality from "./tweetsFunctionality";
 import Tooltip from "./tooltip";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import { TweetsInterface } from "../../../types";
 import TimeAgo from "./timeAgo";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
-import { closeIcon } from "../createPost/Icons/closeIcon";
-
 import useTweets from "../../../Hooks/Home/usetweets";
-
+import ImageModal from "./ImageModal";
+import useImageModal from "../../../Hooks/imageModal";
+import LoadingComponent from "../../LoadingComponent";
+import UserInformation from "../../../Hooks/userInformation";
 
 
 export default function Tweets(): JSX.Element {
   const navigate = useNavigate();
   const {setTweet_id}=usePostStore()
-  const { data } = useTweets()
-  // console.log(data)
-  const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+  const { data, isLoading } = useTweets()
+ const {openImage,enlargedImage, closeImage} = useImageModal()
+ const {setFirs_name,setAvatar,setContenido} = UserInformation()
 
-  const openImage = (imageSrc: string) => {
-    setEnlargedImage(imageSrc);
-  };
+if(isLoading) return <LoadingComponent/>
 
-  const closeImage = () => {
-    setEnlargedImage(null);
-  };
-
-  const handleClickId = (id:number) =>{
-    setTweet_id(id)
-    console.log(id);
+  const handleClickId = ( id: number,
+    firs_name: string,
+    avatar: string,
+    contenido: string,
+    // gif: string | undefined,
+    // multimedia: string | undefined)
+  )=> {
+    setTweet_id(id);
+    setFirs_name(firs_name);
+    setAvatar(avatar);
+    setContenido(contenido)
     navigate("/comments")
+    
 
   }
   const handleProfileClick = (e:React.MouseEvent) => {
@@ -41,37 +45,43 @@ export default function Tweets(): JSX.Element {
     e.stopPropagation();
    
   };
-  const handleFunctionalityClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
+  // const tweeData = {
+  //   id:tweet_id,
+  //   usuario:data?.data.map(name =>name.usuario?.firs_name)
+  // }
+
   return (
     <main>
-      {data?.data
-        ?.slice()
+      {data?.data.slice()
         .reverse()
         .map((tweet: TweetsInterface) => (
           <React.Fragment key={tweet.id}>
             <article
               className="py-3 px-4  h-auto border-2 border-gray-100
        hover:bg-gray-100 cursor-pointer"
-              onClick={() => handleClickId(tweet.id) }
+              onClick={() => handleClickId( tweet.id,
+                tweet.usuario?.firs_name || "",
+                tweet.usuario?.avatar || "",
+                tweet.contenido || "",
+                ) }
             >
               <div className="grid grid-cols-[40px,1fr] ">
                 <div className=" w-10 mr-3 grid " >
                   <Tooltip>
-                    <div
+                    <img
+                    src={tweet.usuario?.avatar}
                       className="w-10 h-10 mr-3 rounded-full 
               bg-black cursor-pointer"
               onClick={handleProfileClick}
                     >
-                    </div>
+                    </img>
                   </Tooltip>
                 </div>
                 <div className="flex flex-col ml-3 ">
                   <div className="flex gap-1 items-center">
                     <Tooltip>
-                      <span className="hover:underline">Ever Rojas</span>
-                      <span>@EverRojas</span>
+                      <span className="hover:underline">{tweet.usuario?.firs_name}</span>
+                      <span>@{tweet.usuario?.firs_name}</span>
                     </Tooltip>
                     <span className="mb-2">.</span>
                     <span className="">
@@ -105,7 +115,7 @@ export default function Tweets(): JSX.Element {
                 </div>
               </div>
             
-              <Functionality onClick={handleFunctionalityClick} tweetData={tweet} />
+              <Functionality  tweetData={tweet} />
             </article>
             </React.Fragment>
         ))}
@@ -119,23 +129,7 @@ export default function Tweets(): JSX.Element {
                 {GoToPost}
               </div>
             </div>
-         {enlargedImage && (
-        <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black z-50">
-          <div className=" relative w-screen h-screen">
-            <img
-              src={enlargedImage}
-              alt="Enlarged Image"
-              className="w-full h-full object-contain rounded-lg"
-            />
-            <button
-              onClick={closeImage}
-              className="absolute top-0 left-0 m-4 p-2 rounded-full hover:bg-gray-100 focus:outline-none"
-            >
-              {closeIcon}
-              </button>
-          </div>
-        </div>
-      )}
+        <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
     </main>
   );
 }

@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorldIcon } from "./Icons/worldIcon";
 import { securityIcon } from "./Icons/securityIcon";
 import GifEmojiFileDisplay from "./GifEmojiFileDisplay";
 import { closeIcon } from "./Icons/closeIcon";
 import usePostStore from "../../../Hooks/Home/postStore/usePostStore";
+import { useAppSelector } from "../../../Hooks/useAppSelector";
+import { getPostById } from "../../../services/dataApi";
 
 export default function UserMessage() {
+  const dataPost = useAppSelector(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (state: { config: { access: any } }) => state.config.access || []
+  );
+  const id = localStorage.getItem("userId");
+
+  useEffect(() => {
+    getPostById({id})
+  },
+  [])
   const [selectOption, setSelectedOption] = useState("todos");
   const {
     textArea,
@@ -32,7 +44,7 @@ export default function UserMessage() {
   return (
     <section className="grid grid-flow-row auto-rows-max px-4 pt-4">
       <div className="grid grid-cols-[40px,1fr]">
-        <div className="w-10 h-10 rounded-full bg-black cursor-pointer"></div>
+        <img src={dataPost?.avatar} className="w-10 h-10 rounded-full bg-black cursor-pointer" />
         <div className="flex flex-col ml-3">
           <select
             className=" w-[108px] h-10 border-1 flex items-center 
