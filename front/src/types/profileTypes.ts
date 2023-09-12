@@ -25,3 +25,11 @@ export interface FormDataProfile {
     bio: string;
     location: string;
 }
+
+export interface AvatarInterface {
+  avatar: string | null
+}
+
+export interface FrontPageInterface {
+  front_page: string | null
+}

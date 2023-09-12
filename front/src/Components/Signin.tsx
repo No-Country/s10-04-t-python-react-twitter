@@ -15,7 +15,6 @@ const App: React.FC = () => {
 
 
   const mutation = useMutation(async (formData: FormDataSignin) => {
-    console.log("formData", formData);
     const response = await axios.post<UserResponseSignin>(
       "http://15.229.1.136/users/api/login/",
       formData

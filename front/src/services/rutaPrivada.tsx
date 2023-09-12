@@ -17,6 +17,5 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': 'http://127.0.0.1:5173'
     },} );
-  console.log(response.data)
   return response.data;
 };

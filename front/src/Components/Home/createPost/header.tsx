@@ -9,9 +9,9 @@ import { useEffect } from "react";
 
 export default function Header() {
   const id = localStorage.getItem("userId");
- 
+
   useEffect(() => {
-    getPostById({id});
+    getPostById({ id });
   }, [id]);
 
   const {
@@ -22,7 +22,7 @@ export default function Header() {
     setTextArea,
     setContentUser,
     setSelectImage,
-    setImageFile
+    setImageFile,
   } = usePostStore();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -31,13 +31,11 @@ export default function Header() {
     setTextArea("");
     setContentUser("");
     setSelectImage("");
-    setImageFile(null)
+    setImageFile(null);
     navigate("/home");
   };
-  
 
-
-  const { mutate, } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: postTweets,
     // onMutate: async (newPost) => {
     //   await queryClient.cancelQueries(['newtweets'])
@@ -51,18 +49,17 @@ export default function Header() {
     //   //   ...(newPost.contenido && { contenido: newPost.contenido }),
     //   //   ...(newPost.multimedia && { multimedia: newPost.multimedia }),
     //   //   ...(newPost.gif && { gif: newPost.gif }),
-  
+
     //   // };
     //   // console.log(newItem)
     //   console.log(newPost)
     //   console.log(previousTodos)
     //    if(previousTodos) {
     //     queryClient.setQueryData(['newtweets'], {
-    //       ...(previousTodos || {}), 
-    //       data: [...(previousTodos?.data || []),{}], 
+    //       ...(previousTodos || {}),
+    //       data: [...(previousTodos?.data || []),{}],
     //     });
     //   }
-
 
     //   return { previousTodos };
     // },
@@ -72,9 +69,9 @@ export default function Header() {
 
     // },
 
-     onSettled: () => {
-       queryClient.invalidateQueries(['newtweets']);
-     },
+    onSettled: () => {
+      queryClient.invalidateQueries(["newtweets"]);
+    },
   });
   const handleAddPost = () => {
     const postData = {
@@ -90,19 +87,17 @@ export default function Header() {
       ...(postData.multimedia && { multimedia: postData.multimedia }),
       ...(postData.gif && { gif: postData.gif }),
     };
-    
+
     mutate(dataToSend);
     setTextArea("");
     setContentUser("");
     setSelectImage("");
-    setImageFile(null)
-    navigate("/home")
-    
+    setImageFile(null);
+    navigate("/home");
   };
 
   return (
     <header>
-
       <form
         className="flex flex-row justify-between items-center px-4 "
         // onSubmit={handleSubmit}

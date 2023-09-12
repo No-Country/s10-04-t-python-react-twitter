@@ -6,11 +6,13 @@ import { getPostById } from "../services/dataApi";
 import { useAppSelector } from "../Hooks/useAppSelector";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FormDataProfile } from "../types/profileTypes";
+import { backIcon } from "../Components/Home/createPost/Icons/GifEmojiFileIcon";
+import { AvatarInterface } from "../types/profileTypes";
+import { FrontPageInterface } from "../types/profileTypes";
 
 export default function SetUp() {
-
   const id = localStorage.getItem("userId");
   const dataPost = useAppSelector(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,34 +23,42 @@ export default function SetUp() {
   const avatarRef = useRef<HTMLInputElement | null>(null);
   const [avatarFile, setAvatarFile] = useState(null);
   const [frontPageFile, setFrontPageAvatarFile] = useState(null);
-  // const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [imageSrc, setImageSrc] = useState<AvatarInterface | null>({
+    avatar: null,
+  });
+  const [frontImageSrc, setFrontImageSrc] = useState<FrontPageInterface | null>(
+    { front_page: null }
+  );
 
   const mutation = useMutation(async (formData: FormDataProfile) => {
-    console.log("formData", formData);
     const response = await axios.put(
       `http://15.229.1.136/users/api/update/${id}/`,
       formData
     );
-    console.log(response);
-
+    if (response.status == 200) {
+      navigate("/profile");
+    }
     return response.data;
   });
 
-  const handleFileUploadAvatar = (event:any) => {
+  const handleFileUploadAvatar = (event: any) => {
     const file = event.target.files[0];
     if (file) {
       setAvatarFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImageSrc({ avatar: imageUrl });
     }
   };
 
-  const handleFileUpload = (event:any) => {
+  const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
     if (file) {
       setFrontPageAvatarFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setFrontImageSrc({ front_page: imageUrl });
     }
   };
-
-  console.log(avatarFile);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,7 +69,6 @@ export default function SetUp() {
     if (frontPageFile) {
       formData.set("front_page", frontPageFile);
     }
-    
     mutation.mutate(formData as unknown as FormDataProfile);
   };
 
@@ -78,14 +87,11 @@ export default function SetUp() {
       frontPageRef.current.click();
     }
   };
-  // const prueba = () => {
-  //   navigate("/profile")
-  // }
 
   return (
     <>
       <Link to="/Profile" className="m-4 my-7">
-        BACK
+        {backIcon}
       </Link>
       <h2 className="font-bold flex justify-center text-2xl">
         Actualiza tus Datos
@@ -123,13 +129,14 @@ export default function SetUp() {
             Imagen de Fondo:
           </label>
           <section className="max-w-[598px] flex flex-col items-center">
-            {/* <div className="border border-slate-500 w-[] h-[157px] flex justify-center items-center"> */}
             <img
               className="h-[157px] w-[598px] flex justify-center items-center mx-1"
-              src={dataPost?.front_page}
+              src={
+                frontPageFile ? frontImageSrc?.front_page : dataPost?.front_page
+              }
             ></img>
-            {/* </div> */}
             <button
+              type="button"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 m-3"
               onClick={handleClick2}
             >
@@ -148,11 +155,11 @@ export default function SetUp() {
           <label className="m-1 font-semibold md:text-2xl">Avatar:</label>
           <section className="flex flex-row items-center">
             <img
-              src={dataPost?.avatar}
+              src={avatarFile ? imageSrc?.avatar : dataPost?.avatar}
               className=" w-[200px] h-[200px] rounded-[50%] flex justify-center items-center"
             ></img>
-            {/* <section> */}
             <button
+              type="button"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 m-3"
               onClick={handleClick}
             >
@@ -164,7 +171,6 @@ export default function SetUp() {
                 hidden
               />
             </button>
-            {/* </section> */}
           </section>
           <section className="w-[70%] flex flex-col items-center md:flex-row md:justify-around md:mt-3">
             <label className="m-1 font-semibold md:text-2xl">Nacimiento:</label>
@@ -195,7 +201,6 @@ export default function SetUp() {
           </section>
           <div>
             <button
-              // onClick={prueba}
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 my-4"
             >

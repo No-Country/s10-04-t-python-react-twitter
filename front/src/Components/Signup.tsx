@@ -37,14 +37,12 @@ const SignUp: React.FC = () => {
   };
 
   const mutation = useMutation(async (formData: FormDataSignUp) => {
-    console.log(formData);
-
     const response = await axios.post<UserResponseSignUp>(
       "http://15.229.1.136/users/api/register/",
       formData
     );
 
-    return console.log(response);
+    return response;
   });
 
   const handleSubmit2 = (event: React.FormEvent<HTMLFormElement>) => {
