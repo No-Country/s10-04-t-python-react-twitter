@@ -40,7 +40,7 @@ class TweetViewSet(generics.ListCreateAPIView):
 
 class CitaViewSet(generics.ListCreateAPIView):
     
-    pagination_class = PersonPaginationSerializer
+    #pagination_class = PersonPaginationSerializer
     queryset = Cita.objects.all()
     serializer_class = CitaSerializer
 
