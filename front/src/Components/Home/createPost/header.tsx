@@ -37,38 +37,6 @@ export default function Header() {
 
   const { mutate } = useMutation({
     mutationFn: postTweets,
-    // onMutate: async (newPost) => {
-    //   await queryClient.cancelQueries(['newtweets'])
-    //   const previousTodos = queryClient.getQueryData(['newtweets']);
-
-    //   // const newItem = {
-    //   //   id:Math.random(),
-    //   //   firs_name:newPost.firs_name,
-    //   //   avatar: avatar,
-    //   //   usuario: firs_name,
-    //   //   ...(newPost.contenido && { contenido: newPost.contenido }),
-    //   //   ...(newPost.multimedia && { multimedia: newPost.multimedia }),
-    //   //   ...(newPost.gif && { gif: newPost.gif }),
-
-    //   // };
-    //   // console.log(newItem)
-    //   console.log(newPost)
-    //   console.log(previousTodos)
-    //    if(previousTodos) {
-    //     queryClient.setQueryData(['newtweets'], {
-    //       ...(previousTodos || {}),
-    //       data: [...(previousTodos?.data || []),{}],
-    //     });
-    //   }
-
-    //   return { previousTodos };
-    // },
-    // onSuccess: async (newTweet) => {
-    //   // eslint-disable-next-line no-unsafe-optional-chaining
-    //   await queryClient.setQueryData( ['newtweets'], (old) => [...old?.data, newTweet]);
-
-    // },
-
     onSettled: () => {
       queryClient.invalidateQueries(["newtweets"]);
     },
@@ -98,10 +66,7 @@ export default function Header() {
 
   return (
     <header>
-      <form
-        className="flex flex-row justify-between items-center px-4 "
-        // onSubmit={handleSubmit}
-      >
+      <form className="flex flex-row justify-between items-center px-4 ">
         <Button variant="secondary" onClick={handleClickBack}>
           {HeaderBack}
         </Button>

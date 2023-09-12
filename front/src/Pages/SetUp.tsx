@@ -15,7 +15,6 @@ import { FrontPageInterface } from "../types/profileTypes";
 export default function SetUp() {
   const id = localStorage.getItem("userId");
   const dataPost = useAppSelector(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state: { config: { access: any } }) => state.config.access || []
   );
 
@@ -33,7 +32,7 @@ export default function SetUp() {
 
   const mutation = useMutation(async (formData: FormDataProfile) => {
     const response = await axios.put(
-      `http://15.229.1.136/users/api/update/${id}/`,
+      `http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/update/${id}/`,
       formData
     );
     if (response.status == 200) {

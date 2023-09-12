@@ -1,6 +1,5 @@
 import axios from "axios";
 import { setAccess } from "../redux/actions/config";
-// import { useMutation } from "@tanstack/react-query";
 
 interface IgetPostById {
   id: string | null;
@@ -9,7 +8,7 @@ interface IgetPostById {
 export const getPostById = async ({ id }: IgetPostById) => {
   try {
     const response = await axios.get(
-      `http://15.229.1.136/users/api/detail/${id}/`
+      `http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/detail/${id}/`
     );
     const data = response.data;
     setAccess(data);
@@ -18,4 +17,3 @@ export const getPostById = async ({ id }: IgetPostById) => {
     alert("No se pudo cargar la vista home");
   }
 };
-

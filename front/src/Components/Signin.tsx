@@ -16,12 +16,13 @@ const App: React.FC = () => {
 
   const mutation = useMutation(async (formData: FormDataSignin) => {
     const response = await axios.post<UserResponseSignin>(
-      "http://15.229.1.136/users/api/login/",
+      "http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/login/",
       formData
     );
     const data = response.data.id;
     await dispatch(configSlices.setAuthId(data));
     localStorage.setItem("userId", data);
+    // localStorage.setItem("userId", data);
     navigate("/profile");
     return response.data;
   });

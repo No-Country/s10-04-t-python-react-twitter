@@ -12,75 +12,71 @@ import useImageModal from "../../../Hooks/imageModal";
 import LoadingComponent from "../../LoadingComponent";
 import UserInformation from "../../../Hooks/userInformation";
 
-
 export default function Tweets(): JSX.Element {
   const navigate = useNavigate();
-  const {setTweet_id}=usePostStore()
-  const { data, isLoading } = useTweets()
- const {openImage,enlargedImage, closeImage} = useImageModal()
- const {setFirs_name,setAvatar,setContenido} = UserInformation()
+  const { setTweet_id } = usePostStore();
+  const { data, isLoading } = useTweets();
+  const { openImage, enlargedImage, closeImage } = useImageModal();
+  const { setFirs_name, setAvatar, setContenido } = UserInformation();
 
-if(isLoading) return <LoadingComponent/>
+  if (isLoading) return <LoadingComponent />;
 
-  const handleClickId = ( id: number,
+  const handleClickId = (
+    id: number,
     firs_name: string,
     avatar: string,
-    contenido: string,
-    // gif: string | undefined,
-    // multimedia: string | undefined)
-  )=> {
+    contenido: string
+  ) => {
     setTweet_id(id);
     setFirs_name(firs_name);
     setAvatar(avatar);
-    setContenido(contenido)
-    navigate("/comments")
-    
-
-  }
-  const handleProfileClick = (e:React.MouseEvent) => {
+    setContenido(contenido);
+    navigate("/comments");
+  };
+  const handleProfileClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate("/Profile")
-  }
+    navigate("/Profile");
+  };
   const handleImgClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-   
   };
-  // const tweeData = {
-  //   id:tweet_id,
-  //   usuario:data?.data.map(name =>name.usuario?.firs_name)
-  // }
 
   return (
     <main>
-      {data?.data.slice()
+      {data?.data
+        .slice()
         .reverse()
         .map((tweet: TweetsInterface) => (
           <React.Fragment key={tweet.id}>
             <article
               className="py-3 px-4  h-auto border-2 border-gray-100
        hover:bg-gray-100 cursor-pointer"
-              onClick={() => handleClickId( tweet.id,
-                tweet.usuario?.firs_name || "",
-                tweet.usuario?.avatar || "",
-                tweet.contenido || "",
-                ) }
+              onClick={() =>
+                handleClickId(
+                  tweet.id,
+                  tweet.usuario?.firs_name || "",
+                  tweet.usuario?.avatar || "",
+                  tweet.contenido || ""
+                )
+              }
             >
               <div className="grid grid-cols-[40px,1fr] ">
-                <div className=" w-10 mr-3 grid " >
+                <div className=" w-10 mr-3 grid ">
                   <Tooltip>
                     <img
-                    src={tweet.usuario?.avatar}
+                      src={tweet.usuario?.avatar}
                       className="w-10 h-10 mr-3 rounded-full 
               bg-black cursor-pointer"
-              onClick={handleProfileClick}
-                    >
-                    </img>
+                      onClick={handleProfileClick}
+                    ></img>
                   </Tooltip>
                 </div>
                 <div className="flex flex-col ml-3 ">
                   <div className="flex gap-1 items-center">
                     <Tooltip>
-                      <span className="hover:underline">{tweet.usuario?.firs_name}</span>
+                      <span className="hover:underline">
+                        {tweet.usuario?.firs_name}
+                      </span>
                       <span>@{tweet.usuario?.firs_name}</span>
                     </Tooltip>
                     <span className="mb-2">.</span>
@@ -107,29 +103,30 @@ if(isLoading) return <LoadingComponent/>
                       src={tweet.multimedia || tweet.gif}
                       alt=""
                       className="rounded-lg"
-                      onClick={(e) => { handleImgClick(e);
-                      openImage(tweet.multimedia || tweet.gif);
-                    }}
+                      onClick={(e) => {
+                        handleImgClick(e);
+                        openImage(tweet.multimedia || tweet.gif);
+                      }}
                     />
                   )}
                 </div>
               </div>
-            
-              <Functionality  tweetData={tweet} />
+
+              <Functionality tweetData={tweet} />
             </article>
-            </React.Fragment>
+          </React.Fragment>
         ))}
-            <div data-dial-init className="fixed right-6 bottom-16 group ">
-              <div
-                className="w-14 h-14 bg-blue-500 rounded-full flex 
+      <div data-dial-init className="fixed right-6 bottom-16 group ">
+        <div
+          className="w-14 h-14 bg-blue-500 rounded-full flex 
           items-center 
     justify-center cursor-pointer"
-                onClick={() => navigate("/posttweets")}
-              >
-                {GoToPost}
-              </div>
-            </div>
-        <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
+          onClick={() => navigate("/posttweets")}
+        >
+          {GoToPost}
+        </div>
+      </div>
+      <ImageModal enlargedImage={enlargedImage} closeImage={closeImage} />
     </main>
   );
 }

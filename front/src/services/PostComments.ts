@@ -30,7 +30,7 @@ export async function postComment(newComment: addComment) {
           formData.append('gif', newComment.gif);
         }
     
-        const response = await axiosWithAuth.post('http://15.229.1.136/tweets/api/comentario/', formData);
+        const response = await axiosWithAuth.post('http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/tweets/api/comentario/', formData);
         return console.log(response.data,formData,{
             headers: {
                 "Content-Type": "multipart/form-data",

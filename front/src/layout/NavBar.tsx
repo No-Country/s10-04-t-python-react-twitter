@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import {
   Home,
   Profile,
-  Notifications,
-  Explore,
+  // Notifications,
+  // Explore,
 } from "../Components/Home/tweets/TweetIcons/Icons";
 import logo from "../assets/twitter-logo.svg";
 import Logout from "../Components/Logout";
@@ -94,7 +94,7 @@ export default function NavBar(): JSX.Element {
                 {Profile}
                 <h1 className="text-xl">Profile</h1>
               </Link>
-              <Link
+              {/* <Link
                 to="/Notifications"
                 className="flex flex-row hover:bg-[#E7E7E8] rounded-full cursor-pointer px-5 py-3"
               >
@@ -107,7 +107,7 @@ export default function NavBar(): JSX.Element {
               >
                 {Explore}
                 <h1 className="text-xl">Explore</h1>
-              </Link>
+              </Link> */}
               <div className="px-5 mt-7">
                 <div className="flex flex-row hover:bg-[#E7E7E8] rounded-full cursor-pointer px-5 py-3 justify-center">
                   <Logout />

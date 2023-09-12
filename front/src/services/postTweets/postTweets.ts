@@ -26,7 +26,7 @@ export type AddPost = {
         formData.append('gif', newPost.gif);
       }
   
-      return await axios.post('http://15.229.1.136/tweets/api/tweets/', formData, {
+      return await axios.post('http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/tweets/api/tweets/', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

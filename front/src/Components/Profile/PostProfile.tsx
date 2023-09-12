@@ -1,9 +1,6 @@
 import Tooltip from "../../Components/Home/tweets/tooltip";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  // Ellipse,
-  GoToPost,
-} from "../../Components/Home/tweets/TweetIcons/Icons";
+import { GoToPost } from "../../Components/Home/tweets/TweetIcons/Icons";
 import { useEffect } from "react";
 import { useAppSelector } from "../../Hooks/useAppSelector";
 import { getPostById } from "../../services/dataApi";
@@ -64,17 +61,7 @@ export const PostProfile: React.FC = () => {
                         <span className="text-slate-400 ml-2">
                           @{dataPost?.firs_name}
                         </span>
-                        {/* <span className="">aug 20</span> */}
                       </div>
-                      {/* <div className="group/edit group">
-                        <div
-                          className="group-hover/edit:bg-blue-100 
-                        rounded-full w-[35px] h-[35px] flex items-center justify-center 
-                        absolute  right-0 "
-                        >
-                          {Ellipse}
-                        </div>
-                      </div> */}
                     </div>
                     <div className="mb-2">
                       <p>{data.contenido}</p>
@@ -97,7 +84,6 @@ export const PostProfile: React.FC = () => {
         ) : (
           <div>Cargando!</div>
         )}
-        {/* {dataPost.tweets.length === 0 && (<div className="text-slate-400 text-xl">Aún no tienes ningún tweet</div>)} */}
         <div data-dial-init className="fixed right-6 bottom-6 group">
           <div
             className="w-14 h-14 bg-blue-500 rounded-full flex 
