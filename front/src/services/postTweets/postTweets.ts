@@ -1,10 +1,11 @@
 import axios from "axios";
 
-type AddPost = {
-    usuario: number
-    multimedia?: File 
-    contenido?: string
-    gif?: string
+export type AddPost = {
+  
+    usuario: string | null
+    multimedia?: File | null 
+    contenido?: string | null
+    gif?: string | null
   }
 
 
@@ -25,7 +26,7 @@ type AddPost = {
         formData.append('gif', newPost.gif);
       }
   
-      return await axios.post('http://15.229.1.136/tweets/api/tweets/', formData, {
+      return await axios.post('https://twitter-api-6tse.onrender.com/tweets/api/tweets/', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

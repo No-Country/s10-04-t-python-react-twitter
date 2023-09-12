@@ -2,7 +2,7 @@
 import { axiosWithAuth } from "./configHeader"
 
 interface addComment {
-    usuario:number | null
+    usuario:string | null
     tweet_original:number | null
     content:string
     multimedia: File | null 
@@ -18,7 +18,7 @@ export async function postComment(newComment: addComment) {
         formData.append('usuario', Number(newComment.usuario).toString());
         formData.append('tweet_original', Number(newComment.tweet_original).toString());
   
-        if (newComment.content) {
+        if (newComment.content && newComment.content.trim() !== "") {
           formData.append('content', newComment.content);
         }
   
@@ -30,7 +30,7 @@ export async function postComment(newComment: addComment) {
           formData.append('gif', newComment.gif);
         }
     
-        const response = await axiosWithAuth.post('http://15.229.1.136/tweets/api/comentario/', formData);
+        const response = await axiosWithAuth.post('https://twitter-api-6tse.onrender.com/tweets/api/comentario/', formData);
         return console.log(response.data,formData,{
             headers: {
                 "Content-Type": "multipart/form-data",

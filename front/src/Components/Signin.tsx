@@ -5,36 +5,25 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../Hooks/useAppDispatch";
 import * as configSlices from "../redux/slices/config";
+import {UserResponseSignin, FormDataSignin} from "../types/loginTypes"
 
 const App: React.FC = () => {
-  interface FormData {
-    email: string;
-    password: string;
-  }
-  interface UserResponse {
-    id: string;
-    token: string;
-  }
 
   const dispatch = useAppDispatch();
-
-  // const authId = useAppSelector((state) => state.config.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const navigate = useNavigate();
 
-  // console.log(userId)
 
-  const mutation = useMutation(async (formData: FormData) => {
-    console.log("formData", formData);
-    const response = await axios.post<UserResponse>(
-      "http://15.229.1.136/users/api/login/",
-      formData,
-      {}
+  const mutation = useMutation(async (formData: FormDataSignin) => {
+    const response = await axios.post<UserResponseSignin>(
+      "https://twitter-api-6tse.onrender.com/users/api/login/",
+      formData
     );
     const data = response.data.id;
     await dispatch(configSlices.setAuthId(data));
     localStorage.setItem("userId", data);
+    localStorage.setItem("username", JSON.stringify(formData.email));
+    localStorage.setItem("password", JSON.stringify(formData.password));
     navigate("/profile");
     return response.data;
   });
@@ -44,7 +33,7 @@ const App: React.FC = () => {
     const formData = new FormData(event.target as HTMLFormElement);
     const formJson = Object.fromEntries(
       formData.entries()
-    ) as unknown as FormData;
+    ) as unknown as FormDataSignin;
     mutation.mutate(formJson);
   };
 

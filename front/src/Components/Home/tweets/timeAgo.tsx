@@ -27,6 +27,6 @@ export default function TimeAgo({ timestamp }: {timestamp: string}) {
     return () => clearInterval(intervalId);
   }, [timestamp]);
 
-  return <span>{timeAgoOrDate}</span>;
+  return <span>{timeAgoOrDate}</span> 
 }
 
