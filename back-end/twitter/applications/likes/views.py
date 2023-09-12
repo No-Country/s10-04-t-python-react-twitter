@@ -39,14 +39,14 @@ def get_user_likes(_request, email):
 ### Notificaciones ############################################
 @api_view(['GET'])
 def noti(request):
-    user = request.user
+    user = request.users
     notis = Notificacion.objects.filter(para_usuario=user, is_read=True)
     serializer = NotiSerializer(notis, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def noti_no_read(request):
-    user = request.user
+    user = request.users
     notis = Notificacion.objects.filter(para_usuario=user, is_read=False)
     serializer = NotiSerializer(notis, many=True)
     return Response(serializer.data)
@@ -54,7 +54,7 @@ def noti_no_read(request):
 
 @api_view(['PUT'])
 def noti_read_one(request, pk):
-    user = request.user
+    user = request.users
     noti = Notificacion.objects.get(para_usuario=user, id=pk)
     if noti.is_read == True: 
         return Response({ 'message': 'Leído'})
@@ -65,7 +65,7 @@ def noti_read_one(request, pk):
 
 @api_view(['PUT'])
 def noti_read_all(request):
-    user = request.user
+    user = request.users
     notis = Notificacion.objects.filter(para_usuario=user, is_read=False)
     for noti in notis:
         noti.is_read = True
