@@ -30,7 +30,7 @@ class Tweet(models.Model):
         verbose_name_plural='Tweets'
 
     def __str__ (self):
-        return f"Tweet by {self.usuario.firs_name}: {self.contenido}"
+        return f"  {self.id}  Tweet by {self.usuario.firs_name}: {self.contenido}"
 
 class Cita(models.Model):
     
@@ -44,9 +44,9 @@ class Cita(models.Model):
 
 class Comentario(models.Model):
     
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User,related_name='user', on_delete=models.CASCADE)
     tweet_original = models.ForeignKey(Tweet, related_name='comentario', on_delete=models.CASCADE) 
-    content = models.TextField()
+    content = models.TextField(null=True, blank=True )
     created_at = models.DateTimeField(auto_now_add=True)
     multimedia = models.FileField(upload_to='tweets/', null=True, blank=True )
     gif = models.CharField(max_length=150, null=True, blank=True)

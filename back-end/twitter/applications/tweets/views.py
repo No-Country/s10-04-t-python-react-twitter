@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 #
-from .serializer import TweetSerializer, CitaSerializer, ComentarioSerializer, PersonPaginationSerializer,TweetSerializerId,RetweetSerializer
+from .serializer import CitaSerializer,TweetSerializerId,RetweetSerializer,TweetSerializerGET,TweetSerializerPOST,ComentarioSerializerGET,ComentarioSerializerPOST
 #
 from .models import Tweet, Cita, Comentario
 #
@@ -24,10 +24,18 @@ from rest_framework import status
 class TweetViewSet(generics.ListCreateAPIView):
     
     # permission_classes = [IsAuthenticated]
-    serializer_class = TweetSerializer
+    # serializer_class = TweetSerializer
     # parser_classes = [MultiPartParser, FormParser]
     # pagination_class = PersonPaginationSerializer
     queryset = Tweet.objects.all()  
+    
+    def get_serializer_class(self):
+
+        if self.request.method == 'GET':
+            return TweetSerializerGET
+
+        elif self.request.method == 'POST':
+            return TweetSerializerPOST
 
 
 class CitaViewSet(generics.ListCreateAPIView):
@@ -41,8 +49,16 @@ class ComentarioCreateView(generics.ListCreateAPIView):
     
     # pagination_class = PersonPaginationSerializer
     queryset = Comentario.objects.all()
-    serializer_class = ComentarioSerializer
     # permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
+    
+    def get_serializer_class(self):
+
+        if self.request.method == 'GET':
+            return ComentarioSerializerGET
+
+        elif self.request.method == 'POST':
+            return ComentarioSerializerPOST
+
 
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
