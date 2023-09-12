@@ -23,7 +23,7 @@ from rest_framework import status
 
 class TweetViewSet(generics.ListCreateAPIView):
     
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     #serializer_class = TweetSerializer
     parser_classes = [MultiPartParser, FormParser]
     #pagination_class = PersonPaginationSerializer
@@ -49,7 +49,7 @@ class ComentarioCreateView(generics.ListCreateAPIView):
     
     #pagination_class = PersonPaginationSerializer
     queryset = Comentario.objects.all()
-    permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
+    #permission_classes = [IsAuthenticated]  # Requiere autenticación para acceder
     
     def get_serializer_class(self):
 
