@@ -1,6 +1,6 @@
 import { Ellipse, GoToPost } from "./TweetIcons/Icons";
 import Functionality from "./tweetsFunctionality";
-import Tooltip from "./tooltip";
+// import Tooltip from "./tooltip";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { TweetsInterface } from "../../../types";
@@ -11,6 +11,7 @@ import ImageModal from "./ImageModal";
 import useImageModal from "../../../Hooks/imageModal";
 import LoadingComponent from "../../LoadingComponent";
 import UserInformation from "../../../Hooks/userInformation";
+import defaultUser from "../../../assets/userDefault.png"
 
 export default function Tweets(): JSX.Element {
   const navigate = useNavigate();
@@ -62,23 +63,33 @@ export default function Tweets(): JSX.Element {
             >
               <div className="grid grid-cols-[40px,1fr] ">
                 <div className=" w-10 mr-3 grid ">
-                  <Tooltip>
-                    <img
+                  {/* <Tooltip> */}
+                    {/* <img
                       src={tweet.usuario?.avatar}
                       className="w-10 h-10 mr-3 rounded-full 
               bg-black cursor-pointer"
                       onClick={handleProfileClick}
-                    ></img>
-                  </Tooltip>
+                    ></img> */}
+                    {tweet.usuario?.avatar ? (
+                          <img
+                            src={tweet.usuario?.avatar}
+                            alt=""
+                            className="w-[45px] h-[45px] rounded-full"
+                            onClick={handleProfileClick}
+                          />
+                      ) : (
+                          <img src={defaultUser} className="w-[45px] h-[45px] rounded-full" alt="" onClick={handleProfileClick}/>
+                      )}
+                  {/* </Tooltip> */}
                 </div>
                 <div className="flex flex-col ml-3 ">
                   <div className="flex gap-1 items-center">
-                    <Tooltip>
+                    {/* <Tooltip> */}
                       <span className="hover:underline">
                         {tweet.usuario?.firs_name}
                       </span>
                       <span>@{tweet.usuario?.firs_name}</span>
-                    </Tooltip>
+                    {/* </Tooltip> */}
                     <span className="mb-2">.</span>
                     <span className="">
                       <TimeAgo timestamp={tweet.created} />

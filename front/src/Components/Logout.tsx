@@ -5,6 +5,8 @@ function Logout() {
 
   const logoutApp = () => {
     localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
     navigate("/");
   };
 

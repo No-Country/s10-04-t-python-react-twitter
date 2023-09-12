@@ -32,7 +32,7 @@ export default function SetUp() {
 
   const mutation = useMutation(async (formData: FormDataProfile) => {
     const response = await axios.put(
-      `http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/update/${id}/`,
+      `https://twitter-api-6tse.onrender.com/users/api/update/${id}/`,
       formData
     );
     if (response.status == 200) {

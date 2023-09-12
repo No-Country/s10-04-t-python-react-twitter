@@ -38,7 +38,7 @@ const SignUp: React.FC = () => {
 
   const mutation = useMutation(async (formData: FormDataSignUp) => {
     const response = await axios.post<UserResponseSignUp>(
-      "http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/register/",
+      "https://twitter-api-6tse.onrender.com/users/api/register/",
       formData
     );
 

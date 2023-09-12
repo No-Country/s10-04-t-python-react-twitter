@@ -15,7 +15,8 @@ export const InfoProfile: React.FC = () => {
     getPostById({ id });
   }, [id]);
 
-  console.log(dataPost);
+
+//   console.log(dataPost);
 
   return (
     <>

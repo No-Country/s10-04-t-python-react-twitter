@@ -1,13 +1,17 @@
 import axios from 'axios';
 
 
+const usernameJSON = localStorage.getItem("username");
+const passwordJSON = localStorage.getItem("password");
+
 const authCredentials = {
-  username: 'admin@gmail.com',
-  password: 'admin',
+  username: usernameJSON ? JSON.parse(usernameJSON) : null,
+  password: passwordJSON ? JSON.parse(passwordJSON) : null,
 };
+
 
 // Create an Axios instance with default headers
 export const axiosWithAuth = axios.create({
-  baseURL: 'http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/tweets/api/',
+  baseURL: 'https://twitter-api-6tse.onrender.com/tweets/api/',
   auth: authCredentials, 
 });

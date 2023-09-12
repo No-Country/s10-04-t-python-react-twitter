@@ -1,4 +1,4 @@
-import Tooltip from "../../Components/Home/tweets/tooltip";
+// import Tooltip from "../../Components/Home/tweets/tooltip";
 import { Link, useNavigate } from "react-router-dom";
 import { GoToPost } from "../../Components/Home/tweets/TweetIcons/Icons";
 import { useEffect } from "react";
@@ -33,7 +33,7 @@ export const PostProfile: React.FC = () => {
               >
                 <div className="grid grid-cols-[40px,1fr]">
                   <div className="w-10 mr-3 grid">
-                    <Tooltip>
+                    {/* <Tooltip> */}
                       {dataPost?.avatar ? (
                         <div className="col-span-1 w-10 mr-3 ">
                           <img
@@ -48,16 +48,16 @@ export const PostProfile: React.FC = () => {
                           <img src={defaultUser} alt="" />
                         </div>
                       )}
-                    </Tooltip>
+                    {/* </Tooltip> */}
                   </div>
                   <div className="col-span-1 ml-5">
                     <div className="flex justify-between ">
                       <div className="flex gap-1 items-center">
-                        <Tooltip>
+                        {/* <Tooltip> */}
                           <span className="hover:underline font-semibold">
                             {dataPost.firs_name}
                           </span>
-                        </Tooltip>
+                        {/* </Tooltip> */}
                         <span className="text-slate-400 ml-2">
                           @{dataPost?.firs_name}
                         </span>
@@ -75,8 +75,6 @@ export const PostProfile: React.FC = () => {
                     ) : (
                       <img src={data.gif} alt="" className="rounded-lg " />
                     )}
-
-                    {/* <Functionality/> */}
                   </div>
                 </div>
               </article>

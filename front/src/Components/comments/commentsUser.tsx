@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Tooltip from "../Home/tweets/tooltip";
+// import Tooltip from "../Home/tweets/tooltip";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
 import Functionality from "../Home/tweets/tweetsFunctionality";
 import useSelectedTweet from "../../Hooks/Home/useSelectedTweet";
@@ -42,21 +42,21 @@ export default function CommentsUser() {
       >
         <div className="grid grid-cols-[40px,1fr] ">
           <div className="w-10 mr-3 grid">
-            <Tooltip>
+            {/* <Tooltip> */}
               <img src={comments.usuario.avatar}
                 className="w-10 h-10 mr-3 rounded-full 
                   bg-black cursor-pointer"
               />
             
-            </Tooltip>
+            {/* </Tooltip> */}
           </div>
 
           <div className="flex flex-col ml-3 ">
             <div className="flex gap-1 items-center">
-              <Tooltip>
+              {/* <Tooltip> */}
                 <span className="hover:underline">{comments.usuario.firs_name}</span>
                 <span>@{comments.usuario.firs_name}</span>
-              </Tooltip>
+              {/* </Tooltip> */}
               <span className="mb-2">.</span>
               <span className=""><TimeAgo timestamp={comments.created_at} /></span>
               <div className="group/edit group flex items-center">

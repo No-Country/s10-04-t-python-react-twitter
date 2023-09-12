@@ -8,7 +8,7 @@ interface IgetPostById {
 export const getPostById = async ({ id }: IgetPostById) => {
   try {
     const response = await axios.get(
-      `http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/detail/${id}/`
+      `https://twitter-api-6tse.onrender.com/users/api/detail/${id}/`
     );
     const data = response.data;
     setAccess(data);

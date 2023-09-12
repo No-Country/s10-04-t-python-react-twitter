@@ -1,4 +1,4 @@
-import Tooltip from "../Home/tweets/tooltip";
+// import Tooltip from "../Home/tweets/tooltip";
 import { Ellipse } from "../Home/tweets/TweetIcons/Icons";
 import BackButton from "./BackButton";
 import Functionality from "../Home/tweets/tweetsFunctionality";
@@ -7,6 +7,7 @@ import useImageModal from "../../Hooks/imageModal";
 import ImageModal from "../Home/tweets/ImageModal";
 import UserInformation from "../../Hooks/userInformation";
 import usePostStore from "../../Hooks/Home/postStore/usePostStore";
+import defaultUser from "../../assets/userDefault.png";
 
 export default function CommentsTweets() {
   const { data } = useSelectedTweet();
@@ -30,23 +31,27 @@ export default function CommentsTweets() {
           <BackButton title="Post" />
           <div className=" flex flex-row ">
             <div className=" w-10 mr-3 grid">
-              <Tooltip>
-                <img
-                  src={avatar}
-                  className="w-10 h-10 mr-3 rounded-full 
-              bg-black cursor-pointer"
-                />
-              </Tooltip>
+              {/* <Tooltip> */}
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt=""
+                    className="w-[45px] h-[45px] rounded-full cursor-pointer"
+                  />
+                ) : (
+                  <img src={defaultUser} className="w-[45px] h-[45px] rounded-full" alt="" />
+                )}
+              {/* </Tooltip> */}
             </div>
 
             <div className="flex justify-between ">
               <div className="flex gap-1 items-center">
-                <Tooltip>
+                {/* <Tooltip> */}
                   <div className="flex flex-col">
                     <span className="hover:underline">{firs_name}</span>
                     <span>@{firs_name}</span>
                   </div>
-                </Tooltip>
+                {/* </Tooltip> */}
               </div>
             </div>
             <div className="group/edit group">

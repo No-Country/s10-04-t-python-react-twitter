@@ -11,7 +11,7 @@ export interface LoginResponse {
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await axios.post(
-    "http://ec2-15-229-1-136.sa-east-1.compute.amazonaws.com/users/api/login",
+    "https://twitter-api-6tse.onrender.com/users/api/login",
     data,
     {
       headers: {
