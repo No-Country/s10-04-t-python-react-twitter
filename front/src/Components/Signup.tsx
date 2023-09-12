@@ -44,7 +44,7 @@ const SignUp: React.FC = () => {
       formData
     );
 
-    return console.log(response.data);
+    return console.log(response);
   });
 
   const handleSubmit2 = (event: React.FormEvent<HTMLFormElement>) => {

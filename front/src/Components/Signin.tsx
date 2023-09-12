@@ -18,8 +18,7 @@ const App: React.FC = () => {
     console.log("formData", formData);
     const response = await axios.post<UserResponseSignin>(
       "http://15.229.1.136/users/api/login/",
-      formData,
-      {}
+      formData
     );
     const data = response.data.id;
     await dispatch(configSlices.setAuthId(data));

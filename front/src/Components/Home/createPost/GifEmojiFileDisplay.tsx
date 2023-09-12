@@ -21,6 +21,7 @@ export default function GifEmojiFileDisplay() {
       if (file) {
         setContentUser(URL.createObjectURL(file));
         setImageFile(file)
+        console.log(file)
       }
     }
   };

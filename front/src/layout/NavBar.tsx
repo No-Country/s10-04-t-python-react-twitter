@@ -34,16 +34,16 @@ export default function NavBar(): JSX.Element {
         <div
           className={`${
             !open && "hidden"
-          } bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 xl:hidden`}
+          } bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 lg:hidden`}
           onClick={() => setOpen(false)}
         ></div>
 
         <div
           className={`${
             open ? "w-[280px]" : "w-0"
-          } bg-white min-h-screen absolute top-0 right-0 left-0 transition-all duration-200 xl:w-[280px] z-10`}
+          } bg-white min-h-screen absolute top-0 right-0 left-0 transition-all duration-200 lg:w-[280px] z-10`}
         >
-          <div className={`${!open && "hidden"} xl:block`}>
+          <div className={`${!open && "hidden"} lg:block`}>
             <div>
               <div className="p-5 lg:ml-5">
                 {dataPost?.avatar ? (

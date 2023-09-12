@@ -19,17 +19,12 @@ export const InfoProfile: React.FC = () => {
 
   return (
     <>
-      <div className="mt-16 mx-2 bg-slate-300 h-[157px]">
-        {dataPost && <img src={dataPost.front_page} alt="" className="h-[157px] w-[100%]"></img>}
+      <div className="mt-16 mx-2 h-[157px]  flex items-center justify-center">
+        {dataPost && <img src={dataPost.front_page} alt="" className="h-[157px] w-[100%] max-w-[800px]"></img>}
       </div>
       <div className="flex flex-row -mt-[50px] mx-5 justify-between">
         {dataPost && (
-          <div className="">
-            {/* <img
-              src={dataPost?.avatar}
-              className="w-[100px] h-[100px] mr-3 rounded-full 
-              bg-slate-400 cursor-pointer"
-            ></img> */}
+          <div className="hola">
             {dataPost?.avatar ? (
                         <img src={dataPost?.avatar} alt="" className="w-[100px] h-[100px] mr-3 rounded-full 
                         bg-slate-400 cursor-pointer"/>
@@ -47,7 +42,7 @@ export const InfoProfile: React.FC = () => {
         </div>
       </div>
       {dataPost ? (
-        <section className="flex flex-row">
+        <section className="flex flex-row my-4 ml-2">
           <div className="mr-5">{dataPost?.followers_count} Followers</div>
           <div>{dataPost?.following_count} Following</div>
         </section>

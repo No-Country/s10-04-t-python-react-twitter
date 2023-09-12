@@ -17,7 +17,8 @@ const pages: Page[] = [
   { path: "/posttweets", component: lazy(() => import("../Pages/PostTweets")) },
   {path: "/gift", component: lazy(() => import("../Pages/gif"))},
   {path: "/comments", component: lazy(() => import("../Pages/Comments"))},
-  {path:"/replycomments", component: lazy(() => import("../Pages/replyComment"))}
+  {path:"/replycomments", component: lazy(() => import("../Pages/replyComment"))},
+  {path:"/SetUp", component: lazy(() => import("../Pages/SetUp"))}
 ];
 
 export default function AppRouter(): JSX.Element {

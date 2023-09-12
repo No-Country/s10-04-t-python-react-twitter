@@ -6,8 +6,10 @@ const Profile = () => {
   return (
     <>
       <NavBar />
-      <InfoProfile />
-      <PostProfile />
+      <div className="mt-16 mr-3 lg:ml-[300px] ">
+        <InfoProfile />
+        <PostProfile />
+      </div>
     </>
   );
 };
