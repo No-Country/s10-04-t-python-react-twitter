@@ -24,7 +24,7 @@ from rest_framework import status
 class TweetViewSet(generics.ListCreateAPIView):
     
     permission_classes = [IsAuthenticated]
-    serializer_class = TweetSerializer
+    #serializer_class = TweetSerializer
     parser_classes = [MultiPartParser, FormParser]
     pagination_class = PersonPaginationSerializer
     queryset = Tweet.objects.all()  
