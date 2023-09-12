@@ -102,7 +102,7 @@ class UserUpdateAPIView(RetrieveUpdateAPIView):
 
     serializer_class = UserDeletelSerializers
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
     def get_queryset(self):
         
@@ -114,7 +114,7 @@ class PersonDeletePIView(RetrieveDestroyAPIView):
 
     serializer_class = UserDeletelSerializers
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
 
@@ -122,7 +122,7 @@ class PersonDeletePIView(RetrieveDestroyAPIView):
 class FollowToggleView(CreateAPIView):
 
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -152,7 +152,7 @@ class FollowToggleView(CreateAPIView):
 class UserDetailFollowers(RetrieveAPIView):
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -161,7 +161,7 @@ class UserDetailFollowers(RetrieveAPIView):
 class UserList(ListAPIView):
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     serializer_class = UserDetailSerializers
     def get_queryset(self):
         return User.objects.all()
