@@ -2,7 +2,8 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from .twitter.settings.create_superuser import create_superuser
+from twitter.settings.create_superuser import create_superuser
+
 
 
 def main():
@@ -20,6 +21,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
     create_superuser()
+    main()
+    
 
