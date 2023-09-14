@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from applications.users.managers import UserManager  # Reemplace 'myapp' con el nombre de su aplicación
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")  # Reemplace 'myproject' con el nombre de su proyecto Django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "twitter.settings.prod")  # Reemplace 'myproject' con el nombre de su proyecto Django
 django.setup()
 
 User = get_user_model()
