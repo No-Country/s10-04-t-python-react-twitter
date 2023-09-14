@@ -13,3 +13,9 @@ python manage.py makemigrations likes
 python manage.py makemigrations tweets
 
 python manage.py migrate
+
+
+if [[ $CREATE_SUPERUSER ]];
+then
+  python world_champ_2022/manage.py createsuperuser --no-input
+fi
