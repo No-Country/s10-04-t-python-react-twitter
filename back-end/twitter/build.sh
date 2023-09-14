@@ -13,9 +13,12 @@ python manage.py makemigrations likes
 python manage.py makemigrations tweets
 
 python manage.py migrate
+<<<<<<< HEAD
 
 
 if [[ $CREATE_SUPERUSER ]];
 then
   python manage.py createsuperuser --no-input
 fi
+=======
+>>>>>>> parent of cad3492 (prueba render admin)
