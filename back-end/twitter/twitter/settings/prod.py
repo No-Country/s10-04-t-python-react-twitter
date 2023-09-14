@@ -35,3 +35,4 @@ CORS_ALLOWED_ORIGINS = [
     "https://react-python-twitterclone.netlify.app",
 
 ]
+##lo que 
