@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from twitter.settings.create_superuser import create_superuser
+#from twitter.settings.create_superuser import create_superuser
 
 
 

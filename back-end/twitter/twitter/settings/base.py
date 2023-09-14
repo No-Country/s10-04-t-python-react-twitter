@@ -2,6 +2,7 @@ from django.core.exceptions import ImproperlyConfigured
 import json
 from pathlib import Path
 from unipath import Path
+
 import os
 # Calling the secret.json file
 with open('secret.json') as f:
