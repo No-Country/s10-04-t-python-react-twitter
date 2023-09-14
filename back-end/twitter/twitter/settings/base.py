@@ -132,3 +132,25 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+
+import os
+
+SUPERUSER_USERNAME = os.environ.get('DJANGO_SUPERUSER_USERNAME')
+SUPERUSER_EMAIL = os.environ.get('DJANGO_SUPERUSER_EMAIL')
+SUPERUSER_PASSWORD = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
+
+if SUPERUSER_USERNAME and SUPERUSER_EMAIL and SUPERUSER_PASSWORD:
+    # Crear el superusuario
+    try:
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        if not User.objects.filter(username=SUPERUSER_USERNAME).exists():
+            User.objects.create_superuser(SUPERUSER_USERNAME, SUPERUSER_EMAIL, SUPERUSER_PASSWORD)
+            print(f'Superuser {SUPERUSER_USERNAME} created successfully.')
+        else:
+            print(f'Superuser {SUPERUSER_USERNAME} already exists.')
+    except Exception as e:
+        print(f'Error creating superuser: {str(e)}')
+else:
+    print('Please provide values for DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD environment variables.')
