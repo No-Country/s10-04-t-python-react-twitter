@@ -2,6 +2,10 @@
 
 Este proyecto es una plataforma de redes sociales inspirada en la popular aplicación Twitter. Fue desarrollado en un período de 5 semanas bajo la supervisión de la empresa "No Country". Esta plataforma ofrece a los usuarios la capacidad de compartir mensajes cortos, seguir a otros usuarios y participar en conversaciones públicas.
 
+- Deploy Frontend: https://react-python-twitterclone.netlify.app/
+- Deploy Backend: https://twitter-api-6tse.onrender.com/
+- Video de presentación: <a href="https://www.youtube.com/watch?v=o_MnO-BipSA&ab_channel=DavidCaballero">Twitter | React-Python - seleccionado 10</a>
+
 ![Logo](https://israelvalley.com/wp-content/uploads/2020/08/twitter-logo-1200x675.jpg)
 
 
